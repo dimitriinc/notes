@@ -1,0 +1,709 @@
+--------------------------------------------------------------------------
+INTRODUCTION
+--------------------------------------------------------------------------
+
+	computer is a machine that can perform a task based on received instructions. the electrical circuit of each computer is able to receive and 
+	recognize a certain set of instructions. the sequence of instructions, directed to a certain goal, is called a program
+	the instructions are simple (add two numbers, check if the number is zero, move some data from one memory slot to another)
+	they constitute the machine language - a way for people to communicate with the computer.
+	because the instructions are so simple, programming them is very tedious for a human, so the industry decided to structure computers in a
+	form of a sequence of abstractions, the next level building on top of the previous one; this way we can tame the complexity, and design the 
+	computer systems in systematic, organized way. this approach is called 'structured computer organization'
+
+
+1.1 STRUCTURED COMPUTER ORGANIZATION
+
+	consider all the parts of a computer are functioning and ready to be used, the way those parts are structured is an attempt to bridge the gap
+	btn what the user wants and what the computer can do
+	
+	1.1.1 Languages, Levels, and Virtual Machines
+	
+		the machine instructions that form the machine language (L0) can be executed by electronic circuits directly, we can think about those
+		circuits as a whole machine (M0), or abstract it away in a virtual machine, a black box, where the instructions are the input and the 
+		output is the execution itself, or the result of it.
+		as we said, for humans it's impractical to write programs in L0, so we create a higher-level language (L1), which is also formed by
+		a set of instructions, more understandable to humans. to be executed, the L1 instructions must be converted to the L0 that will do the
+		same thing.
+		there are two methods to execute a program written in L1 on M0: 
+		
+			> Translation - create a new program, written in L0, where all the instructrions written in L1 are replaced by equivalent 
+			  instructions of L0, the L1 program is descarded, and the L0 program is executed. the new L0 program is in control of the
+			  computer.
+			> Interpretation - we write a program in L0 that takes in the L1 program as its input, looks at the L1 instructions, and 
+			  executes the equivalient sequence of instructions in L0, one by one. the program is called 'interpreter', and with this 
+			  technique, it's the one in control of the computer.
+			  
+		both methods, and combiantion of the two, are widely used.
+		for L1 instructions to be replaced by the L0 instructions and still do the desired thing, L1 shouldn't be too far away from L0. and so
+		L1 might not be very usable for humans either. and so we create even higher-level language (L2), for it to be executed, its 
+		instructions should be replaced by the L1 instructions first and so on.
+		we can think of the mechanism of execution of the instructions written in a higher-level language, as of a virtual machine, whose 
+		machine language is the higher-level language, so it can understand its instructions.
+		those virtual machines allow the execution of instructions written in human-level languages as if it was written in a machine-language.
+		in theory a virtual machine can be built in real life, i.e. electronic circuits that could interpret higher-level instructions 
+		directly, but in practice it's not cost effective.
+	
+		thus, to get the human's wishes fulfilled by the computer, we have these layers, or levels, each of them has it's own language and a
+		virtual machine to execute the instructions of the language.
+		a person that writes a program in a higher-level language, doesn't have to know anything about the lower-level languages for their 
+		program to be executed.
+		a person who wants to understand how computers really work, must study all of the levels.
+		
+		how the machines get structured as a sequence of levels, and the implementation details of those levels, form the main subject of the 
+		book.
+		
+	1.1.2 Contemporary Multilevel Machines
+	
+		the model presented consists of 6 levels, where the Level 0 is the actual hardware of the machine, capabale of executing instructions
+		from the Level 1 (all virtual machines execute instructions from one level above)
+		actually there's another level below the Level 0, the 'device level': the operational unit of this level is individual transistor, the
+		lowest-level primitive for a computer designer. but that level belongs to the field of electrical engineering, and thus, outside of the
+		book's scope.
+		if we are exceptionally curious and want to go to even deeper level, and ask how the transistor itself works, we would enter the realm
+		of the solid-state physics.
+		
+		Level 0 is called the Digital Logic Level, the objects of interest on this level are gates. though they consist of analog components
+		(such as transistors) the gates can be modeled as digital devices. they have an input of one or more digital signals (0 or 1) and 
+		produce a function of those signals (e.g. AND, OR)
+		a small amount of gates can be combined to form a 1-bit memory, which can store 0 or 1. 1-bit memories can be combined in groups of 
+		16, 32, 64 to form registers.
+		the main computing engine itself is formed by gates.
+		
+		Level 1 is the Microarchitecture Level. here we find a collection of registers (usually from 8 to 32), forming a local memory; an 
+		Arithmetic Logic Unit (ALU), capable of performing simple operations on the values stored in registers; and a bus that connects 
+		registers to the ALU. that structure is called 'data path'. the old-fashioned way of controlling its operations is with a program
+		called 'microprogram' that serves as an interpreter of the instructions coming from the Level 2; a newer way is to use the hardware
+		to control the data path.
+		
+		Level 2 is the Instruction Set Architecture Level (ISA level). machine language reference manuals deal with this level. the 
+		instructions from this level are executed interpretively by the data path from the Level 1.
+		
+		Level 3 is the Operating System Machine level. it's a hybrid level: it's partly consists of the instructions from the Level 2, 
+		interpreted directly by the microprogram/hardwired control, and partly of some new features: new set of instructions, a different 
+		memory organization, an ability to run several programs concurrently, etc. Those new features are carried out by a interpreter from the 
+		Level 2, which is historically called 'operating system'. The designs of Level 3 vary much greater than the designs of lower levels.
+		
+			* there's a break btn Level 3 and 4, it separates the whole structure on system level and application level. lower levels are
+			  intended mostly for running interpreters and translators needed to support the higher levels, those are written by systems
+			  programmers, who specialize on designing and implementing new virtual machines. Levels 4 and above are intended for the 
+			  applications programmer with a problem to solve.
+			  they differ in the way they support higher levels: 2 and 3 are alway interpreted, 4 and above are most commonly translated.
+			  the nature of instructions changes as well: up to Level 3, the instructions are numeric, above - words and abbreviations
+			  meaningful to people.
+			  
+		Level 4 is the Assembly Language Level. this level is for writing programs for the lower levels but in a more human language than
+		the languages of the virtual machines. so it's kind of symbolic representation of the lower-levels languages. the programs written in 
+		the assembly language are first translated to the level 1, 2, or 3 langugages, and then interpreted by the appropriate virtual machine 
+		(or the actual machine). the translator program is called 'assembler'.
+		
+		Level 5 consists of languages designed to be used by the applications programmers with a problem to solve. such languages are called
+		high-level languages. the programs are generally translated to Level 3 or 4, and then interpreted. the translators are called 
+		'compilers'.
+		
+			* in summary, each level represent a distinct abstraction, with different objects and operations present
+			  the set of data types, operations, and features of each level is called its architecture
+			  the architecture deals with the aspects that are visible for the users of that level (e.g. how much memory is available)
+			  the implementation aspects (e.g. what tech is used to implement the memory) are not part of architecture.
+			  
+	1.1.3 Evolution of Multilevel Machines
+	
+		the programs, written in true machine language (Level 1), and executed by the machine's electronic circuits (Level 0) don't need no
+		interpreters and translators. those circuits, together with the memory and the i/o devices, form the computer's hardware, the tangible
+		objects. software consists of algorithms and their computer representations - programs. they can be stored on tangible objects, but 
+		their essence is in the instructions they contain. in early days the distinction btn hardware and software was well defined; but as
+		the evolution went on, with new levels emerging, levels merging into each other, the line is pretty blurry.
+		
+			hardware and software are logically equivalent
+			
+		any operation performed by software can be petrified into a circuit, and any instruction executed by the hardware can be simulated in
+		software.
+		
+		~ the invention of microprogramming ~
+		first digital computers had two levels: the ISA level, in which the programming was done, and the Digital Logic Level with the circuits
+		to execute those programs. those circuits were large, complicated to design and implements, and unreliable. so in 1951, Maurice Wilkes
+		suggested designing three-level machines. there would be a built-in interpreter (microprogram) that would execute the ISA programs by
+		interpretation in form of microprograms that have much reduced instruction set, allowing for less and simplier circuits. by 1970 this 
+		design became dominant.
+		
+		~ the invention of operating system ~
+		in the 60s operating a computer was a tedious job (decks of punch cards as input, before running a program you'd have to input a 
+		compiler first, etc.), so they start to think how to automate the operator's job - hence the 'operating system'. it was a program,
+		that would be in a computer's memory at all times, and its responsibility was to read the input program together with some 
+		control cards. those controls were new instructions.
+		with time, operating systems became more and more sophisticated, aquiring new features and instructions, while still on the ISA level.
+		soon enough those new instructions were enough to form a whole new level. some new instructions were identical to the ISA instructions,
+		but some, especially i/o instructions, were completely different. the term for those new instructions is 'system call'.
+		so the purpose of an op system that we're interested in, is the interpretation of system calls (instructions and features of Lvl 3).
+		but it's not all operation systems can do, for example their invention allowed for timesharing systems. those were invented in early
+		60s and allowed several programmers to access a single computer at the same time via remote terminals, connected to the central 
+		computer with telephone lines.
+		
+		~ the migration of functionality to microcode ~
+		as the microprogramming had become common by 1970, the programmers realized that you can increase the functionality of the machine by 
+		writing augmented microprograms. for example, you could write a new instruction for multiplication, whereas the basic microprogram
+		would do the same operation through ADD and jump commands; and with the new functionality to the microprogram, we can perform the 
+		same with only one command - it's like adding a new circuit to the hardware, but by programming. the physical path of the signals is 
+		the same, but running it with one command tends to be a little faster.
+		a sequence of microinstructions formed to achieve a certain goal, that could be called by another program, is called 'procedure' in
+		the world of microprogramming. sort of like functions in high-level languages.
+		this realization brought to life an explosion in variety and sophistication of instruction sets.
+		some of the instructions added in that period of time include:
+		
+			> before mentioned multiplication
+			> division
+			> increment
+			> floating-point arithmetic operations
+			> instructions for calling and returning from procedures
+			> instructions for speeding up looping
+			> instruction for handling character strings
+		
+		once machine designers saw how easy it's to add new instructions, they started adding whole new features to their microprograms.
+		for example: 
+		
+			- features to speed up computations involving arrays (indexing, indirect addressing)
+			- move program in memory while it's been executed (relocation facilities)
+			- interrupt systems that signal the computer when an i/o is completed
+			- ability to suspend one program and start another (process switching)
+			- processing audio, image, and multimedia files
+			
+		~ the elimination of microprogramming ~
+		with all those new features, microprograms got bloated and slow. so some researchers suggested eliminating the microprogram, reducing
+		the instruction set, and having the remaining instructions be directly executed (hardware control of the data path). computers got
+		faster because of that, though modern processors still rely on microprogramming to translate complex instructions into basic 
+		executable instructions.
+		
+		the borders btn hardware and software are fluid. so are the border btn different levels.
+
+
+1.2 MILESTONES IN COMPUTER ARCHITECTURE
+
+	~ Mechanical. Zeroth generation ~
+	Pascal, Leibniz - first mechanical machines. Babbage: difference engine - one algorithm; analical engine - general purpose, had memory, 
+	arithmetic unit, i/o. both - mechanical.
+	
+	~ Vacuum tubes. First generation ~
+	first electronic computer - COLOSSUS from Bletchley Park (classified for 30 years)
+	electronic computers were based first on relays, then on vacuum tubes.
+	the most influential of them was the IAS machine built by von Neumann and collegues at Princeton (von Neumann wrote the paper describing 
+	the design of the machine). it had 5 major parts: memory, control unit, arithmetic unit (with an accumulator inside), input, and output.
+	later the control unit and the arithmetic unit merged together on one chip and became the CPU. significant innovation was treatment of 
+	programs as data, i.e. storing them in memory.
+	
+	~ Transistors. Second generation ~
+	in 1948 transistors were invented and by the late 1950s, vacuum tube computers were obsolete.
+	one of the first commercial transistor computers was called PDP-1, could execute 200,000 instructions/sec, had a 512x512 px monitor.
+	the students at MIT got one of those machines and programmed a game called Spacewar!, one of the first video games (1962)
+	in 1964 the 6600 machine was released by CDC, the fastest one at the time, inside its CPU it had several functional units: one for addition,
+	another for multiplication, another for division, - and all of them could run in parallel. it also had a number of small computer helping 
+	with the work, CPU could focus on crunching numbers, while those little helpers would do the details of job managment and i/o.
+	the focal point of all those machines was hardware, Burroughs B5000 machine was designed to be programmed specifically in Algol 60 (forerunner
+	of C and Java), its hardware was designed to ease the compiler's task.
+	
+	~ Integrated circuits. Third generation ~
+	invented in 1958 by Jack Kilby and Robert Noyce (independently). allowed to put multiple transistors into one silicon chip -> smaller, faster,
+	cheaper computers.
+	some of the significant computer from that era:
+	
+		> IBM's System/360 line: innovative for many reasons:
+		
+			- it was a family of different models, that shared the instruction set, and differed in size, price, and capabilities. the 
+			  strategy of releasing new computers in families like that became sth like an industry standard for the manufacturers.
+			- thanks to the same instruction set, the models were one-way compatible: you could run the programs written for smaller models
+			  on larger ones, but when trying to do it the other way around, you could encounter some problems due to the programs written
+			  for the larger models wouldnt fit into the memory of the smaller ones.
+			- they were compatible with two previous IBM's models: the smaller models could emulate the 1401 (commercial usage, input/
+			  output processor, computed with the serial decimal arithmetics on variable-length words in memory), and the larger ones
+			  could emulate the 7094 (scientific usage, number cruncher, performed parallel binary arithmetic on 36-bit registers). they
+			  could emulate them because they had a microprogram for that computer stored in them, and they had a microprogram for their
+			  native instruction set as well). System/360 computers were the first ones that could emulate (simulate) other computers.
+			- multiprogramming - they could store several programs at once in memory, and then one program freezes, waiting for an i/o 
+			  operation to complete, other programs could be executed in the meantime.
+			  
+		> on the minicomputer side: PDP-11 series by DEC
+		
+	~ Very Large Scale Integration. Fourth generation ~
+	millinos of transistors on one chip, small and cheap enough for individuals to buy. IBM PC (1981) run on MS-DOS. Apple Lisa - first GUI, 
+	Macintosh - more successful, followed Lisa. at some point hit the ceiling in optimization of processors, until multiple-core architectures
+	were introduced in early oughts.
+	
+	~ Low-power and Invisible Computers ~
+	smartphones, imbedded into appliances computers, ubiquitous computing
+	
+	
+1.3 THE COMPUTER ZOO
+	
+	Technological and Economic Forces that drive the expanding variety of digital devices with computers in them:
+		
+		> growing quantity of available transistors. 
+		  new scientific abilities to shrink transistors allow for their greater amount on a single chip; which means larger memories and 
+		  faster CPUs. according to the Moore's Law, the amount of transistors that is posiible to fit into one chip doubles once in 18 months.
+		  it can't go on forever though: there is a limit to how small transistors can be, when they reach the size of an atom, they won't be
+		  able to be stable. one of the ideas of how to keep the progress going is to move to the subatomic realm of quantum phisics to 
+		  exponentially enlarge the computational power available. 
+
+		> economic virtous circle.
+		  tech advances -> better and cheaper products -> larger market -> more applications -> more companies -> stronger competition -> 
+		  demand for new tech advnaces.
+		  
+		> larger software.
+		  according to the Nathan's (executive at MS) first law of software, that states: software is a gas, it expands to fill the container
+		  holding it. programs become larger and demand new space.
+		  
+	Computer families:
+	
+		~ disposable computers ~
+		  very small chip that controls one specific function, e.g. play the music in a gift card. 
+		  RFID (radio frequency identification) chips contain a unique 128-bit number, and the ability to response to a radio signal with that 
+		  number. larger ones can have storage to track such things as cash, or bank account (credit cards)
+		  
+		~ microcontrollers ~
+		  computers embedded into something that is not a computer, for the purposes of managing the device and handle the user interface.
+		  appliances, phones, computer peripherals, cameras, medical devices, weapon systems, atm, toys - basically, any device that works
+		  on electricity by now has a microcontroller on it.
+		  while RFID chips are minimal structures, microcontrollesrs are complete computers: they have processor, memory, and I/O capability.
+		  I/O is usually sensing pressed buttons and switches on the device, and controlling light, display, sound etc of devices. the software 
+		  for microcontrollers comes in form of a chip with a read-only memory (ROM), it's produced when the microcontroller is manufactured.
+		  the production volume of microcontrollers exceeds that of normal comptuers by orders of magnitude. they can be cheap - some 10 cents.
+		  can be two types: 
+		  	- general purpose: classic architecture and instruction set
+		  	- special purpose: modified architecture and instruction set, tuned to some specific application (e.g. multipmedia)
+		  microcontrollers also can vary in their data transoport capabilities, there are 4-bit, 8-bit, 16-bit, and 32-bit systems (2010ish).
+		  manufactoring costs greatly insluences the architectural choices, because microcontrollers are much more cost-sensitive than normal
+		  computers (every cent in prices matters, since they're so cheap) 
+		  another thing that impacts the architecture of microcontrollers is the fact that they must operate in real time: an interaction from
+		  the user (or from the environment) must produce an instant response.
+		  
+		  ~ mobile and game computers ~
+		  low-end PC devices basically, though some technologies can be ahead of those in the PC market (e.g. Synergistic Processing Elements
+		  (SPE) were wider (128bit) in PlayStation 3 than those of PC. the main difference is that they are closed systems, i.e. you can't 
+		  extend their capabilities; and also they are carefully optimized for a very special domain of applications, their apps are highly
+		  interactive, with 3D graphics and multimedia output, everything else is secondary. because of those restrictions, game consoles may
+		  be sold at cheaper price than PCs.
+		  in mobile devices the crucial part is effective use of energy: it has to be frugal, but still provide for high-performance operations
+		  
+		  ~ personal computers ~
+		  desktop, laptop, tablet. 
+		  elaborate operating systems, many expansion options, a lot of available software.
+		  
+		  ~ servers ~ 
+		  buffed up PCs, faster, bigger, with improved network capabilites, run basically the same operating systems (something Windows or 
+		  UNIX-based). combined in clusters - a number of servers connectied into GB/sec networks and running special software that allows 
+		  multiple machines to work together on a single problem.
+		  large cluster are housed in special-purpose rooms and buildings called 'data centers'
+		  cloud computing is a paradigm that repeats the early days of computing where computation and storage were performed by a mainframe 
+		  computer, that received inputs from remote terminals. now the mainframe will be a data-center and the termainals - all the individual 
+		  devices. thus the system is centralized once again.
+		  
+		  ~ mainframes ~
+		  room-size computers, computationally don't have advantage over data centers, but have their perks: more I/O capacity, disc farms.
+		  also kept for legacy reasons: the very old software that is still in use, was written for old mainframes.
+		  can serve as powerful internet servers, e.g. by handling e-commerce transactions in businesses with huge databases.
+
+1.4 EXAMPLE COMPUTER FAMILIES
+
+	this book will center on three famalies of Instruction Set Architecture:
+	
+		> x86
+		  found in nearly all PCs and server systems.
+		  initially designed by Intel, the authors of the first general-purpose CPU on a single chip (4004, for Japanese electronic 
+		  calculators). and they built on top of that, 8086 - the first 16-bit CPU on a chip, and perhaps the one that gave the family its 
+		  name. all the subsequent are backward compatible with the 8086, which is good for supporting the legacy software: a program written
+		  for 8086 will run on the latest Core; the price to pay for it is that you can't build modern efficient system with such a bagage of
+		  old techonology and mistakes, i.e. if you give an engineer some billions of transistors and say to him to build a fresh new CPU, it 
+		  will be more efficient when an Intel CPU with the same amount of transistors.
+		  apart from new transistors, other ways to upgrade CPUs: 
+		  	- memory organization, most notably the introduction of cache memory in 1989 (80486), which allow to store the most used 
+		  	  memory words in a register close to the CPU, and avoid longer fetching from RAM.
+		  	- extending the instruction set with specialized commands, e.g. MMX (MultiMedia eXtension): speeds up computations required
+		  	  to process audio and video
+		  	- increasing the clock speed, though by early oughts the industry stambled upon an interesting threshold: the power consumed
+		  	  and the heat dissipated is proportional to the square of the voltage, and running at higher speed increases voltage. at
+		  	  3.6GHz, Pentium 4 consumes 115 watts of power, meaning it gets hotter than a 100-watt light bulp. So due to problems with 
+		  	  dissipating the heat, they don't manufacture CPU with the clock speed above 4GHz.
+		  	- multiple cores: smaller transistors allowed to put several CPUs on one chip, adding multiple layers of cache memory, third
+		  	  level is shared btn all the cores. two CPUs on one chip consume far less power than one CPU running double speed.
+
+		> ARM
+		  originated by Acorn Computer, in the 1980s, when the company tried to design a computer to compete with IBM PC and its 16-bit 8086.
+		  they took inspiration from the Berkley's RISC project (they managed to build a very fast processor, as i understand, on a 
+		  minimalistic instruction set), hence - Acorn RISC Machine (ARM), and later - Advanced RISC Machine (after they split form Acorn)
+		  the destinctive feature of this architecture is the priority of speed and low power consumption, which made it a go-to for the
+		  mobile and tablet insdustries.
+		  
+		> AVR
+		  used in low-end embedded systems. Alf and Vegard's Risc processor. has three types of memory as its peripherals:
+		  	- Flash: nonvolatile (data stays when off), contains program code and data, programable using an external interface and high
+		  	  voltages 
+		  	- EEPROM: nonvolatile, can be changed by the program during its run, contains e.g. user configurations (preferences)
+		  	- RAM: volatile, contains program variables while it runs
+		  small inexpensive package with small numer of pins
+
+
+1.5 METRIC UNITS
+
+	while talkin about bits, we should separate the usage of bits in context of measuring memory or something that's stored in memory - those can
+	be only powers of two, e.g. 1 MB of memory contains 2^20 (1,048,576) bytes, not 10^6 (1,000,000) bytes.
+	but then we use bits in context of data transportation, we use the powers of ten, e.g. a 1Mbps LAN runs at 1,000,000 bit/sec
+
+1.6 OUTLINE OF THIS BOOK
+
+	the book's primal concern are concepts, not implementation details. examples are simplified to emphasize the central principals.
+	to illustrate how those principles are implemented in practice, we'll use x86, ARM, and AVR architectures as running examples.
+
+
+
+
+---------------------------------------------------------------------------
+COMPUTER SYSTEMS
+---------------------------------------------------------------------------
+
+	A digital computer consists of an interconnected system of processors, memories, and input/output devices. This chapter is an introduction to 
+	these components and their interconnections. These are the key concepts and they're present at each level.
+
+
+2.1 PROCESSORS
+
+	the function of CPU is to execute programs stored in memory by fetching their instructions, examining, and executing them one by one. the 
+	components are connected by bus, which is a collection of parallel wires that transmits addresses, data, and contol signals. buses can
+	be external to CPU, connecting it to memory and i/o devices, or internal.
+	CPU consists of: 
+	
+		- Control unit - responsible for fetching instructions and determining their type
+		- Arithmetic Logical Unit - performs operations needed to carry out the instructions (e.g. addition, AND, etc.) 
+		- a collection of registers, high-speed memories to store temporary results and control information. usually, all the registers have
+		  the same size. each register can hold one number, up to some max, determined by its size.
+		  
+	the most important registers:
+	
+		> Program Counter (PC) - points to the next instruction to fetch
+		> Instruction Register (IR) - holds the current instruction being executed
+		
+	other registers can be of general purpose, or a special one, some are used by the operating system to control the computer
+	
+	2.1.1 CPU Organization
+	
+		the part of CPU involved in the execution of an instruction is called the 'data path', it consists of:
+			-> registers as a source of data
+			-> ALU's input registers - usually two
+			-> ALU - performs a simple operation
+			-> output register - stores the result of the op
+			-> then the result gets stored back to a common register
+		all the components are connected by an internal bus.
+		this cycle is called the 'data path cycle'.
+			*there are other possible designs that don't include input and output registers.
+		
+		most instructions can be devided into:
+			~ register-memory - fetch memory words into registers and the other way around
+				* 'word' - unit of memory moved btn RAM and registers (sth like 'packet' in networking?)
+			~ register-register - fetch operands from registers to ALU, store the result back to a register.
+			
+	2.1.2 Instruction Execution
+	
+		the CPU executes each instruction in a series of steps:
+			1. fetch the next instruction from memory into the IR
+			2. change the program counter to point to the following instruction
+			3. determine the type of instruction
+			4. if instruction uses a word in memory, determine where it is
+			5. fetch the word, if needed, into a CPU register
+			6. execute the instruction
+			7. go to step one to begin executing the following instruction
+		this sequence of steps is referred to as the 'fetch-decode-execute' cycle
+		
+		you could write a program that emulates the FDE cycle, with variables for PC, accumulator, IR, instruction type (i.e. opcode), 
+		MDR, the operand itself, etc.
+		the fact that it's possible, tells you that a program doesn't need to be executed by the hardware of the machine; it can be executed
+		by another program. that another program that fetches, decodes, and executes the instruction of anohter program, is called an
+		'interpreter'
+		
+		the equivalence btn hardware and interpreter has a great impact on computer organization and the design of computer systems. the 
+		designers have a choice, after settling on a certain machine language (L): do they execute the L's instructions directly by hardware,
+		or feed those instructions to an interpreter and let it communicate with the hardware? complex instructions, executed directly, require
+		complex and expensive hardware, but they are executed faster. interpreters can strip the complexity from the hardware, also they 
+		provide for compatibility btn systems (first realized by IBM in their system/360 series, where architecture was the same, but models
+		differed in implementation of it: e.g. the most expensive models had the direct execution, lower - interpreted). and since the industry
+		moved to more and more complex instructions, with different options and ways to specify operands; and to more affordable machines - the 
+		interpreted systems got an upper hand.
+		the existence of fast read-only memories ('control stores') also favored the interpretation, those chips stored the interpreters, and 
+		allowed for a much faster execution, reduced the overhead of interpretation. at the time the connection to a control store was much
+		faster than the connection to the main memory.
+		
+	2.1.3 RISC vs. CISC
+	
+		by the late 1970s the interprated machines with large instruction sets with complex instructions that perform multiple operations in a 
+		single instruction dominated the market. this approach to processor design is called CISC (Complex Instruction Set Computer).
+		then, in the early 1980s, machines with different approach were designed: the idea was to improve performance by using a reduced 
+		instruction set with simple instructions that don't require an interpreter. this one is called RISC (Reduced Instruction Set Computer)
+		
+		to perform the same operation, it will take a RISC larger amount of instructions than a CISC, but the execution of each simple 
+		instruction will take that much fewer time, that the op on RISC will go faster than on CISC. The insight that led the desingers of 
+		RISC was that a good performance is defined by how many instructions you can initiate (issue) per sec, how long the instruction takes
+		to actually execute matters less.
+		also, the main memory speed has caught up with the control store speed by that time, which favoured the RISC.
+		
+		the RISC didn't come to dominate the market though, the main reason being the compatibility issues, mainly within the Intel's x86
+		architecture, that started as CISC. the ARM architecure didn't have those issues since it was born in 1980s, so almost all mobile
+		devices are RISCs. and larger machines (PC, servers) have come to use a hybrid of RISC and CISC: smaller and most common instructions
+		are executed by hardware, and more complex instructions pass through the interpreter.
+		
+	2.1.4 Design Principles for Modern Computers
+	
+		those principles aren't rules, and can be compromised in certain cases, but most designers strive to use those:
+		
+			> all instructions are directly executed by hardware: the interpretation by microninstructions is allowed only for less 
+			  common, complex instructions. all the other ones should avoid the interpretation.
+			> maximize the rate at which instruction are issued: suggests that parallelism imroves performance, i.e. multiple instructions
+			  are executed at the same time. this complicates the execution flow, some instructions can be executed only when a previous 
+			  instruction is finished, which requires a lot of bookkeeping. but generally the benefits of the parallelism outweight those
+			  complications.
+			  	* MIPS - Millions of Instructions Per Second, 500-MIPS processor issues 500 mil instructions/sec (issues, not executes)
+			> instructions should be easy to decode: the main thing that puts a limit on the rate of instruction issue is the decoding 
+			  time (determine what resources the instruction needs). strategies to reduce the decoding time include making all the 
+			  instructions of the same format, i.e. fixed length, small number of fields.
+			> only loads and stores should reference memory: apart from LDA and STA, all the instructions should be of the 
+			  register-register type
+			> provide plenty of register: minimum 32. when you run out of registers, some of them should be emptied by moving the words
+			  they contain back to the memory, and then fetching them back then they are needed. to avoid this the CPU should be packed 
+			  with registers, once a word is fetched, it should remain in CPU until it's positively not needed.
+			  
+	2.1.5 Instruction-Level Parallelism
+	
+		in the search for a higher performance, designers deploy parallelism (doing multiple things at the same time). it comes in two forms:
+		instruction-level parallelism (gets more instruction/sec out of the machine) and processor-level parallelism (multiple processors 
+		work on the same problem). here we look at the former.
+		
+		~ pipelining ~
+		
+			a major bottleneck in instruction execution speed is the actual fetching of instructions. first attempt to improve it dates 
+			back to 1959, when the 'prefetch buffer' was introduced: a set of registers that could store next instructions, so when the
+			CPU actually calls for their fetch, the delivery time is reduced. in essence, this method devides the execution in two 
+			steps: fetching and actual execution, - pipelining takes this concept much further.
+			
+			instruction execution is devided into multiple stages (often dozen and more), each stage has a dedicated to it piece of 
+			hardware, and all of them can be run in parallel. 
+			e.g. one stage might be responsible for fetching from RAM, another - for decoding, another - for locating and fetching 
+			opearands, another - for running operands through the data path, another - for storing the result, etc.
+			now, the stages for one instruction happen sequentially; however, while the stage 2 decodes the first instruction, the stage
+			1 can fetch another instruction during the same clock cycle, and at the same time the stage 3 locates operands for some other
+			instruction. and let's say we have 5 stages, meaning we can perform 5 different operations on 5 different instructions in the
+			span of 1 clock cycle. suppose a clock cycle is 2 nsec, hence a complete instruction execution will take 10 nsec (5 stages):
+			so if we counted just executions, we could say that the machine runs at 100 MIPS, but since thanks to the pipelining we can
+			opearate on 5 instructions simultaneously, and one instruction completes every clock cycle, it's actually 500 MIPS (MIPS 
+			measure the processor's bandwidth).
+			
+			to find the bandwidth of a processor on the scale of nanoseconds we need to devide 10^9 by T (one clock cycle) so we get IPS,
+			and to convert it to MIPS, we devide the result by 10^6.
+			
+		~ superscalar architectures ~
+		
+			it's possible to have two pipelines (e.g. first Pentium did), where stage 1 fetches instructions in pairs, and puts each one
+			in a separate pipeline, each with it's own ALU. those two instructions must not compete for the same resources (e.g. registers)
+			and be independent of each other's result.
+			
+			more modern approach to speeding up the pipeline is to have only one, but have multiple functional units for the data path
+			stage. usually this stage lasts longer than 1 clock cycle, and the instructins are issued at higher (4 or 6 per cycle) rate 
+			than they're executed. this approach is called 'superscalar architecture'.
+			
+	2.1.6 Processor-Level Parallelism
+	
+		pipelining and superscalar operation rarely win in performance more than a factor of 5 or 10. to get the gains of 50, 100, or more, we
+		design computers with multiple functional units and CPUs
+		
+		~ data parallel computers ~
+		
+			a lot of problems in computational domains (such as physical sciences, engineering, graphics processing) require same 
+			operations to be performed on a set of different data (e.g. when processing an image, you perform a same op on each pixel).
+			those operations are great candidates for speeding up through parallelism. 
+			data parallel computers are specifically designed to perform those kind of ops on large sets of data simultaneously. there are
+			two approaches:
+			
+				> SIMD - Single Instruction Multiple Data - can be implemented with a multiple CPU architecture, but mostly refers to
+				  	 a single processor, that fetches a SIMD instruction and sends it to multiple execution units (ALU, floating
+				  	 point arithmetic unit, etc.); and those execution units, reference different sets of data, execute the 
+				  	 instruction each on different data simultaneously.
+				  	 
+				> vector processors - all the ops are performed in a single, heavily pipelined functional unit, using vector registers,
+						      which are a collection of normal registers, can store multiple values
+						      
+			data parallel computers make use of only one control unit shared between the multiple functional units: we don't talk here 
+			about multiple processors.
+						      
+		~ multiprocessors ~
+		
+			multiple CPUs, share the same memory. since each CPU can read/write any address in the memory, they must coordinate with
+			each other well not to cause conflicts. so they have to interact closely, thus they're said to be tightly coupled.
+			the most basic implementation of multiprocessors is all of them and the memory are connected by a single bus. one solution
+			to the conflicts that inevitablly will emerge in this situation	is to provide each CPU a separate local memory that's not 
+			accessible to others, that can be used for the program code and operational data. those local memories are connected to their
+			CPU by a separate bus, which lightens the main bus' burden significantly.
+			having a shared memory is also an advantage - it allows the CPUs to work on a common problem.
+			
+		~ multicomputers ~
+		
+			computers with a large amount of CPUs (more then 256) are difficult to build because of all the connections to the main
+			memory. to increase the CPU count, the computational power of the system, we connect together multiple machines that don't
+			share a common memory. instead, they communicate with each other by sending packets.
+			it's impractical to connect each computer to every other computer in a large system, so different topologies, such as 
+			2D and 3D grids, trees, and rings are used.
+			the CPUs in such a system are said to be loosely coupled.
+			
+			multiprocessors are easier to program, and multicomputers are easier to build, so there are hybrids as well (illusion of a 
+			shared memory).
+		
+
+2.2 PRIMARY MEMORY
+
+	2.2.1 Bits
+	
+		the basic unit of memory, a binary digit.
+		why do we store digital information in binary code?
+		the data is stored by distinguishing between different values of some continuous physical quantity (e.g. voltage or current). the 
+		higher variaty of possible values, the less separation there is between individual values, the more unreliable the distinguishing is.
+		so by using the set of only two possible values (0 and 1) we perform the most reliable encoding of digital data.
+		
+		it's possible to perform decimal arithmetics, but the decimal numbers must be represented by a 4-bit binary value (Binary Coded 
+		Decimal, BCD). so a 16-bit register can store 10K variations of such decimals, whereas in binary data, the same register can store
+		65,536 variations of numbers.
+		thus, using binary is also efficient. (though if there was a way to reliably store data in decimals, it would be more efficient to 
+		store data in decimals)
+		
+	2.2.2 Memory Addresses
+	
+		memory consists of cells, each of which contains some information. all cells inside one machine contain the same amount of bits.
+		a cell of k bits can host 2^k bit combinations. each cell has it's own address, by which programs refer to it. if a memory has n cells,
+		the addresses will be in the range from 0 to n-1. memory addresses are binary numbers as well (in computers that use the binary number 
+		system). if an address has m bits, the maximum of addressable cells (of any size) is 2^m.
+		pretty much all the manufactorers acepted 8 bit cells (bytes). bytes are grouped together into words. a word is important because the 
+		majority of instructions operate on one single word (e.g. ADD two words), thus, a 64-bit machine will have an 8-byte word, 64-bit
+		registers, and instructions designed to manipulate 64-bit words, travelling by the bus with 64 lines.
+		
+	2.2.3 Byte Ordering
+	
+		there are two approaches of how to order the bytes inside a word (we use a 32-bit word as an example):
+			- big endian - from left to right: |0|1|2|3| - used by IBM mainframes
+			- little endian - from right to left: |3|2|1|0| - used by Intel
+		in both systems a 32-bit integer of, say, 6, is represented by the binary digits 110, that go to the rightmost part of the word, i.e.
+		in the byte 3 on a big endian device, and in the byte 0 on a little endian device; followed by 29 zeros on the left.
+		characters in a string, though, will follow the numerical order of the bytes in a word:
+			> in big endian: |J|I|M| |
+			> in little endian: | |M|I|J|
+		the problem is transmitting data from one type of device to another through network: with strings it works fine - the computer starts
+		reading with the byte 0 in both cases. with integers it's more difficult: e.g. in a transmittion from big to little endian the number
+		will go to the leftmost part of the word and will be interpreted as an incorrect value; the solution to this particular problem is to
+		swap bytes on the receive end. but if the data contains integers and strings, the swapping will scramble the string characters.
+		there is no easy solutions to this.
+		
+	2.2.4 Error-Correcting Codes
+	
+		memories occasionally make errors due to voltage spikes, cosmic rays, or other causes. to guard against those error, memories implement
+		error-correcting codes, which are additional bits to a word arranged in a special manner that allows computers to detect if there was
+		an error in the word, and where in the word the error has occurred. those extra-bits (parity bits) can point to the corrupted bit, and 
+		the machine will flip that bit. generally speaking.
+		there are different correction error techniques, such as Hamming codes, Reed-Solomon codes, and others.
+		
+	2.2.5 Cache Memory
+	
+		advancement in technology affects CPUs and memories in a different way: CPUs get faster, memories get larger (capacity-wise), which
+		begets a problem: processors request words from memory at a higher rate than the words can actually arrive from the memory.
+		the solution to the problem is to have a small but fast memory, close to processor, called cache (from french for 'hidden'). the way 
+		words arrive at that memory is based on the notion that if a program need a word at certain address, chances are the next words it
+		gonna need will be situated at the adjacent addresses. so the requested word arrives at the cache along with its neigbours, that group
+		of words is refered to as 'cache line'.
+		concerning the design of cache there are 5 issues:
+			- the size: the bigger it is, the slower it is accessed (also more expensive)
+			- the size of cache line
+			- the organization of cache: how it keeps track of which words are currently being held
+			- separation btn instructions and data: 'unified' cache keeps them together, 'split' cache (aka Harvard architecture) - 
+			  instruction fetch and operands loading can be performed in parallel, plus the instruction cache can be read-only, since 
+			  instructions don't get modified during the run of the program
+			- number of caches
+			
+	2.2.6 Memory Packaging and Types
+		
+		
+
+
+2.3 SECONDARY MEMORY
+
+
+
+2.4 INPUT/OUTPUT
+
+
+
+2.5 SUMMARY
+
+
+
+
+
+----------------------------------------------------------------------------
+THE DIGITAL LOGIC LEVEL
+----------------------------------------------------------------------------
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+THE MICROARCHITECTURE LEVEL
+-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+----------------------------------------------------------------------------
+THE INSTRUCTION SET
+----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+THE OPERATING SYSTEM
+-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+------------------------------------------------------------------------------
+THE ASSEMBLY LANGUAGE LEVEL
+------------------------------------------------------------------------------
+
+
+
+
+
+-------------------------------------------------------------------------------
+PARALLEL COMPUTER ARCHITECTURES
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

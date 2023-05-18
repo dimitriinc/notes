@@ -1,0 +1,136 @@
+BRANCHES
+
+a branch is a project within a project, where you can work on changes to the project in isolation from the main version of the project.
+each branch is a sequence of commits, the last commit on a branch is called the 'head'
+the main branch is called 'master' by default
+when you want to make some changes, but don't want to publish it yet on the master branch, you create a working branch, or 'topic' branch
+you do it with the 'branch' command, and the name of the new branch as its argument
+
+	git branch new-branch
+	
+the new branch will be created with the Head of the current branch as its starting point; this head commit has reference to the whole sequence of all the commits on the master branch prior to it, so the new branch has all the commits of the project.
+
+to start working on the new branch, we check it out
+
+	git checkout new-branch
+	
+when we check out a branch, the working directory is updated according to the state of the branch.
+
+the way you use branching can vary and depend on the goals and architecture of the project. as an example, in web development its common to keep the master branch as the code base that gets deployed on the server, and topic branches are used for experimental features, bug fixing etc.
+the branches grow independent of each other, their shared history though, is immutable.
+
+when a topic branch is ready to be deployed, you merge it with the master. for that you first checkout the master, and then rund the merge command
+
+	git merge new-branch
+	
+depending on the history of commits, Git has different merge strategies:
+
+	> the master hasn't changed, it's head commit is the common anscestor of the two branches - fast-forward merge: the master's pointer is moved 
+	  to the head of the topic branch
+	  
+	> both branches have commits on top of the common anscestor but they don't contradict each other - Git looks at the common anscestor and uses 
+	  it as a reference point to track all the changes, if no conflicts a new 'merge commit' that has two (or more, in case of merging several 
+	  branches at once) parent commits.
+	  
+	> in the presence of conflicts, the solution will be a merge commit, just like with the true commit, but Git will not do it automatically, it
+	  will point to the conflicts and ask us to resolve it by hand, previously though, it will stage the changes free of conflict for us.
+	  
+'git branch' will show us a list of the project's branches
+	  
+	  
+REMOTES
+
+remote is a repo outside of your computer. server-side repos are 'bare' repos, i.e. they don't contain a working copy, nor a staging area, only the actual repo data (old versions, branches). such kind of directories ('bare' ones) are suffixed with a '.git', mirroring the '.git' hidden directory in a local repo. a remote will have its own set of branches, decoupled from the branches on your local machine. that's why when pushing your commits to a repo, you are asked to provide not only the repo's name, but also a branch's name:
+
+	git push [reponame] [local_branchname]
+	
+a remote is defined by it's url, but for the convenience purposes we give a name to a repo, and it will reference the actual url:
+
+	git remote add [remotename] [remoteurl]
+	
+the remote commands are namespaced, i.e. they are two word commands, the first of which is always the namespace, 'remote' and the second is command itself, e.g. 'remote add' or 'remote rm'.
+the 'git remote' command will show us a list of remotes of the project.
+
+when you clone a repo from some remote destinations, this remote will be automatically assigned to the new local repo under the conventional name 'origin'.
+
+Git supports three protocols to exchange data btn remotes and local repos:
+
+	- Git's protocol - not much in use, read-only
+	- SSH - secure shell - connects only to private remotes, authentication happens with public-private key pairs
+	- HTTPS - most popular one, authentication with username and password, you can make reads public, but restrict who can write.
+	
+keeping the branches names on a remote the same as in a local repo isn't required, but by convention they are. so when you run:
+
+	git push [remote] [branch]
+	
+if the remote doesn't have a branch of that name, it will be created automatically.
+
+push and pull opeartions involve not only copying the commits from one repo to another, but also merging. then pulling, e.g., git creates a buffer branch called FETCH_HEAD, where it stores the fetched from the remote commits, before merging them into our local branch.
+the way to resolve merge conflicts is the same as with local merge conflicts. don't forget to commit after resolving.
+
+sometimes the 'push' command can be rejected. this will happen if the merge on the server side requires sth other than usual fast-forward, i.e. there is a conflict. to solve this, you pull before pushing.
+
+you can tell a local branch to 'track' it's counterpart on a remote, so you don't have to specify the remote and the branch each time you push or pull.
+the best way to do it is by adding a '--set-upstream' option (aka '-u') to the push command. and the branch will be forever tracking the specified branch on the specified remote:
+
+	git push -u origin master
+	
+while the pull command delivers a specified branch and merges it with the local one, the 'fetch' command copies all the branches of the remote, and stores them locally as read-only branches with this naming convention: [remote]/[branch]. it leaves you the job of merging those branches.
+
+to pull use: 
+
+	git pull [remote_name] [remote_branch_name]
+
+
+HISTORY
+
+'git log' shows a list of commits on the current branch, starting with the head, and going back through the chain of parents.
+you specify the branch by adding it's name as an argument:
+
+	git log new-homepage
+	
+you adjust the format of the log, the range of commits; you can filter commits by author or by date, or by a word contained in message. you can do all that with various options of the 'log' command.
+
+the IDs of commits is a product of a hash function, that receives the content of the commit (author, date, message, snapshot of the project) and produces a 40-digit checksum. shorter versions of the same ID can be used as well (standard is the first 7 digits of the original ID)
+
+on commit messages: think of them as a newsfeed (only headlines) of the project, they should explain what changed and why the change was made in concise fashion. there is no limit on how long a msg can be, so it's ok to provide some context, but do it after you separate the first line, since that's what will be displayed in a log entry: the first line still should be like a headline that tells you the reason for the commit.
+
+instead of providing messages in inline fashion with the --message (-m) option, you can use your text editor program of choice to do it: you ommit the -m option and when you run the commit command, the editor will open, and when you close it, git will commit with what your wrote as a msg. first you need to modify the config to tell git what editor to use:
+
+	git config --global core.editor "atom --wait"
+	
+the thing that goes in quotes is the command with which your editor runs, so you provide the command, not the name, to the git config.
+
+you can compare different versions of a project with 'git diff'
+
+	git diff HEAD~4
+	
+this will display what was added and what was removed between the present state (indicated with the HEAD pointer) and the state 4 commits ago.
+
+you can jump to old commits with 
+	
+	git checkout [commit_id]
+	
+your'are not really supposed to commit anything at this stage, you're in a 'detached HEAD state', you aren't on any branch, any commits you make will be accessable only by their IDs.
+you can branch from a specific commit though (if i understand it correctly) by:
+
+	git branch [new_branch_name] [commit_id]
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+

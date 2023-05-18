@@ -1,0 +1,38 @@
+PART I.
+
+	> by default <span> is an inline element (i.e. the width w/o content is 0)
+
+	> how to make Emmet to insert a line break when you multiply the elements:
+	
+	  	- open the settings.json file of the vs code
+	  		F1 -> settings.json user
+	  		
+	  	- add:
+	  	
+	  	 "emmet.preferences": {
+	  		"output.inlineBreak": 1
+	  	  }
+	  		
+	> CTA button - Call To Action - a promt, most commonly in a form of a bright button; a marketing device to indicate to the user some desired
+	  action, e.g. sign up, buy now.
+	  
+	> you cannot transition the background property, instead utilize the 'opacity' to show sth on hover
+	
+	
+PART III.
+
+	> user overflow: hidden to prohibit scrolling when you expand the overlay mobile nav menu
+	
+PART IV. 
+
+	> to center a element inside its parent element: set parent's position to relative, child's to absolute.
+		to center it horizontally, set left and right to 0, margin to 'auto'
+		to cetner it vertically, set top to 50% (usually a bit less, it will put the top border to the named percentage)
+		
+	> 'flex' shorthand property, the first value is growth (1 or 0), 1 allows the item to grow to occupy the available space
+	  second one is 'shrink', third, 'basis', in % tells how much of the space the item is allowed to occupy (e.g. 50% tells the 
+	  item should occupe half of the available space)
+	  
+	> you can't apply margins to inline elements
+	  
+	> when an element is displayed as 'block', it will take all the horizontal space, when 'inline-block', it will take the width of the content

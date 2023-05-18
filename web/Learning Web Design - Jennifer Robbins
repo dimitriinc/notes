@@ -1,0 +1,239 @@
+----------------------------------------------------
+WEB IMAGES
+----------------------------------------------------
+
+
+XXIII. WEB IMAGE BASICS
+
+
+== meet the formats ==
+
+	> PNG
+	
+		PNG-8 - good for images with flat colors and sharp edges, like logos, icons, line art, etc. 
+			fotos and textures will not be saved efficiently in this format
+			two key characteristics: 
+			
+				~ uses indexed color model: image has its color table, or pallet, consisting of 256 colors max (2^8), each
+				  pixel contains a numeric value (index) that references a color from the table, so each pixel contains an 8-bit
+				  information, hence PNG-8
+				  source images start in RGB color and when sotred in PNG-8, their colors are reduced to a 256 map, this process of
+				  conversion is called 'quantization'
+				~ transperence - uses binary transperency, i.e. it's either fully transperent or fully opaque. however, different 
+				  grades of transperency can be stored as values in the color table
+				  
+		PNG-24 - uses the Truecolor (aka RGB), thus, like JPEG, good for photos. has 3 channels of 8-bit information about each color
+			 key characteristics:
+			 
+			 	~ lossless compresion, meaning the information doesn't get tossed  when compressed, which comes at a size cost:
+			 	  the lossless compresion creates files of bigger size than the lossy compresion, - for that reason for photos in 
+			 	  web it's better to use JPEG
+				~ alpha transperency - adds a fourth channel (aka alpha channel) that contains an 8-bit info about the level of 
+				  transperency. PNG-24 with alpha channel can be referred to as PNG-32, and obviously has greater weigth
+				  
+	> GIF - the first format ever supported by the Web, now mostly used for animations, for other purposes PNG serves better.
+	
+		~ animations - one file contains multiple frames and instructions about the images and how to play them
+		~ other characteristics - 8-bit indexed color, binary transperency, interlacing (progressive display), lossless compression (images
+		  with areas of flat color, i.e. when the same color is used for neigbouring pixels, get compressed better: the strings of same 
+		  indexes get replaced by one data description at compression)
+		  
+	> WebP - the format that combines all the best features of the priovous ones and has smaller size, with better software support might
+		 replace them all.
+		 	- can be compressed with lossless or lossy schemes
+		 	- alpha transperency that can work with lossy compression (PNG-24 cannot), that result in much smaller img sizes
+		 	- supports animation
+		 	- stores metada
+		 	- can embed color profile (ICC) information
+		 	
+		 	
+== image size and resolution ==
+
+	> image resolution - defines how many information an inch of an image contains, the unit of measure for digital img is ppi (pixel per inch),
+			     for printed img it's dpi (dots per inch), which is the number of ink dots per one inch of paper; both units are often
+			     used interchangably, albeit incorrectly. on web though, inches are irrelevant, and the way an img is shown depends on 
+			     the resolution of the monitor; that said, it's recommended to maintain the img resolution (when you create an img in 
+			     a bitmapped image editor) at 72ppi, that keeps images roughly at the same size they appear on a monitor. you can use
+			     different ppi, the consistency is the key, so the images don't get resized  when used in different files.
+			     
+			     		~ 1800 x 1245 - it's screen dimensions, not its resolution. resolution is a measure of pixel density
+			     		
+	> screen resolution - apple introduced Retina screens in 2010, those were the first high-density screens. to account for them, we use 
+			      reference pixels, which is an abstraction over the real pixel grid; its purpose is to display the same image with the
+			      same size on different screens, just with different resolution. as i understand it, when we define values in px in CSS
+			      we use those reference pixels, not the real ones. Apple calls its reference pixels points (PT), Android - 
+			      device-independent pixels (DPI / DP)
+			      
+== image asset strategy ==
+
+some general rules to follow:
+
+	- keep files sizes as small as possible (aka image optimization)
+	- minimize the amount of HTTP requests
+	- don't download more image data than needed
+	- deliver high-quality images to high-density displays
+	
+	- if possible create graphics with css, saving the overload of downloading it from server
+		effects like rounded corners and gradients are better performed with css	
+		also, some simple shapes can be created with css
+		
+	- next, prefer svg to bitmap when possible
+		small file size and resoution independence
+		plus, making it inline saves an HTTP request
+		
+	- settling on bitmap, try to make it responsive by creating a server-side automation system
+		choose the format wisely: flat colors - PNG-8, photos - JPEG, for the supporting browsers - provide WebP using <picture>
+		does the layout need responsive images:
+			no > largely textual layouts with small illustrations
+			yes > load pictures based on device characteristics
+				~ if the layout is image heavy, providing all the versions of imgs can be cumbersome, there are image resizing 
+				  and autmatization services open source and for fee (check out bookmarks on mozilla)
+				 
+				 
+== favicons ==
+
+those are small icons you can see to the left of the title in the browser tab and in the bookmarks list
+they should be of ICO format and placed at the root directory with the file name 'faveicon.ico', and the browser will know what to do with it.
+the file itself should be 16x16 and contain a 32x32 version for high-density screens (the ico can contain multiple images in one file, create the icon in PNG and convert it to ICO with an online converter)
+if you want to provide additional files, for other possible configurations, you can attach the files with the <link>
+or you can use an online service for the whole ico creation process - e.g. favicomatic.com
+
+
+
+XXIV. IMAGE ASSET PRODUCTION
+
+== saving images in web formats ==
+
+in photoshop 'save as' provides more functionality, like making JPEG progressive etc., but the cost is weaker compression: the size of the file can
+be up to 10x bigger than with 'export as'
+
+in Gimp, the files under work are in the native XCF format. to save in diffrent format, add the appropriate extension to the file name, when you press 'export', you are presented with some options according to the chosen format.
+
+regardless of the final format, you should always edit in RGB color space (image -> mode)
+
+== working with transparency ==
+
+	> binary transparency reserves a slot in a color map for a transparent value
+		anti-aliasing - slight blur applied to rounded edges to make the transition btn colors smoother
+	  with binary transparency there is a problem of halos when around the edges the images doesn't display the background of the page
+	  it's solved with applying a matte color (the same as background), or using the alpha transparency
+	  
+	> alpha transparency - the image acquires a fouth 8-bit channel (can be visualized as a mask), thus each pixel can have one of 256 values
+	  of intensity of transparency on this channel
+	  
+in Gimp by default the png is saved as 24, to switch to 8, choose 'Indexed' in Image -> Mode
+
+== responsive image production ==
+
+in context of bitmapped images, responsive means 'multiple versions' that you provide for different screen dimensions
+when resizing manually, obviously start from the biggest size and go down; but also don't reduce the image abruptly, reduce it a bit, and sharpend it, then reduce again.
+you can pick images not based on their width, but based on their file sizes.
+
+for high-density screens you create larger images, but all the design work you do at 1x scale anyway. there are web services that can do it for you
+
+== image optimization ==
+
+after all the images are created, the last step of img asset production should always be the optimization, i.e. reducing the size of the files.
+optimization techniques fall into two categories:
+	> design and export stages
+	> post-export compression
+some general guidelines:
+	- start with a high-quality original
+	- limit dimensions - crop the unnecessary details
+	- when using same images throughout a site, reuse them from cache rather than download them over again
+	- run images through optimizers
+
+JPEG
+	- the quality setting in the editor defines the level of compression, different images can withstand different levels of compression w/o
+	  loosing its character, but mostly we talk about the range 50-70, some images can stand up to 30-40
+	- always use Optimized option in the editor if available 
+	- use Gaussian blur: soft images compress smaller than sharp ones
+	- smooth the transition btn colors, sharp edges and details compress larger
+PNG-24
+	- lossless compression doesn't allow a profound optimization, so a good practice is to avoid this format, and if you need an alpha 
+	  transparency, convert to PNG-8 with multiple levels of transparency
+PNG-8 and GIF
+	- reduce amount of colors in the palette - it no only reduces the amount of color data, but also makes compression more efficient (more 
+	  flat colors)
+	- turn of the dithering, i.e. approximating color when it's not available in the color map
+	- design with flat colors instead of gradients
+	
+you should finish the image production process with putting your images through optimization tools - their compression is lossless, so they don't change the way images look, they just clean up some redundant information (like meatadata etc.)
+
+
+
+XXV. SVG
+
+
+SVG is an XML (which is a meta-language, most commonly used for data transportation between different applications) created by W3C. its main perks is small file size and scalability. perfect for icons, logos, charts etc.
+
+within the <use> element inside a svg you can reuse other elements like shapes, texts, effects. just put it inside the <svg> parent element
+
+just like HTML, SVG creates a DOM through which you can access objects, properties, and methods of the related elements. thus svg images are interactive: though the big images take a lot of computational power, more than the <canvas>; so with respect to the reservation service: the first stage will be a simple service without graphics, the next one will be simple and it will be a <svg>, and the final form will be a pixel game inbedded into a <canvas>
+
+with this interactivity you can animate svg with JS among other methods. there are JS library dedicated to svg animations.
+
+you can also transform datasets into charts and graphics with svg (i.e. draw the image on the fly based on some data)
+
+if you use and editor, keep in mind that the text it produces, needs to be optimized to reduce the file size and make it easier for JS to access elements.
+
+
+
+
+
+
+FLEXBOX
+
+main axis - is the line corresponding to the flex flow
+	the display of the items as pertains to this axis is defined by the 'justify-content' property
+		'center' puts the items in center
+		'space-between' puts the first item at the start and the last - at the end, and adds equal space between the items
+		'space-around' adds equal space before the first item and after the last one, the space btn other items is double of that space 
+cross axis - the line perpendicular to the main flow
+	the display along this line is defined with 'align-items' property
+		the most common value is 'center'
+
+
+
+FORMS
+
+the whole form you wrap into the <form> element, and provide some attributes to it:
+	- action - points to the url of the script on the server side that is to process the information gathered by the form
+	- method - defines how the data will be sent to the server. there are only two: GET (data is tacked into the url after '?') and HOST (data is 
+		   sent with a separate package and can by encrypted). if not provided, the default is GET.
+		   
+the user provides input via a set of form controls. each control represents a variable that will be sent to the server, with its name and value. the name of the var is provided with the 'name' attribute for the control element. names should be identical on both client and server sides.
+
+a simple control is declared with a <input> element, and which control will it be is defined with the 'type' attribute: 'text' value is the default one. is declared with a 'placeholder' attribute. with 'type' you can also tell browser what kind of info is expected (e.g. tel, email etc)
+
+to submit the form you need a submit button, declared with the same <input>, with 'type' set to "submit"	
+
+
+
+
+MISC
+
+	> by default <span> is an inline element (i.e. the width w/o content is 0)
+	
+	> ::before and ::after - pseudo element selectors for generated content: when you want to generate some element on the fly while the page
+	  			 is being rendered. 'before' generates an element before the parent one, and 'after' - after. those have to have a 
+	  			 'content' property to exist on the page, the value might be an empty string.
+	  			 
+	> the :active is a pseudo class that denotes the elements in the active state, i.e. when the element is clicked.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

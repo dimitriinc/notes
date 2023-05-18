@@ -1,0 +1,137 @@
+===============================================================
+DC ELECTRICITY
+===============================================================
+
+
+I. A CIRCUIT DIAGRAM SAMPLER
+
+Block Diagrams - the simpliest of diagrams: components are rectangles, wires and cables - straight lines, connected wires have points in the connection
+	   	 places. there also can be switches, voltmeters, earth ground, etc. Multiple-wire cables and a single-conductor wire are represented
+	   	 the same. (e.g. there are 3-conductor cords, that in the book connect generator to appliances directly, the voltmeter connects its
+	   	 single-conductor wire to the voltage-carrying wire in that cord, aka 'hot')
+	   	 when two cables are crossed and connected, it's good practice to separate input and output and give each one a dot, so that the point
+	   	 of connection is easy to spot.
+	   	 another way to represent cables that are not connected is to add a little arch to one of them, a 'jog' or a 'jump'
+	   	 to denote the direction of the electrical energy or power, you put arrows to the cable lines, e.g. from generator to appliences.
+	   	 voltmeter doesn't need arrows, becuase a good one doesn't consume any power.
+	   	 
+Schematic Diagrams - has a plethora of special symbols for different kinds of possible components of a circuit, like capacitors, logic gates, grounds,
+		     bataries, etc. those components can be grouped in categories, and those categories have common traits in their graphic 
+		     representation: e.g. resistors will have a zig-zag in their symbols. the components can be connected in series or in parallel,
+		     the behavior of the circuit changes depending on the method of connection: e.g. the resistor in series will reduce the voltage
+		     and dim the bulb, in parallel the higher the resistence in the resistor the brighter is the bulb, because the resistor consumes
+		     less of the electrical flow. the parallel connection is useful when you want the components to receive all the battery's voltage
+		     at same value: e.g. you'd connect several bulbs in parallel and they will all shine equally bright.
+		     that resistor that regulates the voltage coming through to the bulb, is called a potentiometer
+		     
+		     
+		     
+II. CHARGE, CURRENT, VOLTAGE, AND RESISTANCE
+
+For electricity to exist, a source of electric charge should be present.
+
+Charge - there are two types of charges: negative and positive (the names are just a convention). two electrically charged objects, when moved close
+	 together, will attract or repel each other. the force of attraction or repulsion is called 'electrostatic force' (not the same as magnetic
+	 force). the magnitude of the force depends on two factors:
+	 
+	 	> total extent of the charge (aka charge quantity) - the charges of both objects together. when it's increased, the electrostatic force
+	 	  increases in direct proportion to the charge quantity, considering the second factor doesn't change
+	 	> distance btn centers of the objects - when the distance is increased, the electrostatic force decreases according to the square of 
+	 	  the distance, considering the charge quantity stays the same.
+	 	  
+	 * atom - nucleus: protons and neutrons - dense and packed together; electrons - orbit around the nucleus, but not so dense and it's common
+	   	  for them to jump to another nucleus. protons and electrons of one atom are equally and opposedly charged. by convention, protons 
+	   	  have positive charge, and electrons - negative. amount of charge on any proton is the same as the amount of charge on any other 
+	   	  proton, the same goes for electrons, they all have the same amount of charge. neutrons don't carry any electrical charge.
+	   	  
+	 * electron - free-roaming electrons is what causes the 'electrostatic charge'. the objects that have an excess of electrons compared to their
+	 	      protons are said to be negatively charged; when the object contains more protons than electrons, its positively charged.
+	 	      
+	 * units of charge - since every electron in the universe in normal circumstances has equal amount of electrostatic charge, this is taken as
+	 		     a unit of measure, and is called 'elementary charge unit' (ECU). though it's very small, so for real-life objects we 
+	 		     measure the charge in 'coulombs' (C) which is equal to 6,24 x 10^18 ECU.
+	 		     
+Current - when charged objects move it results in electric current. usually those objects are electrons, jumping fron one nucleus to another. some
+	  materials have atomic structure well fit for provideing a good environment for the free exchange of electrons, such materials are called 
+	  conductors. best conductor is silver, copper and aluminum are good conductors, most metals are fair to good, salt water is fair, distilled
+	  water is a pooor conductor. substances that do not create a good environment for the exchange of electrons are called 'insulators': most 
+	  gases are insulators, glass, dry wood, paper, plastic, pure water (though some minerals diluted in it may cause it to conduct electricity),
+	  some metalic oxides. an insulating material is often called a 'dielectric', since it keeps electric charges apart. when there are two regions
+	  of opposite polarity, separated by a dielectric, this pair of regions is called 'electric dipole'.
+	  
+	- current is measured in terms of the number of charge carriers that pass a certain point in the span of 1 second. again, to measure it in ECU
+	  per second would mean to operate on gigantic numbers, so the standard measure is one coulomb per second, a current of 1 C/s is called 
+	  'ampere' (A).
+	  
+	- in physics, they think about the current flowing in the circuit from positive terminal to negative terminal, this is so-called 'theoretical
+	  current'. but actual electrons, which carry the charge, flow from negative to positive. remains to be understood.
+	  
+Voltage - current will flow only if the charge carriers are 'pushed' or 'motivated', this motivation is provided by a build of electrostatic charges.
+	  when negative charge builds up in one place, and a positive one - in another, electromotive force (EMF) exists. EMF, aka 'voltage', or 
+	  'electrical potential' is expressed in 'volts'
+	  
+	- some common voltages: household electricity - 110-130V, it's not stable, the voltage changes polarity several times per second
+		- an automotive battery - 12V, steady, constant voltage
+		- by walking on a carpet with rubber soles - thousands of V (not deadly, becuase not a lot of charge carries acumulate to provide for
+		  a deadly current
+		- before a lightning discharges - millions of V btn clouds, or btn a cloud and the ground
+		
+	- voltage can exits w/o current, that is the case rigth before the lightning, in a house outlet btn the terminals when nothing is connected,
+	  battery with nothing connected. this is called 'static electricity'. it stops being static when a good pathway btn terminals presents itself
+	  
+	- in case of a steady voltage not changing its polarity, the current that flows through an electrical device is directly proportional to the
+	  voltage supplied to the divice: if the voltage doubles, the current doubles as well. though it's common that devices vary their 'conductance'
+	  depending on the current. some devices are designed to have a constant conductance event if voltage (and current with it) vary greatly.
+	  
+Resistance - opposite of conductance. no material is perfectly conductive, there is always some resistance. conductors have low resistance, insulators
+    	     high. where resistance is high, it's difficult for current to flow.
+    	     
+    	   - measured in 'ohms' (represented by the Greek letter omega). in an electrical system as low as possible resistance is desired, because 
+    	     resistance (aka ohmic value) converts electrical energy into head, and it's considered a waste ('resistance loss'). given a constant
+    	     voltage, the current varies in inverse proportion to the resistance, i.e. if resistance doubles, the current doubles in half; if 
+    	     resistance a fith of its previous value, current increases by the factor of 5.
+    	     when current flows through a resistive material, it gives rise to voltage across the resistive object (this kind of voltage is called 
+    	     'potential difference'; the larger the current, the greater is the voltage (directly proportional given the resistance is the same)
+    	     
+    	   - conductors can loose all their resistance at temperatures near the absolute zero, this phenomenon is called 'super-conductivity'.
+    	     so the conditions may affect the resistance of a certain component in a practical circuit. this fluctuations in high/low resistance can
+    	     be made to happen billions times per second, which allows for the existence of microchips.
+    	     
+    	     
+III. OHM'S LAW, POWER, AND ENERGY
+
+	> prefix multipliers - denote small fractions or big numbers, starting with small:
+		- pico - p - one trillionth part - 0.000 000 000 001
+		- nano - n - one billionth - 0.000 000 001
+		- micro - u/mm - one millionth - 0.000 001
+		- milli - m - one thousandth - 0.001
+		- kilo - k/K - 1000
+		- mega - M - million - 1 000 000
+		- giga - G - billion - 1 000 000 000
+		- tera - T - trillion - 1 000 000 000 000
+		
+	> Ohm's law - in a DC curcuit current flows through a medium with a resistence, it's pushed through a resistive material by voltage. Current,
+		      voltage, and resistance interact in a predictable and precise way. The Ohm's law describes this way in mathematical terms.
+		      the law is denoted in three formulas:
+		      
+		      		E = IR
+		      		I = E/R
+		      		R = E/I
+		      		
+		      where E - voltage in volts, I - current in amperes, R - resistance in ohms
+		      the formulas function only with those units of measure
+		      
+	> Power - is the rate at which energy consumed or used, i.e. energy per unit of time. The unit of power is 'watt' (W), in equations - italic P.
+		  a conventional household bulb uses 25 W to 100 W. We can calculate power when we know 2 of the 3 basic measures of the curcuit with
+		  one of these formulas:
+		  
+		  		P = EI
+		  		P = E^2/R
+		  		P = I^2*R
+		  		
+		  		
+	
+	   	  
+	   	  
+	   	  
+	   	  

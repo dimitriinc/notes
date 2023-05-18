@@ -1,0 +1,63 @@
+when incorporating your scripts into html documents, the best place to put the <script> is at the end of the <body>, so that the browser processes the scripts after it renders all the visual elements (better user experience), and also to be able to reference the previous elements from inside the script.
+when referencing an external script, you put <script> also at the end of body, and point to the script you need with the 'scr' attribute. 
+
+JS is executed by a JavaScript engine build into a browser (v8 for Chrome, SpiderMonkey for Firefox). outside of browsers can be executed by Node, which is a programm written in C++ that is basically an environment to run JS on a computer.
+
+for declaring strings in JS it's more common to use single quotes: 'some String'
+
+variables can be declared with 'var' keyword, and with 'let' keyword (preferred way)
+
+to declare constants use the 'const' keyword
+
+the primitive types include:
+	String
+	Number
+	Boolean
+	undefined (assigned to a variable that wasn't initialized with a value)
+	null
+	
+JS is a dynamically typed language, unlike the staticly typed languages (where you cannot change the type of variables once declared), it can change the variables' types at runtime.
+
+the reference types include:
+	Object
+	Array
+	Function
+	
+an Object is a set of key-value pairs, declared with 'object literal' syntax:
+	let person = {
+		name: 'John',
+		age: 32
+	};
+to access a property of an object you can use:
+	- dot notation: person.name
+	- bracket notation: person['name']
+	
+Array is a list of items. It's type is Object as well, and comes with predefined (in the prototype) properties (e.g. length). Declaration:
+	let selectedColors = ['blue', 'red'];
+since JS is dynamically typed, the length of an array can be changed:
+	selectedColors[2] = 'orange';
+an array can contain values of any types, one array can contain values of various types
+
+Functions are declared with the 'function' keyword, parameters go without type declaration, when an argument is not provided, the default value of the parameter is 'undefined'
+	function displayName(name) {
+		console.log(name);
+	}
+the function declaration doesn't end with ;
+a function can serve as an argument to another function
+
+FOR loop:
+in parentheses we need to declare three statements:
+	- initial expression: let i = 0;
+	- condition: i < 5;
+	- increment expression: i++
+the loop will go on as long as condition evaluates to true
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

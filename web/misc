@@ -1,0 +1,5 @@
+> to perform an operation when all the document (including all the resources) is loaded:
+
+	window.onload = (event) => {
+		// do smth
+	};

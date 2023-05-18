@@ -1,0 +1,90 @@
+==================================================================================
+CHAPTER I. INTRODUCTION TO JAVASCRIPT
+==================================================================================
+
+when a statement consists only of a variable's name, it is considered an expression, that evaluetates to the variable's value.
+apart from primitives, JS has two types: object and array
+	> object consist of name/value pairs (string/type), denoted by curly braces
+	> array - list of values, denoted by square brackets
+	
+an experssion computes a value but doesn't do anything, i.e. doesn't change the state of the programm
+a statement doesn't compute anything, but changes the state of the program, e.g. a variable assignment is a statement
+a category of statements is 'control structures', like conditionals and loops
+
+functions are values and can be assigned to variables, and can be parameters to other functions
+a function declaration doesn't get a semicolon at the end, but when you assign a function to a variable, you put a semicolon after the declaration:
+
+		let square = function(x) {
+			return x * x;
+		};
+		
+there is a shorthand notation for function declaration, that separates arguments from the body with the '=>' operator. mostly used when you pass an anonymous function as a parameter to another function. such functions are called 'arrow functions':
+
+		const square = x => x * x;
+		
+functions can be assigned to object's properties, they're called methods in this case. just like any other value of an object, its methods can be accessed with a dot notation or by providing a string name property inside the square brackets.
+when you use the 'this' keyword in the body of a method, you reference the object to which the method belongs
+
+you can define a class with the 'class' keyword, the name of the class is capitalized by convention. you need to define a constructor to initialize new instances, the 'this' keyword in the body of constructor referes to the instance being constructed; you don't need the return statement inside a constructor.
+
+		class Point {
+			constructor(x, y) {
+				this.x = x;
+				this.y = y;
+			}
+			distance() {
+				return Math.sqrt(
+					this.x * this.x +
+					this.y * this.y
+				);
+			}
+		}
+		
+apparently, when you define a method, you don't need the 'function' keyword
+
+
+==============================================================================
+CHAPTER II. LEXICAL STRUCTURE
+==============================================================================
+
+case sensitive, ignores spaces and line breaks (except when it cannot parse what is on the next line as a continuation of the first line, in this case a semicolon is inserted implicitly; - this can lead to ambiguities, so some prefer to put semicolons explicitly)
+
+comments are denoted by // or by /* ... */
+in a multiline comments, * at the beginning of each new line is not a requirement, but a convention
+
+literals is data that appears directly in a program, w/o assigning it to a variable
+
+identifiers are names of constants, variables, properties, functions, classes, and labels for certain loops. can start with letters, _, or & (not numbers, numbers can be subsequent characters). reserved words can't be identifiers.
+
+
+=================================================================================
+CHAPTER III. TYPES, VALUES, AND VARIABLES
+=================================================================================
+
+a type is a category of value on which programs can operate. a set of types is one of the fundamental characteristics of a programming language; another one is the way variables work
+
+JS types fall into two categories: primitive types and object types. primitive include number, string, boolean, null, undefined + one special primitive called Symbol, used to denote language extensions for compatibility purposes. all the rest types of values are objects, including arrays, sets, maps, functions, classes, regExp, date etc.
+
+garbage collection is automatic and performed by the JS interpreter
+
+constants and variables are untyped, you don't declare the type at assignment
+
+numbers take 64 bit to store, can be integers or floating numbers. there are special constants: infintiy and NaN (not a number), e.g. overflow or underflow will result in infininty and negative infinity, arithmetic operations on values that are not numbers will result in a NaN.
+
+each character in a string takes up 16 bits, there is not special type for individual character. to use template literals (expressions) in a string, instead of quotation marks surround it with backticks and put the expression inside the ${}
+
+		let greeting = `Hello, ${ user.name }!`
+		
+regular expressions are put inside slashes / /
+
+
+
+
+
+
+
+
+
+
+
+

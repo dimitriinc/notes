@@ -1,0 +1,1735 @@
+FUNDAMENTALS PT.1
+
+
+	- in JS variables are dynamically typed, they themsleves don't have types, the values have type. the value of a different type can be assigned 
+	  to the same variable
+	- let vs. const - by default use const, use let only if you're sure you gonna mutate the variable later. avoid mutating variables because
+	  it's a breeding ground of bugs
+	- var is the old way to declare variables, obsolete since the ES6 (ES2015)
+	- whenever an operation including numbers produces something other than a number, the result of the op will be a NaN (not a number) value.
+	  the type of this value is still 'number', but it tries to say that it's an invalid one	
+	- type conversion - we cast a type to another explicitly. type coercion - it's casted implicitly. coercion happens when the + operator will 
+	  cast a number into a string, other math operators will cast a string to a number
+	- values that are not booleans can be cast into a boolean, they can be falsy in 5 ways:
+		> 0
+		> ''
+		> undefined
+		> null
+		> NaN
+	  most frequently this feature is used in an if/else statement where the condition is coerced into boolean, so you can check if a string is 
+	  empty by using this:
+	  
+	  	if (someStringVar) {
+	  		alert('the string is not empty')
+	  	else {
+	  		alert('the string is empty')
+	  	}
+	  	
+	  an empty object will result in true
+	  
+	- == - loose equality operator, it does coercion among other things, i.e. '18' == 18 is true. prone to introduce bugs, avoid using it
+	  === - strict equality operator, doesn't do coercion
+	  
+	- to get an input from the user, you can use the prompt() function that takes in a prompt message and returns a string.
+	- switch statements perform there comparison with the strict equality operator, require break after each case, cases can be combined:
+	
+			case 1:
+			case 2:
+			case 3: 
+				do smth // applies for all three cases
+				
+	- conditional / ternary operator - a way to produce a value based on a condition:
+	
+		expression ? value1 : value2
+		
+	  the operator is an expression, i.e. we can use it to assign a value to a var, or in strings literal
+	  
+	- don't break the web - the principle, according to which JS is backward compatible with all the past releases of JS, meaning each new release
+	  doesn't get rid of any old features, it only builds on top of past versions. all the old websites can work on the modern browsers.
+	- also, JS isn't forward compatible, i.e. new features of the language won't work on older browsers.
+	
+	
+FUNDAMENTALS PT.2
+
+	- if you put a string 'use strict' as the first statement of a script, it changes the behavior a bit: it will be more precise with shouwing 
+	  you what errors have transpired and some other features. a strict mode.
+	- a function that doesn't have an output, results in an undefined value.
+	- function declaration is when you declare a function with its full sigature, can be called before it's declared in the code
+	  function expression is when you assign an anonyomous function to a variable, called the same: by writing the name of the var with parenteses.
+	  expressions cannot be invoked before they're assigned.
+	- arrow functions is a shortcut notation:
+	
+			(param1, param2) => {
+				do sth;
+				do sth else;
+			}
+			
+	  if there is only one param, you don't need parenteses, if the body is a one line return statement, you don't need curly braces.
+	  downside of using arros functions is that they don't have access to the 'this' keyword.
+	  
+	- you can put in an array a value of any type, or event an expression, or function that returns sth.
+	- some methods for arrays: 
+		push(element) - adds an element to the end
+		unshift(element) - adds an element to the start
+		shift() - removes first element
+		pop() - removes last element
+		indexOf(element)
+		includes(element) - returns true/false (strict equality)
+	- the type of array is 'object'
+	- object is a collectin of key-value pairs, the order in which they are stored doesn't matter for their retrieval. one way to declare an object
+	  is a literal declaration, with curly braces:
+	  
+	  		const Dima = {
+	  			name: "Dima",
+	  			age: 34,
+	  			job: "hacker"
+	  		}
+	  		
+	- to retrieve values we use dot or bracket notation, the main difference btn them is that the brackets operator can take in  computed values, 
+	  i.e. you can pass expressions there, while the dot opertor processes only exact key names.
+	- a value of an object can be a function expression. to access it with the bracket notation, you should pass the key as a string to the 
+	  brackets, and the arguments in parentheses after the brackets.
+	  to access the values of the object from within the function, use the 'this' keyword, that stands for the object, that is calling the function
+	  a function that is a value stored in an object is called 'method'
+
+	- the for loop takes in a counter (a mutable var), a condition (evaluates after each iteration, loop continues while the condition evaluates to
+	  TRUE), and a counter update. the three parts are separated by a semicolon.
+	  
+	- 'continue' terminates the current iteration of the loop and skips to the next one
+	  'break' terminates the entire loop
+	  
+	- the while loop is for the cases when you don't know how many iterations do you need. it takes in only the condition part, and may not depend
+	  on a counter, though if you do need a counter for you condition, you take it from an outside scope. and the update part happens inside the 
+	  body of the loop, it should update smth that changes the evaluation of the condition.
+	  
+	  
+JS IN THE BROWSER _ DOM AND EVENTS FUNDAMENTALS
+
+	- if there is only one line in the body of control statements, you don't need the curly braces.
+	- to do something when user presses a button on keyboard, we need to register an event listener. concerning keyboard interactions, there are
+	  three event: keydown, keypress, keyup: keypress is fired constantly as the button stays pressed, keyup - when the button is released.
+	  those events are global events, so you register a listener on the document itself. when a key is pressed and an event is fired, JS actually
+	  creates an object, that you can access in you listener if you pass 'event' as an argument to you function.
+	  
+	- when you have nested if statements, look if you can combine those expression into one with boolean operators
+	
+		* diagrams.net - to draw flowcharts
+		
+	- you can get an element by its id in two ways: with a querySelector, and with a getElementById(). the latter is a bit faster.
+	
+	
+HOW JAVASCRIPT WORKS BEHIND THE SCENE
+
+The things we can say about JavaScript:
+
+	- high-level: does the resource managment for us (in C you have to ask for a memory location manually when you declare vars); the downside
+	  of it is that you can't optimize as efficiently as with low-level languages. upside: easier to learn and to use
+	  
+	- garbage-collected: one of the things about the resource managment that is abstracted away from us. garbage collection is an algorithm inside
+	  the JS engine that removes old data from the memory.
+	  
+	- interpreted (in its past), just-in-time compiled (modern): how JS engine translates the source code (which is an abstraction over the machine 
+	  code) into 0 and 1s
+	
+	- multi-paradigm: paradigm is approach to structuring code, which directs the coding style and techniques. the three major paradigms are:
+		> procedural programming - linear instructions with some functions to avoid repetitions
+		> object-oriented -//-
+		> functional
+		
+	  paradigms can also be categorized into 'imperative' and 'declarative'
+	  JS can implement all of those major paradigms, the author is the one who chooses how to structure the code, the language itself doesn't 
+	  dictate the structure.
+	  
+	- protopyped-based object-oriented: everything in JS is an object (apart from primitive values), e.g. an array is an object, and when we 
+	  build one, we build it based on a sort of blueprint for an array, (maybe like a master class in Java), this blueprint in JS is called a 
+	  'prototype', and it contains all the methods and properties we can use on our object, our object inherits them from the prototype.
+	  
+	- first-class functions: functions are treated as variables, i.e. we can pass them as arguments, and we can return them from other functions
+	
+	- dynamic / dynamically-typed: we don't assign types to vars at declaration, their types become known at runtime; a variable  can be reassigned
+	  with a different type of value. which is seen as a source of bugs by some people.
+	  	* TypeScript is a strongly-typed alternative to JavaScript
+	  	
+	- single-threaded: JS runs on a single thread (a thread is a chain of instructions, executed by CPU one by one, it's where the code is executed
+	  actually), which dictates a specific concurrency model (i.e. how we execute different instructions at the same time), especially concerning
+	  long-running operation, like fetching something from the network; the JS model is called 'non-blocking event loop'. the event loop takes
+	  the long-running tasks, executes them in the background, and once they're finished, puts them back in the main thread.
+	  
+JS engine and runtime:
+
+	- the purpose of engine is to execute JS code. each browser has it's own JS engine, the most famous one is Google's V8 that powers Chrome and
+	  Node.js
+	  
+	- the two main components of the engine are:
+		> Call stack - the code is actually executed there. using sth called execution contexts (perhaps it's like a task in Android)
+		> Heap - a memory pool where all the objects used by the application are stored in an unstructured manner
+		
+	- how does the execution happen: first we need to translate the JS code into machine code, there are three approaches to the translation and
+	  execution:
+	  	> compilation: the code is translated, and the resulting machine code is stored into a portable binary file that can be executed later,
+	  	  undefined amount of time can happen between creation of an executable and its execution.
+	  	> interpretation: the code is translated line by line, and each line is executed at once, there is no intermediate stage of creating
+	  	  a machine code version of a program. the execution is much slower. JS used to be an interpreted language, but with the modern
+	  	  applications it cannot allow itself the slow execution.
+	  	> just-in-time (JIT) compilation - the code is translated into binary fully, and the binary version is executed immediately; i.e. 
+	  	  it's a compilation model, but without creating a portable file containing the binary code, so the time between compilation and
+	  	  execution is none. it's a lot faster than executing code line by line.
+	  	  
+	  so, in JS, as a piece of code enters into the JS engine, the first thing that happens is the code gets parsed into a data structure called
+	  'abstract syntax tree', i.e. gets separated into meaningful to the engine parts and thus is rewritten into the AST (something like a Java
+	  Byte code). and this AST then can be compiled into a machine code and executed in the Call Stack immediately. The parsing part is also where
+	  the checking for syntax errors happens.
+	  
+	  there is also the last step that starts right after the execution, and that's optimization: the binary code gets recompiled into an optimized
+	  version of itself and passed to the execution again, without ever stopping the execution, and this loop of optimization can happen 
+	  multiple times.
+	  
+	  this parsing-compilation-execution-optimization happens on the same main thread in JS engine, but we cannot access those ops in our code
+	  
+	- JS runtime is a JS environment, i.e. a container with everything JS needs to function. at the heart of a runtime is JS engine, apart from
+	  it, in case of browser runtimes, there are 'web API's, like DOM, Fetch API, Timers, Console logging, and more; those functionalities are 
+	  provided to us by browsers. In case of non-browser runtimes, such as Node.js, there are no web APIs, instead we have C++ bindings and a 
+	  thread pool.
+	  
+	  and the last two components that are present in all the runtimes are 'callback queue' and 'event loop'. callback queue is a data sructure
+	  that stores callback functions. e.g. a callback that is passed to an event listener: when the event is fired, the callback is put into the
+	  callback queue, and then as the engine's call stack empties, the callback is inserted there to be actually executed.
+	  and the component that does the inserting from the callback queue into the call stack is the event loop.
+	  
+Execution contexts and the Call Stack
+
+	- as the compiled code is passed to the execution stage, in the Call Stack a global execution context is created.
+		> an execution context is an environment in which a piece of code is executed, the necessary for this data is also stored there, e.g.
+		  local vars, and arguments passed to a function.
+	  the global context is for the top-level code, i.e. the code that is not wrapped in functions, contains declarations of global vars, of those
+	  functions (but not their bodies).
+	  after the global context is created, it's passed to the actuall execution, i.e. to the CPU to process the binary code.
+	  for each program there is one one global execution context.
+	  
+	  then, for each function in the global context, a separate execution context is created and executed. after that the Call Stack is empty and
+	  waiting for the callbacks from the Callback Queue to be inserted by the Event Loop.
+	  
+	- so what's exatctly is in an execution context:
+		> variable environment:
+			~ let, const, and var declarations
+			~ function declarations
+			~ 'arguments' object - an array of args passed to a function, absent in the case of arrow functions	
+		> Scope chain - a way for the current context to reach the variables declared in higher-scoped contexts, contains references to 
+		  those variables. will expand on it later.
+		> 'this' keyword - a special variable, absent for arrow functions. to be expanded upon
+		
+	  all those references are generated during the 'creation phase', right before the execution.
+	  all the actual values of the variables become known only at the execution phase.
+	  
+	- to keep the right order of execution of different contexts is the purpose of the Call Stack, all the contexts, created for a program, get
+	  stacked on top of each other, and executed in the 'first-in-last-out' manner. the way they are stacked is following:
+	  	the first one to go in is the global context, it starts executing and at some point we reach a function call. at this point the 
+	  	execution of the global context is put on hold, and a new context is created for the called function, and put on top of the global
+	  	context in the Call Stack. there might be another function call inside the current function, so it's execution is put on hold, and 
+	  	a new context is put on top of the stack, and this context is executed. let's say there are no more function calls, so the second
+	  	function is done executing, and its context is popped off the Stack, the first function wakes up and continues its execution. when
+	  	it's done, it's popped off the Stack, and the global context may resume.
+	  	the global context is actually doesn't get removed from the stack after finishing its execution until the browser's tab, or the browser 
+	  	itself is terminated.
+	  	
+Scope and the Scope Chain
+
+	- scoping - how variables are organized and accessed
+	  JS implements 'lexical scoping': scoping is controlled by the placement of functions and blocks of code, i.e. where it's written
+	  scope - an environment in which a certain variable is declared. in JS there are: global scope, function scope, and block scope, in case of 
+	  	  functions, it's the same as the Variable environment (that part of the execution context that contains the variable declarations
+	  	  of that context)
+	  scope of a variable - region of code from which the variable can be accessed (includes the outer scopes)
+	  
+	- so the scope is where the variables are declared (this includes function declarations, since they're just values stored in variables)
+	  three types of scope:
+	  	> global scope - outside of any function or block, the variables declared in the global scoped are accessible everywhere
+	  	> function scope - variables are accessible only inside this function, not outside. also called 'local' scope
+	  	> block scope - starting with ES6, the control statemens also create their own scopes. with the exceptions of the variables declared
+	  	  with the 'var' keyword, those will belong to the closest outer function scope, thus, they're called 'function-scoped'; while
+	  	  the variables declared with 'let' and 'const', as well as function declarations (only in the 'strict mode'), are said to be 'block-
+	  	  scoped' (because they support the block scoping). the function declarations in the 'sloppy mode' are function-scoped.
+	  	  
+	- scope chain - a tree-like structure of every scope created inside one script, it allows code from lower scopes access variables from all
+	  of its outer scopes (parent scopes). at execution, when encountering a variable not declared in the current code, JS will look for it up
+	  the scope chain, and if it's there, it will use it; if not - error; this process is only one way - up, and is called 'variable lookup'.
+	  	NB! variables don't get copied in the scopes down the chain
+	  a scope doesn't have an access  to the variables declared in its siblings
+	  
+	- the structure of the Scope Chain reflects how the functions and blocks are written in the code, it doesn't reflect the order in which 
+	  they're called. so, the Scope Chain and the Call Stack are separated from each other, and not relevant to each other.
+		  	
+	- you can declare a new variable in a lower scope with the same name as a variable in a higher scope, and the execution of the current lower
+	  scope will operate with this new value, because of the order of the variable lookup; the higher scope will operate on the old value.
+	  if you reassign a value to a variable of a higher scope from within a lower scope, the higher scope will operate on a newly assigned value of
+	  that variable.
+	  
+Variable environment, hoisting, and TDZ
+
+	- hoisting is the mechanism that allows us to call functions before they are defined in the code (but only if the function was created with a 
+	  function declaration), and acutally there are different rules of hoisting applied to different kinds of variables.
+	  hoisting actually works this way: before the execution of a context, it gets scanned for variables and based on the result, a Variable 
+	  Environment object is created with the scanned variables as its properties, thus when the function is called during the execution, JS
+	  already knows its value.
+	  but not all kinds of variables are accessible this way, or 'hoisted':
+	  
+	 	> function declarations: hoisted, initial value - actual function
+	 	> 'var' variables: hoisted, initial value - undefined. bad behavior, source of bugs: if we try to access a 'var' before it's declared,
+	 	  we don't get an error, but we also can't access it's real value, instead we get an 'undefined' type
+	 	> 'let' and 'const' variables: not hoisted, initial value - <uninitialized>. we get an error if we try to access those vars before
+	 	  their declaration, it's said that the space from the start of the scope to the line where these vars are declared is a 'temporal
+	 	  dead zone' (TDZ)
+	 	> function expressions and arrow functions: hoisting depends on the type of variable they are assigned to: 'var', 'let', or 'const'; 
+	 	  and they accept the behavior of those vars.
+	 	  
+	  so, basically, only function declaration are a subject of hoisting. Technically, 'var' vars as well, but we should avoid using them exactly
+	  because of the reason explained above.
+	  also, the initial value, is the value of the property of the variable environment object in its state before the execution begins.
+	  
+	- TDZ was obviously introduced in ES6 together with 'let' and 'const' to avoid the bugs connected to the use of 'var', and also to make sense 
+	  of the immutable 'const' vars, they cannot first be assigned 'undefined' and then reassigned an actual value, it defeats their whole purpose
+	
+	- hoisting was a part of JS from the beginning, as a way to get access to the functions before their declaration. and the 'var' behavior is a 
+	  byproduct of that, at the time it was the only way to implement this.
+	  
+	- variables, declared with 'var', are stored as properties of the window object, which is a global parent object of the browser runtime.
+	
+'this' keyword
+
+	- it's a special variable that is created for each execution context, and points to the owner of the function (for which the context was 
+	  created). what that owner is depends on the way the function was called:
+	  
+	  	> method - the object that is calling the method
+	  	> simple function call - undefined (in strict mode) / window (in sloppy mode)
+	  	> arrow functions - doesn't have its own 'this', instead the 'this' of the parent context is used, lexical 'this'
+	  	> event listener - points to the DOM element, on which the listener is added
+	  	> functions can also be called with the keywords 'new', 'call', 'apply', and 'bind', and they have their specific 'this', more on this
+	  	  later
+	  	  
+	* when we try to access a property on an object that doesn't exist, what we'll get will be 'undefined' (not an error)
+	* don't use arrow functions as methods, because the 'this' keyword will point to a wrong object
+	
+Primitive vs. Reference types (objects)
+
+	- the difference is that primitives are stored in the execution context where they're declared, and the objects (their data) are stored in 	
+	  the Heap. when a variable is created, it's assigned a memory location, and then a value is assigned to the variable, the value is stored in
+	  that memory location.
+	  
+	  	> for primitive types, the value stored in the memory location is the value itself that you assign to the variable.
+	  	  when you reassign a value to a 'let' variable, it doesn't change the value of the memory location to which the variable points, those
+	  	  are immutable; it creates a new memory location with the new value, and redirects the 'let' variable to that new address.
+	  	  
+	  	> for reference types the value assigned to the memory location is a reference to an address in the Heap, where the actual data for 
+	  	  the object is stored. 
+	  	  when you copy an object, e.g. 
+	  	  
+	  	  		const object = {}
+	  	  		const new_object = object
+	  	  		
+	  	  you don't create a new object in the heap, you just make so that the new_object variable points to the same memory location as the
+	  	  object variable, and they both have the same value, which is the reference to the same object in the heap.
+	  	  
+	  	  
+DATA STRUCTURES, MODERN OPERATORS, AND STRINGS
+
+Destructuring arrays
+
+	- destructuring means break down a data structure into a smaller data structures (e.g. variables), this is how we can destructure an array:
+	
+			const arr = [1, 2, 3]
+			const [a, b, c] = arr
+			
+	  thus we declare three new variables, and assign them values from the array
+	  
+	  		const [a, b] = arr
+	  		const [a, , b] = arr
+	  		
+	  those are also legit, to retrieve some chosen values from the array
+	  
+Destructuring objects
+
+	- use curly braces and actual names of the properties of the object. if you want to store properties under new names, first declare the 
+	  property name and after a colon declare a new variable name:
+	  
+	  	const dimitri = {
+	  		firstName: 'Dimitri',
+	  		age: '34',
+	  		job: 'coder'
+  		}
+  		
+  		const {firstName: name, job} = dimitri
+  		
+  	  you can also reassign existing variables with new values from a destructured object, simply by putting the destructuring in parentheses:
+  	  
+  	  	let age = 32
+  	  	let job = 'porter'
+  	  	
+  	  	({age, job} = dimitri)
+  	  	
+The spread operator (...)
+
+	breaks down an iterable (array, map, set, string) into individual values, but without assigning them to variables (like destructuring does), 
+	that's why you use only when you need several values passed somewhere, e.g. as arguments into a function, or as a part of new array:
+	
+		const arr = [3, 4, 5]
+		const newArr = [1, 2, ...arr]
+		multiplyThreeNumbers(...arr)
+		
+	the places that expect a single value will not accept the spread operator
+	since ES2018 you can apply the ... to objects as well. e.g. you might want create a new object on the base of an old one and just copy all
+	its properties, and add new ones if you like.
+	
+		const newObject = {name: papa, ...oldObject, founded: 1988}
+		
+Rest pattern and parameters
+
+	rest operator looks just like the spread opertor, but does the oposite thing, i.e. combines multiple items into an array (or an object). used
+	in destructuring, i.e. unlike the spread operator, appears on the left side of the assignment operator
+	
+		const [a, b, ...others] = [3, 2, 2, 4, 5, 3]
+		
+	this code will store the first 2 values in separate variables, and the rest will be stored as an array. the rest operator always must be the
+	last one in the list of destructuring
+	
+	also it's often used as a parameter to a function, to such a function you can pass however much arguments, they all will be combined into one
+	array
+	
+		function add(...numbers) {
+			sum = 0
+			for (let i = 0, i < numbers.length, i++) sum += i
+		}
+		
+		add(3, 4, 4, 5, 5)
+		
+Short circuiting && and ||
+
+	you can pass non-boolean value to those boolean operators to decide what value to return based on the values' truthy or falsy states
+	you can use it e.g. to set a default value in case some other value is falsy:
+	
+		const numGuests = 0
+		const guests = numGuests || 10
+		
+	'guests' will be 10
+	it's called 'short circuiting' because as JS encounters a truthy value (in case of ||), it immedeately returns that value without evaluating
+	the rest of the expression.
+	in case of &&, if some value of the expression is falsy, it will be returned and the rest of the expression - short circuited; and if all the
+	values are truthy, the last one will be returned
+	
+		const numGuests = 0
+		const guests = numGuests && 10		// guests = 0
+	
+Nullish coalescing operator ??
+
+	nullish values a 'null' and 'undfined', helps with setting default values as well, e.g. from the last example, imagine 'numGuests' doesn't 
+	exist:
+	
+		const guests = numGuests ?? 10
+		
+Logical assignment operators
+
+	&&=
+	??=
+	||=
+	
+	to say that 
+	
+		numGuests ||= 10
+		
+	is the same as to say:
+		
+		numGuests = numGuests || 10
+		
+	i.e. if the current value of the numGuests is falsy, assign it 10
+	
+		numGuests ??= 10	// if numGuests is null or undefined, assign it 10
+		numGuests &&= 10	// if numGuests is truthy, assign 10, if falsy - assign the initial value
+		
+The 'for of' loop
+
+	used to iterate through each item of an array
+	
+		for (const item of menu) console.log(item)
+		
+	to get the index of each item, we can call entries() on the array, which returns an array of arrays: each item is modified to be an array of
+	two elements: first is index, and second - the item iteself.
+	we can also destructure this item array right away:
+	
+		for (const [i, el] of menu.entries()) {}
+		
+Enhanced object literals
+
+	some simplifications to the way we declare object literals (i.e. with curly braces), introduce in ES6:
+		> if you want to assign a property value of an existing variable of the same name, you can just write this name
+		
+			const hours = [3, 4]
+			const restaurant = {
+				name: 'dkslfj',
+				hours,
+				menu: ['kdsljfk', 'ldskjf']
+			}
+			
+		> when declaring a method, you can skip the 'function' keyword, you need only the name of the method, params in parenthesis, and the
+		  body of the function
+		> property name can be calculated at declaration
+		
+Optional chaining (?.)
+
+	an easy way to check the value on its nullishness inside a chain of object properties
+	
+		restaurant.openenigHours?.mon?.open
+		
+	there, the 'mon' property will be called only if 'openenigHours' exists (i.e. not null, and not undefined), otherwise an undefined will be
+	returned.
+	optional chaining was introduced at the same time with the nullish coalescing operator (in ES2020) and they work together well.
+
+	you can also check the existence of a method, and call it only if it does:
+	
+		restaurnat.order?.() ?? 'method doesn't exist'
+		
+Looping objects
+
+	we can do it indirectly, by turning object's data into arrays:
+	
+		> to get an array of properties' names - Object.keys(nameOfObject)
+		> to get values - Object.values(nameOfObject)
+		> to turn an object into an array of arrays, where each property-value is a two-element array - Object.entries(nameOfObject)
+		
+Sets
+
+	one of the two data structures introduced in ES6. main feature is that all the values in a set must be unique. sets are unordered, values
+	don't have indeces; so there's no way to retrieve a certain value. sets are good e.g. for knowing how many unique values are in an array, or
+	a string. values within a set can be of any data type. sets are faster to work with than arrays.
+	to initialize a set:
+	
+		const set = new Set()	// and as an argument you pass an iterable, mose commonly array or string
+		
+Maps
+
+	the other data structure introduced in ES6, a collection of key-value pairs, both key and values can be of any data type.
+	
+		const map = new Map()	// better to leave the contructor w/o arguments
+		map.set(key, value)
+		
+	the set() method returns the updated map, so we can chain calls
+	
+
+Maps iteration
+
+	to initialize a map within a constructor, pass an array of arrays to it as an argument, the one like that returned by the Object.entries()
+	
+	when iterating through a map the item you get is an array of two elements: key and value, and you can deconstruct it:
+	
+		for (const [key, value] of map) {}
+		
+Maps vs Objects
+	
+	when working with JSON, objects are more comfortable. also to get a particular value it's easier with objects with their dot and brackets 
+	notations.
+	maps are more performative, easier to iterate through, easier to compute their size; and can store any type of data as keys (with objects it's 
+	only strings)
+	
+Strings
+
+	even though strings are primitives, we can call methods on them (e.g. indexOf, lastIndexOf, slice etc.) this happens because when JS sees 
+	a method called on a string, it converts this string into an object (with the 'new String()' function), this object has the characters' indeces
+	as keys and the characters as values.
+	so with the slice() we can provide a single index, and the return will be a primitive string that starts with the provided index and ends with
+	the end of the original string. provided with two arguments (indeces), the slice() will cut out a primitive string that starts with the first 
+	index and ends with the second.
+	
+		* in US the decimals in prices are separated by a dot, in UK - by a comma
+		
+	as a rule when you get an input from a user, and want to perform some operations on it, you should convert it lower case first.
+	some other operations inclue replace(oldString, newString) and replaceAll()
+	some return booleans: includes(), startsWith(), endsWith()
+	
+	to pad a string to a desired length, use padStart(desiredLength, characterToPadWith), and padEnd(-//-)
+	the split() method returns an array of strings, that were devided based on the char provided as argument to the split(); most commonly - ' '
+	join(char) will merge elements in an array into one string and separate them with the char argument inside the string
+	
+	
+
+A CLOSER LOOK AT FUNCTIONS
+
+Default parameters
+
+	assign them in the parameters section of the signature:
+	
+		function createBooking(
+			flightNum, 
+			numPassengers = 1,
+			price = 199 * numPassengers
+		) {
+			...
+		}
+		
+	when you don't provide expected arguments, their value is set to undefined
+	
+Passing args: values vs references
+
+	when we pass a primitive as an arg, it's value get copied, and stored as a local var, so changing the argument doesn't affect the original 
+	value.
+	when a reference type is the arg, the reference to the same object in the Heap gets copied and stored to a local var, thus, changing the
+	object inside the function will change it outside of the function.
+	
+First-class and high-order functions
+
+	first-class functions is a concept, according to which functions are treated as 'first-class citizens', i.e. as just another value: in JS
+	functions are a special type of object, and objects are values. this allows as to store functions in vars, call methods on functions, 
+	pass them to another function as arg, and return a function from another function.
+	
+	the functions that receive a fun as an arg, or return a fun, or both - are higher-order functions.
+	
+	this allows to create and use callback functions. and create a new level of abstraction with it, i.e. we delegate some implementation to a 
+	lower-level function, so that at a higher level we don't have to think about it. the callback is a lower-level computation, and when we work
+	with out main function, we have less things to consider.
+	
+Functions that return other funtions
+
+	still don't really understand the big purpose of that, but it's a big part of functional programming. from what it seems, the idea is to 
+	do some computation in the main function, and use the result of the computation as an imput to the returned function. maybe that's the purpose.
+	
+call() and apply()
+
+	those are two of the methods that we can call on fucntions, they allow us to explicitly define the 'this' keyword for the function, i.e. its
+	owner. the first argument to the call() is the owner, i.e. object to which the 'this' found in the body of the function will refer to, and the
+	arguments to the function itself must follow that first arg:
+	
+		function bookFlight(fligthNumber, passenger) {
+			this.bookings.push({
+				flight: `${this.iataCode}${flightNumber}`, 
+				passenger	// an inhanced object literal
+			})
+		}
+		bookFlight.call(lufthansa, 324, "David Cooper")
+		
+	the only difference btn call() and apply() is that apply() takes in the arguments of the mother function in form of an array
+	call() is more preferable, and if you have args as an array, simply use the spread operator:
+	
+		bookFlight.call(swiss, ...arrOfArgs)
+	
+bind() 
+
+	also lets us manually set the value to the 'this', but it doesn't call the function immediately (like call() and apply()), it returns a new
+	function with the 'this' set to the object that we pass as a single arg to the bind()
+	
+		const bookLH = bookFlight.bind(lufthansa)
+		
+	and then we can call this new function with its usual parameters
+	
+	you can also pass the all or some of the arguments to the bind(), store it into a new function, and this function will have its args set, and
+	when you call it, you only need to pass the missing args, or none at all. this is called 'partial application'
+	
+		const bookLH23 = bookFlight.bind(lufthansa, 23)
+		bookLH23("David Cooper")	// with this you can use one function to book for that specific flightNumber
+		
+	bind() is useful with event listeners: when you pass a function that depends on the 'this' as a callback, 'this' will be dynamically assigned
+	the value of the element to which the event listener was added, since that's the one who calls the callback and therefore considered its owner.
+	that's where we can use the bind() to specify the value of 'this'
+	
+		btnBuyTicket.addEventListener('click', lufthansa.buy.bind(lufthansa))
+		
+	we can use bind() to set some arguments on a simple function (not a method), where we don't need the 'this' at all. in this case, before 
+	setting the arguments, as the first one we pass 'null' to assign it to 'this'
+	splice
+Immediately Invoked Function Expressions (IIFE)
+
+	when you create an anonymous function inside an expression (parentheses)
+	
+		(function() {do sth.})
+		
+	in modern programming isn't used much, used to be used to encapsulate some data in a separate scope, but since ES6 it's better to do it in 
+	a block
+	
+		{ some data }
+		
+Closure
+
+	is a property of JS functions, which allows the functions, initialized inside another functions to maintain access to the Variable Environment 
+	of the execution context of their parent function, all their local variables, including args; it's get stored somewhere in the engine.
+	those lower-level functions can be ones that the higher-level function returns, or a function that gets assigned to some outer-level variable,
+	or a callback function that goes in a timer with setTimeout(). they all will have a reference to the Variable Environment of the function where
+	they were created in their own VE.
+	moreover, the closure will have a precedence in case a variable in the global scope has the same name as a variable from the closure
+	
+	
+WORKING WITH ARRAYS
+
+Simple methods
+
+	slice() - like with strings, doesn't mutate the original array, just creates a copy. the second arg which denotes the end of slice, doesn't
+		  include the element of the provided index
+		  
+	splice() - mutates the original array, provided with one arg, cuts the array starting with the index, and deletes the cut part. the second 
+		   arg signifies the amount of elements to splice. commonly used to get rid of the last element: arr.splice(-1)
+		   
+	reverse() - self-explanatory
+	
+	concat() - self-explanatory, returns an array
+	
+	join() - creates a string out of the array, the arg is the string to put between the joined elements
+	
+	at() - the same as the bracket notation. easier to retrieve the last element, and also with method chaining
+	
+	forEach() - a higher-order function, that takes in a callback fun which it calls while it loops through an array. the callback may accept
+		    from 0 to 3 args in this order: element, index, array itself.
+		    while iterating with forEach() you have no way to break out of the loop, i.e. no 'break' or 'continue' statements
+		    
+		    you can call forEach() on maps, the parameters will be: value, key, map
+		    sets don't have keys or indeces, so the second param for them is just a dummy, that will return the element, but you have to
+		    write it anyway, e.g. write an underscore
+		    
+Creating DOM elements
+
+	to fill a certain element with some generated html, you can use the insertAdjacentHTML() method, called on the parent element. it takes two
+	args: first is a string that defines the position of the new HTML content, there are 4 possible, but we mostly need only 2: 'afterbegin' and
+	'beforeend'; and the second arg is a string containing the html we want to insert.
+	to empty an element of its content, set the innerHTML property of the element to ''.
+	
+		* functions should avoid working with global vars, and work with the data they receive as args. exception: state vars, when the 
+		  behaviour of the function depends on some state, we want the state to live in the global scope
+	
+Data transformations: map, filter, reduce
+
+	map() - iterates through an array, and performs the operation inside the callback provided to each element, and storing the result as an 
+		element of a new array, which it returns at the end of its execution. thus it 'maps' the content of the array it's called on, to a new
+		array.
+		you can access not only the current element, but its index and the whole original array with the args to the callback.
+		
+	filter() - iterates, checks each element with a provided expression and lets in to a new array only the elements that pass the check (the 
+		   expression evaluates to true). returns the new array
+		   
+	reduce() - iterates, computes an accumulator variable based on an operation performed on each element of the array. e.g. you can add all the
+		   elements and store the result in that accumulator var.
+		   the first arg that receives the callback is that accumulator var, and the rest of args are usual el, i, arr.
+		   each iteration should return a value which will be stored in the accumulator var
+		   so reduce() takes in the callback as its arg, but also, there is a second arg, which is the initial value of the accumulator.
+ 
+	
+	* in functional programming when we decide which method to use, the important concept is a side effect, basically it's a modification to the
+	  original data, on which you call a method. e.g. the map() doesn't have a side effect, it returns a new data structure, and doesn't modify
+	  the original one. forEach() does have a side effect, so if you want to change the original data in some way, choose forEach() over map()
+	  
+Chaining methods
+
+	chaining a lot of methods to a big array is costly performance-wise, try to optimize the calls
+	it's bad practice to chain the methods that mutate the original data (e.g. splice(), reverse())
+	
+flat() and flatMap()
+
+	to flatten an array means to get rid of nested arrays, by defualt the flat() goes one level deep, but if you have multiple levels nested arrays
+	you can pass the number of levels as an arg to the method.
+	a common operation to first map an iterable (e.g. get some array from an object property), and then flatten it - for that use flatMap(), as
+	an arg it takes a callback just like the map(), and whatever this callback returns, get flattened.
+	
+find() 
+
+	like filter(), accepts a callback with a condition in its body, but while the filter() returns array of each element that satisfies the 
+	condition, find() returns the first element that satisfies it. useful to find an object we need in an array of object based on certain
+	property. if there is no matches, will return an undefined
+	
+Implementing login
+
+	the default behavior of the submit button in a form is to reload the page after it's clicked. to get rid of that, inside the event
+	listener's callback, declare the event arg (the first arg to the callback), and call the preventDefault() on it.
+	when you hit 'enter' while in an input field of a form, it automatically triggers the click event on the submit button.
+	
+	the assignment operator works from right to left, the value on the right gets passed to the value on the left, thus we can chain assignmetns,
+	when we want multiple vars to be assigned with the same value:
+	
+		someVar = anotherVar = ''
+		
+	after some op, e.g. login, we might want to get an input field out of focus. we can do it with blur() called on the input element
+	
+findIndex()
+
+	works the same way as the find(), only the return will be a number (index) of the first element that satisfies the condition, defined in 
+	the callback. useful, when you want to delete an element from an array, and need a somewhat complex logic to identify which element to delete.
+	
+some()
+
+	accepts a callback that checks each element with the defined condition, if one element passes the check, returns true.
+	similar to the include(), only the include() checks for the strict equality btn elements in the array and the value provided as the arg;
+	and some() checks with complex expressions.
+	
+every()
+
+	the same concept as some(), only it returns true only if every element satisfies the condition from the callback
+	
+	
+		* with all those callback you can pass to those method, don't forget that you can declare a var and store a callback there, and then
+		  pass this var as arg to the methods - the DRY principle.
+		  
+Sorting arrays
+
+	arrays have the sort() method, called without args, it will treat every element as a string, and organize the elements alpabetically.
+	to sort numbers we need to pass a callback to the sort(). the callback takes in 2 args: the current element, and the element after it.
+	the way it works is the callback must return a number, if the return number is bigger than 0, the two elements will be switched; if it's less
+	or equal to 0, the order will stay the same.
+	so to organize the numbers in the ascending order, we compare the two numbers, and the lesser one we want to put to the left:
+	
+		numbers.sort((a, b) => {
+			if (a > b) {			// switch places
+				return 1
+			}
+			if (a < b) return -1		// don't switch
+		})
+		
+	since the return can be any number, we can simplify this:
+	
+		numbers.sort((a, b) => a - b)		// so if a is less than b, we want the order to stay the same, so a-b will be negative
+		
+	and for the descending order, we just perform b - a in the callback, to put the bigger number to the left
+	the sort() mutates the original data
+	
+		* the way to make copy of an array and keep chaining methods, use slice() with no arguments
+	
+Creating arrays programmatically
+
+	querySelectorAll() doesn't return an array, it returns a node list, which is an array-like structure, you can't call the array methods on it,
+	like map() etc. but you can turn it into an array with Array.from(), just pass the node list as an arg.
+	so the first arg of the from() is an object, and the second is a callback, that can acess each element and mutate its value, or generate it in
+	case the object you pass as the first arg is a literal containing one property call 'length' and the value is the number of elements.
+	
+	
+NUMBERS, DATES, INTLS, AND TIMERS
+
+	all numbers interanlly are represented as floats in JS, 64-bit binary value.
+	when you want to convert a string (e.g. an input) to a number, you can just put a '+' before the value
+	
+	the remainder operator (%) is good to know if a number is even or not, and also to perform some action on certain elements of an array, e.g.
+	to perform it on every other element: i % 2 === 0; on every third el: i % 3 === 0; etc.
+	
+	you can use underscore as numeric separators when you hardcode numbers, the engine will ignore it:
+	
+		234_324_324_900
+		
+	out of 64 bits used to store numbers, only 53 is used to store actual digits, hence, the max value you can safely store with the 'number' 
+	primitive is 2 ** 53, or Number.MAX_SAVE_INTEGER
+	to store larger numbers, since ES2020 we can make use of a new primitive - BigInt, this value can be however large.
+	to convert a simple number into a bigint just add 'n' at the end: 32432235332523532243n, or use the BigInt() constructor
+	you cannot perform operations that include both number and bigint, one needs to be converted
+	
+	to get a float with a defined number of digits in the decomal part, call toFixed() on the number and provide the number of digits with an arg
+	to add a 0 to a number, convert it to string, and call the .padStart(2, 0) on it
+	
+Creating dates
+
+	a date is an object, create it with
+		
+		new Date()
+		
+	as an argument you can pass a string in various formats, several numbers separated by commas representing year month day etc, or a timestamp
+	which is a number of milliseconds that passed from the initial moment of the Unix time (which is Jan 1 1970 0am)
+	without any arguments the constructor will return the date and time of now.
+	from the date object you can retrieve all the date and time values (year, month, seconds etc)
+		getMonth() is 0-based (i.e. Jan is 0)
+		getDate() returns a day of month (not 0-based)
+		getDay() returns a day of week (0-based, but it starts with Sun)
+		getTime() returns a timestamp of the date on which it's called
+		
+	to format date into a localized string use Intl API
+	
+		new Intl.DateTimeFormat(locale, options).format(dateObject)
+		
+		navigator.language 	// to access the local of the browser
+		
+	with the same API you can format numbers as well
+	
+		new Intl.NumberFormat(locale, options).format(value)
+
+Timers
+	
+	setTimeout() accepts a callback and a time in milliseconds as it arguments, and it calls the callback ones after the defined time has passed in
+	asyncronous way.
+	setInterval() has same params, but it will call the callback repeatedly after the defined time has passed
+	
+	
+ADVANCED DOM AND EVENTS
+
+How the DOM really works
+
+	DOM is an interface btn JS and browser, allows us to programmatically interact with a webpage. genereated from an HTML document, representing 
+	it as a tree of nodes.
+	a node can be an element, a text content of an element, an HTML comment (everything in HTML doc must be represented in DOM), and a document
+	a node is represented by a JS object, the inheritance is the following Node -> Element -> HTMLElement -> specific_element_object (e.g. 
+	HTMLDivElement)
+	Node has a parent type, EventTarget, which is an abstract one, that we don't access in code, it provides methods to add or remove event 
+	listeners. apart from Node it has one more child - Window, which is a global object, many of its methods and properties are unrelated to DOM.
+	
+Selecting, creating, deleting elements
+
+	querySelsector() and querySelectorAll() are modern ways to select elements. the latter returns a NodeList.
+	getElementById()
+	getElementsByTagName() and getElementsByClassName() return an HTMLCollection, its main feature is that it's updated dynamically, if an element
+	from the collection gets deleted from the doc.
+	
+	to create call the createElement(tag) on the document object
+	then to insert the new element, select its parent and call prepend() or append() on it, the former will insert it as a first child, the latter
+	as a last child.
+	also you can insert a new element as sibling of a certain element by calling before() or after() on it.
+	
+	to delete call remove() on the element you want to delete
+	
+Scrolling
+
+	to ways:
+		- provide the coordinates of the element you want to scroll to to the window.scrollTo(x, y)
+		  to get the coordinates, call the getBoundingClientRect() on the element
+		  	* to access the element on which you add an event listener, from the event listener: this || e.currentTarget
+		  getBoundingClientRect() will return an object, DOMRect, with all sort of properties describing the position on the element
+		  to get the X coordinate, call DomRect.left, Y - DomRect.top
+		  and you need to adjust those coordinates to the current position of the window, i.e. where are you scrolling-wise: just add 
+		  window.pageXOffset and window.pageYOffset accordingly
+		  and to make the scrolling smooth, pass an options object to the window.scrollTo() instead of raw coordinates:
+		  
+		  	window.scrollTo({
+		  		left: domrect.left + window.pageXOffset,
+		  		top: domrect.top + window.pageYOffset,
+		  		behavior: 'smooth'
+		  	})
+		  	
+		- simplier and mor modern way (will work only on modern browsers) is to call the scrollIntoView() on the element you want to scroll to
+		
+			main_text.scrollIntoView({behavior: 'smooth'})
+			
+Events 
+
+	events are fired regardless of if there are listeners.
+	there are several ways to add an event listener to an element, the best one is with addEventListener(), because this way you can add multiple
+	listeners to the same element, and more importantly, you can remove the listener with the removeEventListener() called on the element and 
+	with a callback provided as an arg.
+	  		
+	an event's lifecycle includes 3 phases:
+		- capturing phase - it's born in the top-level node, i.e. the document node, and during the capturing phase it travels down the node
+		  tree to its target node, the one where the event acutally happens, it visits all the parent nodes of the target element
+		- target phase - the event arrives at its target element, if there is a listener, it's executed
+		- bubbling phase - the event travels back to the top of the node tree, again visiting every parent of the target element.
+	this lifecycle is called an event propagation
+	when the event visits parent elements during capturing and bubbling phases, it's as if those elements expierience that event, so if we add 
+	listeners for the same event to the parents, they will be executed as well, by default during the bubbling phase. if you want them to be 
+	executed at the capturing phase, set the third arg of the addEventListener() to 'true'.
+	if you want to stop the propagation at any point, you call e.stopPropagation() in the listener.
+	
+Event delegation
+
+	making use of the event propagation, delegation is when instead of adding listeners to all the sibling elements, we can add one listener to 
+	their parent and implement some sort of matching starategy (e.g. execute the code only if event.target matches a certain child of that parent).
+	the purpose of the delegation is reduce the performance load, not to store multiple callbacks for each sibling, but store only one for their 
+	parent. and also when we create childs dynamically, it's easier to add a listener to their parent, that's already in the document.
+	
+DOM traversing
+
+	is when you select elements by reference to other elements by calling different methods on the selected elements, including querySelector(), 
+	which isn't restricted only to the document object. when you call it on an element, it will scan the children elemnts, not siblings or parents
+	there are a lot of those methods, e.g. children() will return a NodeList of the direct children of an element, nextElementSibling(), 
+	parentElement(), closest() which accepts a query selector as its args, and is useful with event delegation (to select the whole button
+	for example), etc.
+	
+		* guard statement - when we check some condition and if it's true, we return:
+		
+			if (!clicked) return
+			
+		* the result of a function that doesn't return anything explicitly is 'undefined'
+		* to pass an additional arg to a handler function, create a separate function, and pass it to the listener, but with calling bind()
+		  on it with the argument you want to be the additional one, this argugment will be the value of the 'this' var, and inside the 
+		  handler function you call 'this' whenever you want to use that additional argument
+		 
+		* if you want something to happen based on where the user is scrolling wise, instead of using the 'scroll' event which is very resource
+		  consuming, use the IntersectionObserver API
+		  
+DOM lifecycle events
+
+	'beforeunload' - right before user leaves the page, or reloads it. in the callback call e.preventDefault(), and set the e.returnValue to an
+	empty string, this will triger an alert confirmation for the user to see each time they leave the page.
+	'beforeunload' is set on the 'window' global object.
+	
+Script loading: defer and async
+
+	with regard to the script loading, the page loading can be put into three stages: parsing HTML (i.e. building a DOM), fetching script file
+	(downloading it from the server), and executing the script.
+	when we put the script tag at the end of the <body>, browser first parses the HTML completely, then fetches and runs the script
+	which is fine, but we can improve it by starting to fetch the script while the HTML parsing is still going on without interrupting the parsing,
+	the way it happens if you put the simple <script> in the <head>
+	
+	when you put the async attribute to the <script>
+	
+		<script async src="script.js">
+		
+	the script is fetched at the same time as the HTML is being parsed, asyncronously, when the script is fetched though, its executing will 
+	interrupt the parsing, i.e. the execution is a synchronous opertion, the parsing will continue only after the execution is done.
+	
+	<script> with the 'defer' attribute will fetch the script asynchronously with the parsing, wait for the parsing to be finished, and only then
+	execute the script. this is the best option. though old browsers do not support the defer attribute.
+	
+	
+	
+OBJECT-ORIENTED PROGRAMMING
+
+	is a programming paradigm, based on the concept of objects. objects are models of real-world or abstract things, they main contain data
+	(properties) and behavior (methods), the 'state' of an object is referred to an abstraction over its data.
+	objects are building blocks of an application, they interact with each other through public interfaces (API), i.e. public methods.
+	the purpose of OOP is to organize the code, make it more flexible and maintainable
+	
+	classes are blueprints for objects, instances of the classes are the actual objects
+	
+	how to design classes?
+	4 fundamental principles of OOP:
+	
+		- Abstraction: ignore or hide the details of implementation that don't matter for the interaction with a user, allows for more general
+			       overview of the thing.
+			       
+		- Encapsulation: keep properties and methods that are not part of API private to prevent external code from manipulating the internal
+				 state of the object
+				 
+		- Inheritance: things that share properties and behaviors should be put together in one category, and inherit those shared features,
+			       while adding some characteristic ones of their own
+			       
+		- Polymorphism: within the set of shared behaviors, separate things can vary the implementation of them, thus the same behavior may
+				be performed differently by different objects. in code this achieved by overwriting of a method from a parent class
+				by a child class.
+				
+OOP in JS
+
+	the classic model is there are classes and instances (objects) are created from them in a process called 'instantiation'.
+	in JS instead of classes there are prototypes, they also contain properties and methods accessible to objects; for an object to access those,
+	instead of being instantiated, it has to 'link' to a prototype. for an object to be linked  to a certain prototype means to have an access to
+	that prototype's data and behaviors. this model is called 'prototypal inheritance'.
+	moreover, objects do not store the methods of the linked prototype, when a certain method is called on the object, it delegates the call to its
+	prototype. whereas, instances copy the methods of the class they instantiate.
+	
+	the ways to create prototypes and objects, and link objects to prototypes:
+		- constructor functions - the old way
+		- ES6 classes - abstraction over constructor functions, a 'syntactic sugar', under the hood those are constructor functions
+		- Object.create() - the easiest way
+		
+Constructor functions
+
+	declared as a normal function, as a function statement, or function expression (but not arrow function, since it needs the 'this'), 
+	syntactically, the only difference is that the name of a constructor function should start with a capital letter.
+	
+		function Person(firstName, birthdate) {
+			this.firstName = firstName,
+			this.birthdate = birthdate
+		}
+		
+	to create an object we call this function, but with a keyword 'new'
+	
+		const david = new Person('David', 1954)
+		
+	the 'new' keyword is crucial here, behind the scene it: 
+		- creates a new {} (empty object)
+		- calls the function and assigns the {} to its 'this' variable
+		- links {} to prototype (more on it later)
+		- returns {}
+		
+	constructor functions are a bit like typical classes, even if you call
+	
+		david instanceof Person		// returns true
+	
+	in theory you can also define methods in the constructor, in practice it would create a copy of a method for each object and it would be a 
+	performance nightmare, really bad practice. instead we define behaviors with prototypes and prototypical inheritance.
+	
+Prototypes
+
+	in JS each function has a property called 'prototype', including constructor functions. the value of this property is an object containing 
+	properties and methods.
+	so when the 'new' keyword executes its thing, at the phase of linking {} to prototype, it creates a __proto__ property of the new object,
+	and points it to the 'prototype' property of the constructor function. thus we can create methods on the prototype property of the constructor,
+	and it will be accessible to every object created with that constructor:
+		
+		Person.prototype.caclAge = function() {
+			return 2037 - this.birthdate
+		}
+		
+	* the prototype property of a constructor function is not the prototype of the constructor itself, 
+		
+		Person.__proto__ !== Person.prototype
+		david.__proto__ === Person.prototype
+		
+Prototype chain 
+
+	every object in JS has a prototype.
+	Person.prototype is an object itself, and it's prototype is Object.prototype
+	so the Object() is a global constructor, that all the other prototypes end up pointing to
+		* when we create an object literal, under the hood the new Object() is called, so the prototype of an object literal is 
+		  Object.prototype
+	the inheritance/delegation works in this way. when you call a method or a property on an object, and it doesn't posses it, JS looks for it
+	in the object's prototype, if it's not there, JS looks for it in the object's prototype's prototype, and this goes on up to the 
+	Object.prototype, where the chain ends, Object.prototype.__proto__ is 'null'
+	
+	so the objects in one chain are linked through their prototypes
+	
+ES6 classes
+
+	made to make the class construction look similar to that of more classic OOP languages (Java, C++), but under the hood it's the same 
+	constructor function all over again
+	
+	so classes are just special kind of functions, can be defined as a class declaration, and as a class expression:
+	
+		const Person = class {}		// expression
+		class Person {}			// declaration
+		
+	inside the class body the only mandatory thing we have to do is define a constructor() method
+	
+		class Person {
+			constructor(name, age) {
+				this.name = name,
+				this.age = age	
+			}
+			
+			changeName(newName) {
+				this.name = newName
+			}
+
+		}
+		
+	we can also declare custom methods in the class body, and those methods will be added to the prototype property of the class (function), not to
+	the instances of this class (objects created with its constructor)
+	
+	apart from appealing to the users of classic OOP languages, this way is a neater to add functionality to the prototype, we keep it all in one
+	place.
+	
+Setters and getters
+
+	they are defined in the body of a class as methods, with the 'set' and 'get' keywords respectively, but stored as properties, 'accessor' 
+	properties, whereas usual properties are called 'data' properties.
+	good for validating data that is being put in an object as a property's value: in the body of the setter you can implement some logic that
+	will check the provided value
+	when setting and getting existing values with the 'this' var, use underscored properties name to avoid the RangeError:
+	
+		class Person(firstName, birthYear) {
+		
+			constructor() {
+				this.firstName = firstName,
+				this.birthYear = birthYear
+			}
+			
+			set genus(genusName) {
+				this._genus = genusName
+			}
+			get genus() {
+				return this._genus
+			}
+		}
+		
+	the _ is just a convention, the idea is for the data property to have a different name than the setters and getters.
+	on the object you still call
+	
+		david.genus		// getter
+		david.genus = 'ape'	// setter
+	
+Static methods
+
+	methods declared on the object of a constructor function, not in the prototype property of the constructor. hence, static methods are not
+	available to the objects created with that constructor. they are in the constructor function's namespace.
+	e.g. Number.parseFloat() or Array.from()
+	
+Object.create()
+
+	third way of creating objects. first you declare a prototype object literal, store it in a var. then you initialize a new object with the
+	Object.create() and to the create() you pass the prototype as an arg. to initiate the instance variable with this method you have to declare
+	a method on the prototype object, that will do this, sth like a constructor function, but you call it after you initiate the object itself.
+	
+Inheritance btn classes
+
+	- constructor functions - to make one class to inherit from another (make it a child of the said class), we need to do things:
+				  1) in the body of the constructor call the constructor of the parent class, but for it to function properly, we have
+				     to provide it with a 'this' var that would point to the object we want to construct, i.e. call the parent 
+				     constructor with the call(), and put 'this' as its first arg, and the rest args will be the args of the parent
+				     constructor.
+				     
+				     	const Student = function(firstName, birthdate, course) {
+				     		Person.call(this, firstName, birthdate)
+				     		this.course = course
+				     	}
+				     	
+				  2) manually set the prototype of the constructor function (class) with the Object.create() where the parent 
+				     constructor's prototype is the arg. so basically the child's prototype will be an empty object of the parent's
+				     constructor. the idea here is that the child's prototype will have the parent's prototype as its prototype, and 
+				     thus the classes are inherently linked.
+				     
+				     	Student.prototype = Object.create(Person.prototype)
+				     	
+				     the problem with this is that the constructor property of the Student.prototype will point to the Person
+				     the solution is to manually asign the constructor perperty the value of Student
+				     
+	- ES6 classes - with the help of 'extends' keyword and the super() function. syntax, once again, reminds of trditional OOP languages:
+	
+				class Student extends Person {
+					constructor(firstName, birthdate, course) {
+						super(firstName, birthdate)
+						this.course = course
+					}
+				}
+				
+			the super() calls the constructor of the parent class, and also assigns the 'this' var, that's why it always should be the 
+			first statement of a constroctor.
+			
+	- Object.create() - we create a child's prototype object as an instance of its parent's class, and then we can instantiate the child's object
+			    with the child's prototype:
+			    
+			    	const StudentProto = Object.create(PersonProto)
+			    	const marge = Object.create(StudentProto)
+			    	
+			    to implement the constructor, we use the same thechnique as with constructor functions, i.e. we call the parent's 
+			    constructor with the call() to assign the 'this'
+			    
+			    	StudentProto.init = function(firstName, birthdate, course) {
+			    		PersonProto.init.call(this, firstName, birthdate)
+			    		this.course = course
+			    	}
+			    	marge.init('Marge', 1975, 'CS')
+			    	
+		* don't manipulate properties of classes directly, create some methods that will do it for you, a public interface, aka API
+		
+Encapsulation
+
+	you can protect the properties and methods that you don't want to be accessible outside of the class with a conventional syntax, i.e. prefix
+	th names with an underscore. it's not a technical protection, it's sign for yourself and other programmers that the field is protected.
+	
+	to close access programatically, put the fields outside of the constructor and prefix it with #. that's a new feature of JS, not widely 
+	supported. those fields will be stored in the instance object, not in the proto.
+	
+		* return 'this' from the methods to be able to chain them
+		* classes are not hoisted (can't access them before they're declared)
+		* make a preoperty or a method static with a 'static' keyword (declared outside of the constructor())
+	
+	
+	
+MAPTY APP
+
+How to plan a web project
+
+	the planning happends in 4 phases:
+	
+		- user stories - imagine all the possible user experiences, how someone would use the application. all the user stories combined
+				 must describe the app fully.
+				 common format of a user story: 
+				 
+				 'As a [type of user], I want [an action] so that [a benefit]'
+				            who?                 what? 		      why?
+				            
+				 e.g. As a {user}, I want {to log my running workouts on a map}, so that {I can keep a log of my jogs}
+				 
+		- features - based on the stories, define the functionality that would be needed to provide the experience you imagine. e.g. the jogs
+			     you will need a map wher a user can click and create a new workout, get a current geolocation etc.
+		
+		- flowchart - separate nodes in chart into several categories: e.g. actions (such as events or user interactions), in web usually the
+			      chart starts with a page loaded event; async operations, rendering something on the screen etc.
+		
+		- architecture - choose the paradigm, break down the code in parts etc.
+		
+	* all the global vars defined in a script are accessible to other scripts that are linked to the same doc
+	* when traversing DOM, closest() will search parents, not childs for the provided query selector
+	
+Refactoring with OOP
+
+	be careful with using protected methods of you class as callbacks that you pass to event handlers or async calls - they will have the 'this'
+	pointing to other things than the instance of the class. e.g. if a callback function passed to an event handler accesses some instance vars
+	with this.#map, this will point to the DOM element of the event listener.
+	in other words, when callback need to access instance variables, pass them with the .bind(this). set the 'this' explicitly
+	
+	when designing a class for something that will produce multiple instances throughout the lifetime of the app, it's good practice to incude
+	the 'id' property, to identify each instance. do it with third-party libraries, don't create those ids on your own.
+	
+Local storage
+
+	is an API provided by browser, stores data as key-value pairs, both must be strings, store objects with JSON.stringify()
+	I/O operations in this API are blocking, generally should be avoided.
+	when you get objects from the local storage, and parse them back from JSON, they loose their inheritance chain, and become children of the
+	Object class
+	
+			* to reload the page:
+			
+				location.reload()
+	
+	
+	
+ASYNCHRONOUS JAVASCRIPT - PROMISES, ASYNC/AWAIT, AND AJAX
+
+			* alert() is a blocking operation, only when the user click a button, the program resumes.
+			* setting a 'src' attribute (img.src = 'url') is an asynchronous op, the source will be loaded in the background. when the 
+			  file is loaded in the background the 'load event is fired.
+			* addEventListener() isn't an asynchronous op, because it performs no work in the background while it waits for an event.
+			
+	the most important asynchronous tasks in JS are AJAX (Asynchronous JavaScript And XML) calls, used to dynamically (i.e. without reloading 
+	the page) get data from remote servers. the remote server contains a web API that provides actual communication (i.e. it knows what to do
+	when a particular request arrives)
+	API - a piece of software that can be used by another piece of software, so that those pieces could communicate with each other.
+	it has XML in its name because this format was used to transport data in the past, before it was largerly replaced  by JSON.
+
+	one of the old ways to make AJAX calls is through the XMLHttpRequest class:
+	
+		const request = new XMLHttpRequest()
+		request.open(method, url)
+		request.send()
+		
+		request.addEventListener('load', () => console.log(this.responseText))	// this === request
+		
+How the Web works 
+
+	in the client-server architecture those are the steps in the communication:
+	
+		- DNS (Domain Name Server) Lookup - builds the actual IP address: 
+			> domain name -> address
+			> the resource part of URL is removed, later stored in the request
+			> port number is appended
+		
+		- TCP/IP socket connection is established btn the client and the server
+		  TCP (Transmission Control Protocol) is responsible for breaking up the request/response into packets (each packet can take different 
+		  route through the Internet), making sure each of them is delivered, and assembling them in the right order on the other side. IP 
+		  (Internet Protocol) is responsible for actual sending and routing of the packets; attaching the IP address to each packet.
+		  
+		- sending an HTTP request. a request consists of:
+			> start line: HTTP method + request target (the resource part of URL) + HTTP version
+			> headers
+			> body: only if the request wants to store or update sth on the server (POST, PUT, PATCH)
+			
+		- server processes the request and sends a response. a response consists of:
+			> start line: HTTP version + status code + status message
+			> headers
+			> body: JSON with the requested data, HTML of the requested page, etc.
+
+Callback hell
+
+	happens when we perform multiple asynchronous operations sequentially.
+	keeping with the example of XMLHttpRequest, imagine we want to make multiple requests, so we instantiate them and send them:
+	
+		request.send()
+		request1.send()
+		request2.send()
+		
+	those three async ops are performing in parallel, and there is no way to predict the order in which their responses will arrive.
+	if the order matters, we will send the next request from the callback that executes when the previous response arrives:
+	
+		request.send()
+		request.addEventListener('load', () => {
+			request1.send()
+			request1.addEventListener('load', () => {
+				request2.send()
+				request2.addEventListener('load', () => {
+					// do sth
+				})
+			})
+	 	})
+	 	
+	and this is a callback hell, easily identified by the triangle of an empty space caused by identation.
+	this type of code is difficult to understand and maintain, it's prone to bugs, and should be avoided.
+	
+Promises and the Fetch API
+
+	promises is a JS feature, introduced in ES6, that helps us to escape the callback hell.
+	a promise is an object that is used as a placeholder for the future result of an async operation, a container for a future value.
+	
+		* I liked the analogy he used of a lottery ticket as a promise: we buy it (promise built), and when the lottery is drafted (async op
+		  is completed), the ticket can become a monetary value (promise fulfilled), or a waste (promise rejected)
+		  
+	the benefits of using promises to handle async ops:
+		- we don't have to rely on events to handle results
+		- instead of nesting callbacks, we can chain promises for sequential execution of async ops, thus escaping the callback hell
+		
+	a promise can be in two states:
+		- pending - before the future value is available, after building the promise and while the async op is executing in the background
+		- settled - async task is finished, and there can be two types of result:
+			> fulfilled - the value is available, success
+			> rejected - an error occured, there is no value
+	
+	we can handle these states in our code. to interact with the promise object is called to 'consume' it.
+	but to have the promise in the first place we need to 'build' it first. we can build one manually, but most of the time we will let some API
+	to build it for us, and our task will be just to consume it.
+	
+	one of the APIs that builds promises is the Fetch API, used to send HTTP requests
+	the fetch() function in its simpliest form accepts one arg, which is a string containing the URL (but it also can accept a second arg, an 
+	options object, where you can define method, headers, body, and so on). and when called it will send a GET request and return a promise, i.e. 
+	it will build the promise, which we can store in a variable and consume it.
+
+Consuming promises
+
+	in the context of the Fetch API, each built promise has the then() function that, is called when he promise is fulfilled; it accepts a callback
+	that is executed as soon as the promise enters that state. as its argument the then() receives a Response object. The response will contain
+	the metadata like status, headers etc.
+	it will not contain the JSON from the body though. to get it we have to call another async op, this time on the response object, with the 
+	json() function, that returns yet another promise, which when fulfilled turns into a JS object we were after. so to get the object we need
+	to chain 2 then() functions:
+	
+		fetch('some.url.com/resource/value')
+			.then( response => response.json() )
+			.then( data => data.doSth() )
+			
+Chaining promises
+
+	the then() function always returns a promise, we can use that to chain multiple async ops when we want to execute them sequentially.
+	 
+	 	fetch('some.url.com/resource/value')
+			.then( response => response.json() )
+			.then( data => {
+				data.doSth() 
+				return fetch('some.other.url.com/resource/value')	// sic!
+			})
+			.then( response => response.json() )
+			.then( data => data.doSth() )
+			
+	the trick is to explicitly return the promise built by the second fetch() (not to call then() on it right away)
+	with this, we can chain the callbacks on the same identation level, and make it more understandable.
+	
+Handling rejected promises
+
+	one way is to pass a second callback to the then(), which will be called if the promise is rejected, but it's ugly
+	a better way is to call the catch() at the end of the chain, it will be called if any of the chained promises are rejected
+	the catch() receives an Error object as its arg, to get the message from it call err.message
+	the catch() also returns a promise, and on that we can call the finally() method whose callback will be executed after all the then() and a
+	catch() no matter if the promises are fulfilled or rejected.
+	one common functionality of the finally() is to hide a loader animation.
+	
+		fetch('some.url.com/resource/value')
+			.then( response => response.json() )
+			.then( data => data.doSth() )
+			.catch( err => console.error(err.message) )
+			.finally( () => loader.style.display = 'none' )
+			
+				* to display a customized error messages based on a specific failure, we need to identify the error in the then() 
+				  callback, and throw a new Error
+				  
+				  	.then( response => {
+				  		if (response.status === 404) {
+				  			throw new Error('Resource not found')
+				  		}
+				  	)
+				  	.catch( err => container.textContent = err.message )
+				  	
+				  here, the string passed to the constructor of the Error will be set as its message property
+				  when we throw a new error, the promise is automatically rejected, and the error is passed down the chain to the
+				  catch()
+				  
+				  NB! the promise is rejected right away, only if there was a connection fail. if e.g. a resource wasn't found (404), 
+				      the promise will still be fulfilled, the same goes for other internal server failures.
+				      so we need to handle those things manually to get the right error message.
+	
+The Event Loop (Async behind the scenes)
+
+	JS runtime contains all the necessary parts to execute the JS code. JS Engine is the part of the JS runtime that does the actual executing.
+	Web APIs is another part of the runtime that has two main purposes: 
+		~ store the APIs provided by the JS runtime environment (e.g. browser) to interact with it, like DOM, timeouts, fetch API etc.
+		~ provide the place for the background tasks to execute.
+	when an async op is called in the Call Stack, it can't stay there, otherwise it will block the execution of other contexts; so it's moved 
+	to the Web API environment where the background op is performed, and a callback gets assigned to it. when the op is finished, e.g. a file 
+	is done downloading, or an event gets fired, or a timer is run out, the associated callback is passed down to another part of the JS runtime - 
+	the Callback Queue. the Callback Queue is a chronologically ordered list of callback functions to execute. they can only be executed by the 
+	JS engine, in the Call Stack; so they need to get from the Callback Queue to the Call Stack. and the thing that gets them there is called the 
+	Event Loop, another part of the JS runtime.
+	the Event Loop checks the state of the Call Stack, and when it's empty (i.e. contains only the global context), the Event Loop fetches the 
+	first callback from the queue to the Call Stack, when the Call Stack is empty again, it fetches the next callback, and so on.
+	thus, by delegating async ops to other parts of the JS runtime, JS can perform long-running ops without blocking the single thread it possesses
+	
+	Promises are a special kind of async ops, when they are settled, the associated callback goes from the Web APIs environment not to the 
+	Callback Queue, but to the Microtasks Queue, a special list for the callbacks of Promises. The Microtasks Queue has priority over the Callback
+	Queue: when the Call Stack is empty, the Event Loop will empty the Microtasks Queue before fetching anything from the Callback Queue	
+	
+Building a simple Promise
+
+	most of the time we juct consume promises. but to know how the building works.
+	with a construction function. the function takes in one arg - an executor function. when the constructor is called, the executor is run 
+	immediately. the executor contains the async work, and eventually should produce some sort of value, that later we can consume. the executor 
+	takes in two args: two functions: resolve and reject. in the course of the async work, when we a ready to fulfill the promise, we call the
+	resolve() and pass the return value to it as an arg. and we call reject() when we want to reject the promise, usually we pass an Error as 
+	a return value.
+	
+		const lotteryPromise = new Promise(function(resolve, reject) {
+			setTimeout(() => {
+				if (Math.random() > 0.5) {
+					resolve('You win!)
+				} else {
+					reject(new Error('You lose'))
+				}
+			}, 2000)
+		})
+		
+		// Consuming
+		
+		lotteryPromise
+			.then(res => console.log(res))		// 'res' the arg of the resolve()
+			.catch(err => console.error(err))
+			
+	if the executor receives only one arg, it will be considered as the resolve()
+	
+async/await
+
+	it's a syntax sugar over consuming promises with .then(). the goal is to make async code look like a sync one
+	a function prefixed by the 'async' keyword will run in the background, which allows it to be blocked, and that's what the 'await' keyword
+	does: it goes before a Promise creation, and blocks the execution of the function till the promise is resolved
+	
+		async function whereAmI() {
+			const response = await fetch('https://www.some.url')
+			const data = await response.json()
+		}
+		
+	thus we got rid of callbacks all together, the code looks as if it's sync, though behind the scene it's usual promise consumption with .then() 
+	
+	handle rejected promises with try/catch, if needed throw custom errors in the try block.
+	
+Returning values
+
+	any async function returns only promises
+	if an error ocurrs in the try block, the returned promise will still be fulfilled. to reject such a promise you have to rethrow the error
+	from within the catch block
+	
+	to process the result you will need another async function, not to create a special function to do that, you can use an iffy:
+	
+		(async function() {
+			const result = await whereAmI()
+			console.log(result.messge)
+		}()
+		
+	this will execute the function without storing it in a variable.
+	
+Running promises in parallel
+
+	when you make several async calls independent of each other, you should make them in parallel, i.e. one async call shouldn't await the 
+	completeion of another to start. the way to do it is with a static combinator method all() of the Promise proto. it accepts an array of 
+	Promises, combines them into one, and the fulfilled value will be an array of fulfilled values from each Promise.
+	if one of the Promises is rejected, the execution short circuits, and the parent Promise is rejected.
+	
+		const result = await Promise.all([
+			fetch(url1),
+			fetch(url2),
+			fetch(url3)
+		])
+		console.log(result.map(d => d[0].capital))
+		
+	there are other combinators of Promises, all take in an array of Promises as its arg, the difference is the return value:
+	
+		- allSettled() - it's like all(), but it doesn't short-curcuit when one of the promises is rejected; it returns the values of all
+				 the settled promises: fulfilled, or rejected
+				 	
+		- any() - returns the value of the first fulfilled promise, ignoring the rejected ones
+		
+		- race() - returns the value of the first settled promise: fulfilled or rejected. the most useful one, because of the timeout pattern:
+			   when you don't want to wait for one or several AJAX calls past a certain amount of time, you can create a custom timeout
+			   promise and add it to the input array:
+			   
+			   	const timeout = function(ms) {
+			   		return new Promise((_, reject) => {
+			   			setTimeout(() => {
+			   				reject(new Error('Request took too much time'))
+			   			}, ms)
+			   		})
+			   	}
+			   	try {
+				   	const result = await Promise.race([
+				   		fetch(url),
+				   		timeout(1000)
+				   	])
+				} catch(error) {
+					console.log(error.message)
+				}
+				
+			   in this example we don't want to wait for the fetch indefinetely, so if it takes more than 1 second to settle, the timeout
+			   will be settled first, with a rejection, and we can handle this in a desired way.
+	  
+	  
+	  
+MODERN JS DEVELOPMENT: MODULES, TOOLS, FUNCTIONAL
+
+	happens in three stages:
+	
+		- development: divide the code into modules that can share code btn each other, make the code more organized and maintainable, add 
+			       thrird-party modules (most commonly from the npm repository, Node Package Manager)
+		
+		- build: the purpose is to combine all the modules and third-party libraries into one JS bundle (file), i.e. the final file that 
+			 we deploy to the server for production. a complex process, we highlight two steps:
+			 
+			 ~ bundling: combines modules (older browsers don't understand modules), removes unused code, compresses data
+			 ~ transpiling/polyfilling: translates all the modern JS into the ES2015 to increase the scope of browsers (the tool to 
+			   perform this step is Babel)
+			   
+			 the build process is performed by one of the build tools, some of them: Webpack (requires a lot of configuration), Parcel (a 
+			 zero configuration tool); they are also called 'bundlers'
+		
+		- production
+		
+Overview of modules
+
+	modules are reusable pieces of code that encapsulate its implementation details. usually are standalone files (but don't have to be). have 
+	exports, a public API; and imports that can grab the exports from another modules, thus becoming dependent on them. modules are a design 
+	pattern not unique to JS, it's been in use for decades.
+	
+	really useful when the application is big - you can devide the project into self-sufficient blocks, where one developer can work on one block
+	without knowing or even understanding what other blocks do. you also abstract away the implementation details, and perceive modules as black
+	boxes to achieve a better understanding of a broader system
+	
+	ES6 modules have some unique to them characteristics, juxtoposed to the characteristics for normal scripts:
+		- top-level vars are scoped to modules / scoped to the whole project => naming conflicts
+		- executed in the strict mode by default / sloppy mode
+		- top-level 'this' is 'undefined' / top-level 'this' is the 'window' object
+		- imports and exports must be at the top level, and are always hoisted / no imports and exports 
+		- to link a module to an HTML, need to use the 'type="module"' attribute for the <script>
+		- downloaded in the async way by default / sync by default (w/o 'async' of 'defer' attributes)
+		
+	the imports happen in a sync way to assure that the whole code is ready to be executed before the execution starts
+	it's also crucial to eliminating the code we don't use from those external modules.
+	'import' doesn't copy that piece of code, it's more like a reference
+	
+Imperative vs. Declarative code
+
+	- imperative: explains HOW to perform an operation, detailed steps
+	
+		const arr = [2, 4, 6, 8]
+		const doubled = []
+		for (let i = 0; i < arr.length; i++) {
+			doubled[i] = arr[i] * 2
+		}
+		
+	- declarative: describes the way the computer should perform an operation (WHAT to do), the details are abstracted away
+	
+		const arr = [2, 4, 6, 8]
+		const doubled = arr.map(n => n * 2)
+		
+Functional programming
+
+	- write declarative code
+	- avoid side effects: 
+		* side effects - mutations of data outside of the function (e.g. external variables, logging to console, writing to DOM, etc)
+	- combine many pure functions:
+		* pure function - w/o side effects, doesn't depend on external data, same input same output (i.e. the computation depends only on the
+		  input, and not on the external factors; the same value of input will always produce the same output)
+	- treat data as immutable: once a structure is created it doesn't get modified, new structures are created by transforming existing ones 
+	  			   through pure functions
+	- higher order functionsd
+	- recursion
+	
+	declarative syntax that is often used in functional programming:
+		~ array and object deconstruction
+		~ the spread operator
+		~ the ternary operator
+		~ template literals
+		
+	the benefits of using functional programming
+		> pure functions and immutability make it easier to reason about the behaviour of the system and understand the connections of its
+		  parts
+		> since the functions are free of side effects and always produce the same output from the same input, it's easy to test them -> more
+		  robust and reliable code
+		> easier to write concurrent code and perform operations in parallel
+		> more modular and reusable code
+		> declarative code is more readible than imperative
+		> by avoiding mutable states and side effects, we reduce the probability of bugs
+		
+		
+FORKIFY
+
+	to generate an html string iterating through some collection, use the map(), and using an element of the collection, return a string of html
+	from the callback function of the map().
+	
+Hash events
+	
+	you can programmatically add a hash to the current url, the page is not reloaded, but a 'hashchange' event is fired on the window element.
+	you can use it to pass a new item's ID e.g.
+	for it to work, an element in a list must be a link <a href="#somevalue">Someitem</a>
+	and to get the value from the hash:
+	
+		const id = window.location.hash.slice(1)	// removing the '#' symbol
+		
+Architecture
+		
+	we build our application according to a certain architecture, the benefits of it are:
+		- structure
+		- maintainability
+		- expandability
+		
+	there are established architecture patterns, like MVC (Model View Controller)
+	when we use a framework, the architecture is taken care of by the framework
+	
+	components of any architecture:
+	
+		> business logic: what business does in nutshell
+		> state: stores all the data about the application, single source of truth, synced with the UI, state libraries (e.g. Redux)
+		> HTTP library: responsible for AJAX calls
+		> application logic: code that's concerned only with the implementation of the application, handles navigation and UI events
+		> presentation logic: displays the state
+		
+	in MVC, Model manages AJAX calls, keeps the state, and is responsible for the business logic;
+	Controller is the application logic: receives events, calls the Model, updates the UI based on the changes in the state.
+	View - presentation logic	
+	
+		* there is a live connection between exports and imports, i.e. if the value changes in the module that exports this value, the 
+		  changes will propagate to the imported value in the module that imports it.
+	
+Modules
+
+	commonly in a project we have a couple of modules that are separated a bit from the rest of the app, they only export certain values:
+		configuration module - contains constants that we use throughout the project
+		helper functions
+		
+			* design patterns - common solutions for common problems
+			
+Producer Consumer 
+
+	an event itslef must be captured in the View, but the operation that it triggers belongs to the application logic, therefore must be 
+	performed inside the Controller.
+	the way to implement this kind of interaction between View and Controller is via the Producer-Consumer design pattern. View is the Producer
+	here. so at the initiation, the Controller subscribes to the View, i.e. calls a function from the View that adds an event listener to the 
+	document/element, as an argument that function receives a function from the Controller that contains application logic. so when an event 
+	arrives, the Producer signals Cosumer by calling that function.
+	
+Misc
+
+	* the 'data' html attribute is a way to connect DOM and the code. when you want to get some data from the DOM do it via this interface.
+	
+	* to update only nodes that changed, you generate the whole new View based on updated data, then compare old DOM to the new one, and identify
+	  the nodes you want to change.
+	  to create a DOM from an html:
+	  
+	  	const newDOM = document.createRange().createContextualFragment(newMarkup)
+	  	const newElements = Array.from(newDOM.querySelectorAll('*'))
+	  	
+ 	* common pattern for adding and removing object from a state array: when add, we pass the whole object to the function, when removing we pass
+ 	  only the id of the object to the remover function.
+ 	  
+ 	  to remove an object from array, use the splice() method, pass the index of the object as the first argument, and a numer (1) as the second.
+ 	  
+ 	  	array.splice(index, 1)
+ 	  	
+ 	  to find an index of an object in an array, use the findIndex() that recieves a callback that returns an element based on some condition
+ 	  (compare ids)
+ 	  
+ 	  	array.findIndex(el => el.id === id)
+ 	  	
+ 	* when a function doesn't include no business nor application logic, you don't have to call it from the Controller. e.g. if it's just to show
+ 	  a hidden form when a button is pushed. you can call it from the View, adding event listeners at the start of the app. the place to do it is
+ 	  from the constructor.
+ 	  
+ 	* there is a better way to collect values from the form fields rather than getting them one by one - with the FormData:
+ 	
+ 		const arrOfValuesArrs = [...new FormData(formElement)]
+ 		
+ 	  this will return an array of arrays, where are two elements: key and value. to transform this to an object:
+ 	  
+ 	  	const formDataObj = Objec.fromEntries(arrOfValuesArrs)	// fromEntries() is available since ES2019
+ 	  	
+ 	* History API - built into browsers: allows us to do many things, e.g. change the current url without reloading the page (e.g. update the 
+ 	  hash), or go back to the previous page:
+ 	  
+ 	  	window.history.pushState(null, '', `${someHash}`)
+ 	  	window.history.back()
+ 	  	
+ 	* JSDoc - a formulaic way to annotate functions, describes parameters, returning value, the 'this', the author, and many more options. 
+		  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	

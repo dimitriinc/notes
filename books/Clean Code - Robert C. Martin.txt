@@ -1,0 +1,297 @@
+I. CLEAN CODE
+
+prgramming is specifying requirements in such detail that a machine can execute them.
+messy code is time-inefficient, don't try to meet a deadline by writting carelessly.
+a coder with a sense for clean code, when he sees a codebase, he thinks of options, how to archieve the same result but more efficiently.
+
+different opinions about what's a clean code:
+
+	- Bjarne Stroustrup - clean code does one thing well, complete error handling, minimal dependencies
+	- Grady Booch - cc reads like a good prose, crisp abstractions: no unnecessary details
+	- "Big" Dave Thomas (founder of OTI) - cc is easy to enhance by other people, must contain tests (Test Driven Development)
+	- cc looks like it was written by someone who cares
+	- Ron Jeffries - when code duplicates it's like you try to express the same thought differently because you don't have a grasp of it,
+			 expressivenes: meaningful names, units that do only one thing, abstractions: separate a common operation 
+	- Ward Cunningham - cc makes language look like it was created for the problem
+	
+	
+II. MEANINGFUL NAMES
+
+	~ names reveal intentions, i.e. the purposed of the thing they name
+	~ avoid disinformation - don't name stuff if that's not they are (don't use abbreviations that can mean sth different)
+	~ meaningful distinction - don't use noise words (that don't add meaning), different things must be named differently
+	~ the names must be easily pronounced (so you can converse about them)
+	~ use searchable names - the length of name is proportional to the scope of the variable: the smaller the scope, the shorter a name can be
+	~ avoid encodings and prefixes (e.g. 'm' for member vars), they don't add meaning, and people ignore them. besides, with the tendency to make
+	  smaller classes and functions, those destinctions that encodings provide are not that relevant anymore.
+	  
+	  	> hungarian notation - when name includes some metadata, e.g. type
+	  	
+	~ mental mapping is when a name have some implicit meaning, so the person reading must translate it mentally to get what the name is trying
+	  to say, - avoid that. excusable only for the loop counters (e.g. 'i' meaning 'index')
+	~ class names: avoid data, info, manager, processor; should not be a verb
+	~ method names: a verb or a verb phrase (verb + noun). good idea is to aknowledge the purpose of the parameters, like
+	
+		Complex.fromRealNumber(23.0)	better than	new Complex(23.0)
+		
+	~ pick one word per concept and stick with it, e.g. when you request some data from netword and decide to name the function 'fetchUserData',
+	  stick with fetch and don't call other fun 'retrieveMenuData'; likewise with class names.
+	~ don't try to be funny, say what you mean
+	~ use a popular paperback model, where the author is responsible for making themselves understood, not the scientific paper model, where the
+	  reader is supposed to figure out what the author is trying to say.
+	~ use solution domain names (CS terms, e.g. JobQueue, Visitor), and use problem domain names (terms of the industry for which you make the
+	  app)
+	  
+	  
+III. FUNCTIONS
+
+	~ the main rule is they should be small, with a minimum levels of abstraction, i.e. nested blocks (loops, conditionals), which ideally
+	  should be one line long (e.g. another function call, descriptive name)
+	~ do one thing, a fun can call other functions that do different things, but it needs to stay on one level of abstraction, i.e. a discriptive
+	  name of the fun states the intention on a high level of abstraction, the code in the body should go only one level beneath that; and if the
+	  fun accomplishes the stated intent, while calling other functions to perform other tasks (staying on one level), it is considered to do 
+	  only one thing.
+	~ one level of abstraction per function. the code for a complex operation should be read as a sequence of functions, each of which goes one
+	  level beneath the previoius one - the stepdown rule.
+	~ with switch statements, that by design do multiple things, he suggest using polymorphism, i.e. create classes based on the value that is 
+	  being evaluated that have inheritance relationship (implementations of one abstract class), or calling one method with different signatures
+	  (static polymorphism, i.e. specific implementation gets assigned at compile time) 
+	  
+	  	> open/closed principle - refers to a way for providing polymorphism when classes implement the same interface: it's open in a sense 
+	  	  that any class can implement it and override its methods, and it's closed in a way that you can't modify the interface itself.
+	  	  
+	~ descriptive names: a long descriptive name is better than a short enigmatic one, and better than a long descriptive comment
+	~ arguments: the less the better. avoid passing a boolean flag as an argument, this indicates that the function does more than one thing.
+	  if a function needs several arguments, perhaps you should combine them in a custom class.
+	~ no side effects: it's when a fun does sth that is not declared in the name. this can create unwanted and unproclaimed couplings, i.e. the
+	  part of the code that calls the function becomes dependent on some other part.
+	~ command query separation: a fun can either do something, i.e. change the state of an object, or provide some data about the object, but
+	  not both
+	~ try/catch blocks are confusing, it's good to export the bodies of its blocks to separate functions
+	~ if a fun includes error handling it should be the only thing it does, if it contains the try/catch/finally, it should be the only thing
+	  it contains.
+	  
+	  	> a dependency magnet is a class that requires many other parts to inject it. a magnet is costly to modify, it requires recompiliation
+	  	  an redeployment
+	  	  
+		> to wrtie you first draft according to all those principles is virtually imposible, you edit according to them
+		
+		> functions are verbs and classes are nouns in a language that describes a system. a programm is a story about that system
+		
+		
+IV. COMMENTS
+
+in a perfect word the code will be sufficiently expressive on its own, so that we don't need any comments. so don't think about comments as something inherently good, or a sign of a quality code, - at best, it's a necessary evil. write comments only as a result fo failure to express yourself through code.
+the main problem of comments is that they are impossible to maintain as the source code gets modified. thus comments tend to misguide a reader a lot.
+the purpose of a comment is to explain the code, that can't explain itself.
+
+
+
+V. FORMATTING
+
+good habits and discipline in formatting is more important than the functionality of code, since the latter will change with time in newer versions; the neat and consistent styling allows all the versions be understandable and easy to edit.
+comparison of a source code file to a newspaper article: in the beginning - high-level concepts and algorithms, the code gets more concrete as the reader moves downward.
+
+on the subject of blank lines: think of the pieces of code in between empty lines as self-containg thoughts or concepts.
+
+vertical distance: related entities should be close to each other, this conceptual affinity is defined by how one entity is important to understand another, or how similar their functionality are (e.g. funs with the same name but different params should go together). instance variables a declared at the beginning of a class. the function that calls another function should be above the callee, and they should be close vertically.
+
+horizontal distance: using whitespaces, separate the things that are separated conceptually, e.g. the assignment operator separates two entities so surround it with spaces, the params list is closely related to the function's name, so we don't put a space between them. whitespace is a good tool to accentuate the operator precedentes in the math opeartions.
+
+	> a long list of instance variables indicates that the class probably should be split in several classes
+	
+
+VI. OBJECTS AND DATA STRUCTURES
+
+we encapsulate data in objects, so that the other parts of the system don't depend on them, and also not to demand that the outer system knows the details of the object's data structure and implementation of its functionality. the latter is about abstracting an entity, making it more like a black box. this abstruction that stands between the object and the rest of the system is an interface. the more abstract interface is, the beter. e.g. you can expose the object's data via getters and setters, but a better way is to implement an interface, that will hide even the existence of certain variables; because getters and setters let everyone know what the vars are, the interface can just expose an abstract function (e.g. setFuelTankInPercentage()), and only the object itself will know how to implement it.
+
+here lies the difference btn object and data structure: the former exposes functions to manipulate its data, he latter contains only data and no meaningful functions.
+the code the operates on data structures is called 'procedural' (a paradigm): it makes it easy to add new functions without changing the existing data structures (e.g. you may have several data structures for several geomtetric shapes, and a class that performs operations, depending on what shape it gets as an input - here you can easily add functionality to the class, and you don't have to change the data structures for the code to function; but if you add a new data structure, you will have to chage the functions).
+the code that operates on objects is called 'object-oriented' (OO). it makes it easy to add new objects (through different implementation of a parent class) without changing the existing funcitons. but if you change the functionality of a parent class, you will have to change all the objects. you never ask an object about its internals, rather you tell it to do something.
+
+which paradigm to implement depends on the goals of the system. so, not everything is an object: sometimes it makes more sense to have simple data structures and procedures to operate on them. the hybrid paradigms are to be avoided.
+
+Data Transfer Object (DTO) - is a data structure with public variables and no functions at all, good to represent raw data from databases, and serve as the first step in processing this data by the application.
+bean - is a data structure with private variables, public constructor, and getters+setters. provides no real advantages over DTO, apart from making OO purists feel better with its pseudo-encapsulation.
+
+
+VII. ERROR HANDLING
+
+error handling must not dominate over the program's logic.
+avoid returning null from functions: prefer throwing a NullPointerException, or a special case object (like an empty list)
+the main quality that a proper error handling brings to the code is being robust.
+
+
+VIII. BOUNDARIES
+
+dealing with third-party libraries, i.e. how to integrate foreign code correctly.
+the problem with boundaries between original code and a foreign one appear because providers of APIs strive for brad applicability and we want the APIs to be focused on our particular needs.
+
+the problem of the functionality that exceeds our needs can be solved by wrapping foreign APIs in a custom class, and expose methods that perform only the needed operations.
+
+to understand how a third-party code works, write learning tests, exploring what the code does.
+
+
+
+IX. UNIT TESTS
+
+tests are as important as the production code and must be maintained as clean, must be written simultaneously with the production code.
+tests make your code flexible and maintainable, they allow to change code without fear of breaking down the functionality.
+clean tests allow for clean production.
+
+clean tests are of high readiblity, and test one concept per test.
+the also follow the F.I.R.S.T. principles:
+	F - fast - a test must be fast to execute to make it easy to repeat
+	I - independent - test should not depend on another test
+	R - repeatable - i.e. independent of the environment, should be possidble to run on any platform
+	S - self-validating - should return a boolean, gives an easy result: passed on failed, no digging through logs
+	T - timely - should be written just before the production code that it tests is written
+	
+	
+X. CLASSES
+
+organization: from top down: 
+	public static variables
+	private static variables
+	private instance variables
+	public methods
+	private methods
+sometimes it makes sense to make variables and utilities protected (can be accessed from the same package), e.g. to expose them for the tests.
+
+classes should be small, their size is defined not by lines, but by its responsibilities. the name should be concise, a vague name indicates too many responsibilities == too large of a size, e.g. Manager, Processor, or Super are clear indicators that you need to break up the class. 
+for a description 25 words should be enough, it shouldn't include: or, and, but, if; if it does - too many responsibilities.
+
+single responsibility principle - class must have only one reason to change.
+
+keep the list of instance variables small. a max cohisive class is one eache of whose methods uses each instance variables. we should strive for high cohision of classes.
+
+a well-organized system is the one, where a change to one part (class), produces minimum need to change other parts. thus, keeping small classes with one responsibility (one change production), keeps the system robust and flexible, updating one part doesn't result in updating a large part of the system.
+one way to protect from cascading changes is to make classes dependent not on concrete classes with detail implementation, but on abstract classes and interfaces. this way changing details will not cause changes down the pipe. this is called Dependency Inversion Principle - one of the main OO design principles.
+another core OO principle is OCP (Open-Closed Principle) - classes should be open for extension, but closed for modification.
+
+
+XI. SYSTEMS
+
+the chapter is about working with systems on a high level of abstraction and modularity. the main principle here is separation of concerns. also the startup stage of the code must be separated from the production stage (don't really get how, and what's the difference) 
+
+one way to separate construction from use is to perform the construction of all the parts that the application will depend on inside the main() block, or the modules called by the main(); and the application itself (i.e. the use) move into a separate module. in this case, the application doesn't know anything about the construction, it just assumes that all the parts are ready to go.
+but sometimes it has to be in control of when a part is constructed: that's when you can use the Abstract Factory design paattern. in it a factory is created by main, and the app tells the factory object when it wants a certain object created. the app doesn't know about how the objects are created, i.e. it's decoupled from the construction.
+
+Dependency Injection is another mechanism of separating construction and use. its main idea is that an object shouldn't initialize its dependencies, this work is moved to special containers.
+
+the purpose of the separation of concern principle is scaling: a software system with its ephemaral nature can organically grow only when its parts are single-minded.
+
+modularity and separation of concerns make decentralized managment and decision making possible. to optimize the decision making we should make decisions at the last possible moment, because only this way we can have maximum possible information that dictates the decision, rushed decisions are made on the basis of incomplete information. so the well-built system allows to take decisions at the last possible moment, i.e. you can make changes to your code without breaking down the whole project. that's an agile system	
+
+
+XII. EMERGENCE
+
+4 principles of simple design:
+
+	- runs all the tests - system must be easily verifiable, i.e. there should be a simple way to see that the system reaches the stated goals.
+		moreover, writing tests helps with improving designs, since it's hard to write tests when the coupling is strong and the cohesion is 
+		low.
+	- no duplication - apart from obvious: template method - inside a higher-level method you call a lower method not to repeat the code in its 
+		body
+	- expressive - the biggest cost value lays in the long-term maintenance, so you should write code that is easy to understand for other people
+		and for the future you. ways to be expressive: names (tells you about the responsibility), smaller classes and functions are easier to
+		understand, standard nomenclature (like use design patterns names in the names of your entities).
+			* well written tests better the understanding, a test can be a documentation by example
+	- minimal classes and methods - this rule has the lowest priority of the four. even though the rule of thumb is to prefer higher amount of 
+		small classes over few big classes, you should remember not to overdo this and not create unnecessary amount of classes and methods.
+		
+		
+XIII. CONCURRENCY
+
+is a decoupling strategy - decouples 'what' from 'when': in a single thread code what and when are binded together closely, one operation strictly following another.
+can improve performance when there is a lot of wait time
+demands rethinking the whole design of the system
+bugs in concurrency oftentimes aren't consistent (repeating), there is a temptation to write the off as one-off, which is false
+writing a clean concurrency is crucial for it's agility when the system is under stress (higher probability of breaking down)
+
+the main challenge of working with multiple threads (at least in Java) is the handling of a shared data, to avoid problems with this:
+
+	- the concurrent logic itself should be as separated as possible: remember the single responsibility principle, an object should have only one
+	  reason for a change, and to perform a concurrent operation is such a reason; this should not be responsible for anything else
+	- reduce the scope of data shared, it should be accessed only by essential parts
+	- keep the threads as independent as possible
+	
+	
+some terms used in concurrent programming:
+
+	> bound resources - resources of fixed sized used in concurrent environment (e.g. db connections, read/write buffers)
+	> mutual exclusion - when only one thread can access the shared data at a time
+	> starvation - when faster threads have priority to be executed first (access a shared resource), slow threads can 'starve' waiting for their
+	  turn, in case there are a lot of quick threads
+	> deadlock - one thread possesses a resource that another thread needs to proceed with their operation, and the other way around: both threads
+	  wait for each other to release, and both cannot do it, because to release they need to proceed.
+	> livelock - two threads try to proceed but get in each other's way
+
+different execution models used in concurrent programming:
+
+	~ Producer-Consumer: producer threads create jobs to do and store it in a buffer or a queue, and consumer threads take it from there and 
+	  perform the work. the buffer is a bound resource, i.e. there is only so many slots for jobs, if the buffer is full, the producers wait for
+	  an available space.
+	~ Readers-Writers: readers listen to a shared resource, writers update it. the issue here is the throughput (writers, given priority, will
+	  increase throughput), and starvation of threads (e.g. if writers are given permission to update only when they are no readers, and the 
+	  readers are listening constantly)
+	~ Dining philosophers problem: they sit behind the round table with a bowl of spaghetti in the center, each has a fork placed to the left of 
+	  them, all they do is seat and think, and then they are hungry they use two forks to eath the spaghetti. when a philospher is hungry, but he 
+	  doesn't have forks to eat because one or both of his neighbors are eating at the moment, he has to wait.
+	  philosophers are threads and forks are resources.
+	  
+some recommendations about working with concurrency:
+
+	-> in Java the 'synchronized' keyword introduces a lock: all sections of code under synchronized are assured that only one thread will be 
+	   running between them at any given time. locks are expensive and should not be introduced generously, plus the block of code under should
+	   be as small as possible.
+	-> if your sistem needs to shut down at some point gracefully, think of how you do it at early stages, and take the task seriously, becuase 
+	   it's a hard one. e.g. when a parent thread sends a signal to all its children to shut down, and you use the producer-consumer model, the
+	   producer might finish first without sending a message to the consumer, and the consumer will be locked waiting for the communication from
+	   the producer, unable to shutdown. there are many such pitfalls.
+	-> concerning the testing: 
+		trace every exception you get, even if it appears to be one-off
+		first make sure that the non-threaded code works,
+	   	deploy more threads than there are processor nuclei
+	   	run tests on different platforms: threaded code behaves differently in different environments  
+	  
+
+XIV. SUCCESSIVE REFINEMENT
+
+refers to the process of writing a clean code and how it starts with mess, when you increase the mess by adding functionalities to the system. at this point is important to know when to stop increasing the mess. you should be okay with starting the refinement process before the system has all he intended functionalities: once the code is well partitioned and clean, it will be easy to add the rest of functionalities.
+during the refinement, it's important to adhere to one of the rules of Test Driven Development that states that at any stage of development the system must produce the intended output, i.e. pass tests. so each step of refinement should be validated by a successful unit test, it will keep everything tidy and organized.
+it's unprofessional to create a working system and not refine it. first drafts are always messy, albeit functioning. refactor it into a better state, don't let the rot to even start.
+
+
+XV. JUNIT INTERNALS
+
+	* when you have multiple expressions in a if/else statement, the clean way to refactor it is to extract a function for those multiple 
+	  expressions, and name the function so that it reflect the purpose behind all those checks
+	  
+	  
+XVII. SMELLS AND HEURISTICS
+
+	> switch and if/else statements that appear throughout various modules that check out the same thing are considered duplication and should be
+	  replased with polymorphism
+	> separate concepts on high abstraction level from concepts on lower ones: variables and funs that describe implementations should not appear
+	  in a base class.
+	> feature envy: when a method of one class uses variables or method of another class, as it wished it belonged to that class.
+	> use explanatory variables over stringing calculations together, break up the calculation and save intermediate results in explanatory vars.
+	> you shouldn't consult the documentation to know what a function does.
+	> avoid using raw numbers, and store them in constants
+	> prefer straight conditional expressions to the ones with a 'NOT' operator
+	
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
