@@ -5,6 +5,75 @@ CLASSICAL PATTERNS
 
 I. GETTING STARTED WITH KOTLIN
 
+	> Kotlin code structure:
+	
+		- functions doesn't have to be wrapped in a class (like in java), e.g. the main() can exist separately in a file.
+		- no 'static' modifier - functions that don't have a state, can be just placed outside of a class
+		- params in the main() are optional (in Java String[] args is obligatory)
+		
+	> Types:
+	
+		- a type-safe language
+		- no distinction between primitive types and object types (in Java 'int' is memory-efficient, while Integer is more operational
+		  with its methods and nullable). Kotlin's compiler optimizes the types on the run, not to lose the memory efficiency of a primitive.
+		- Java's 'void' is called Unit
+		- the type is inferred if not declared explicitly. once declared, the var cannot be assigned a value of a different type.
+		
+			val greeting: String = "Hello world"
+
+		- mutable variables use the keyword 'var', immutable (aka values) use 'val'. val is preferred - it's easier to reason about the code
+		  that way, especially in a concurrent code.
+		- '==' is implicitly translated to the equals() (in Java == stands for referential equality, not the equality of the values)
+		- if a function returns a value, you should declare its type in the signature, after the params
+		
+			fun getGreeting(): String {
+				return "Hello world"
+			}
+			
+		  if a function consists only of the return statement, you can omit the return type and the curly braces
+		  
+		  	fun getGreeting() = "Hello world"
+		  	
+	> Null safety:
+	
+		- in Java all object types a nullable -> NullPointerException being a big deal
+		- in Kotlin types can be nullable (hold '?' after the type) and non-nullable (no '?'), the nullability of types is checked before 
+		  compile time
+		  
+	> Data structures:
+	
+		- lists: ordered collection of elements of the same type, declared with the listOf()
+		- sets: collection of unique elements, not indexed, setOf() return LinkedHashSet. use 'in' function to check the presence of an el
+		- maps: collection of key-value pairs, keys are unique. a pair is created with the 'to' special function
+		
+			val movieBatmans = mapOf(
+				"Batman Returns" to "Michael Keaton",
+				"Batman Forever" to "Val Kilmer",
+				"Batman & Robin" to "George Clooney"
+			)
+			
+		  to access a value by its key, use the bracket notation
+		- those are read-only collections, they all have mutable counterparts (e.g. mutableListOf()), where you can use such metods as add()
+		- there is also Array<> (the type you pass into the angle brackets is called 'type argument'), used to provide args to the main()
+		
+			fun main(args: Array<String>) {}
+			
+		  also to call Java functions that require arrays as args, and while using the 'varargs' syntax.
+		  the functionality is similar to lists
+		  
+	> Control flow:
+	
+		- 'if' is an expression in Kotlin (statement in Java), which helps us to reduce the amount of return statements and simplify the code
+		- 'when' is an analog of 'switch' in Java, but more powerful. also an expression, use when there are multiple conditions.
+		
+	> Working with text:
+	
+		- string interpolation - insert a value of a var with $, expression with ${}
+		- multiline strings - put them inside """ """, no need to escape quotes, use trimIndent() to get rid of whitespacees and tabs
+		
+	> Loops:
+	
+		-
 
 
 II. WORKING WITH CREATIONAL PATTERNS
