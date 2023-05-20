@@ -73,7 +73,97 @@ I. GETTING STARTED WITH KOTLIN
 		
 	> Loops:
 	
-		-
+		- for-each - for (element in collection) {}
+		- for - the classic 'for' loop in Kotlin is applied to ranges:
+		
+			for (el in 0..9) {}
+			
+		  the range is inclusive. you can replace the range operator with the 'until' function, it will be exclusive. to iterate i reverse,
+		  replace 'until' with 'downTo' function. the functions like until and downTo are called 'infix call'
+		- while - while (expression) {}
+		
+	> OOP:
+	
+		- no 'new' keyword, class instantiation: val player = Player()
+		- classes can be bodyless
+		- primary constructor is defined in parentheses after the class name:
+		
+			class Player(name: String) {}
+			
+		- if you add 'val' to the name member, a getter will be automatically generated, and you'll be able to access it via its name:
+		
+			println(player.name)
+			
+	          if you add 'var' a setter will be generated along with a getter.
+	          a property can be moved inside the body, in this case an initial value must be provided.
+	        - you might want to add some validation when setting a new value (i.e. the value can be only positive). to do this you need to declare
+	          a custom setter:
+	          
+	          	class Player(val name: String) {
+	          		var score: Int = 0
+	          			set(value) {
+	          				field = if (value >=0) value else 0
+	          			}
+	          	}
+	          	
+	          'value' stands for the new value provided, and 'field' stands for the current value of the property
+	        - to provide a custom getter, the property must be declared in the body of the class:
+	        
+	        	class Player(name: String) {
+	        		val name = name
+	        			get() = field.toUpperCase()
+	        	}
+	        	
+	        - interfaces are declared with the 'interface' keyword, implemented with a colon:
+	        
+	        	interface DiceRoller {
+	        		fun rollDice(): Int
+	        	}
+	        	class Player(name: String) : DiceRoller {
+	        		fun rollDice() = Random.nextInt(0, 6)
+	        	}
+	        	
+	          interface support default functions, i.e. if a fun doesn't depend on any state, you can define its operation in the body inside
+	          the interface.
+	        - abstract classes are interfaces that can hold a state. extended with a colon, round brackets after the name:
+	        
+	        	class Player(name: String) : Moveable(), DiceRoller {}
+	        	
+	        - by default properties, functions, as well as classes are public
+	        - by default all classes are final, i.e. can't be inherited from. to make a class eligable for inheritance, declare it open by 
+	          prefixing it with the 'open' modifier.
+	        - in the same manner to make functions open to overriding by child classes, you must declare them with the 'open' modifier.
+	          to override an open function a child class must use the 'override' keyword
+	          private properties cannot be accessed by a child class, they need to be public or protected (visible to the class and its children)
+	        - when extending a class (including an abstract class), we should provide data for its constructor (equivalent to calling the super()
+	          in Java) 
+	          
+	          	class ConfusedPlayer(name: String) : Player(name) {}
+	          	
+	        - data classes replace POJOs of Java, automatically generate equals() and hashCode(). are always final (can't be extended), though
+	          can inherit from other classes. have a copy() method (not present in Java), support both val and var.
+	          
+	> Extenstion functions: 
+	
+	        - are designed to extend the functionality of final classes:
+	        
+	        	fun String.hidePassword() = "*".repeat(this.length)
+	        	
+	          'this' points to a string object the function is called on.
+	          the compiler will transform this not in a function of the String class, but in a regular top-level function
+	          
+	          	fun hidePassword(this: String) = "*".repeat(this.length)
+	          	
+	        - the class being extending is called a 'method receiver'
+	          	
+	        - cannot override member functions of the method receiver, or access its private and protected properties
+	        
+	> Introduction to design patterns:
+	
+		- a design pattern is a proven way to solve a common problem
+		- it's basically a language feature, not present in the langugae itself
+		- relevant only to object-oriented langugages
+		  
 
 
 II. WORKING WITH CREATIONAL PATTERNS
