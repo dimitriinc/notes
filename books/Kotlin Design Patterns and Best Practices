@@ -15,7 +15,8 @@ I. GETTING STARTED WITH KOTLIN
 	
 		- a type-safe language
 		- no distinction between primitive types and object types (in Java 'int' is memory-efficient, while Integer is more operational
-		  with its methods and nullable). Kotlin's compiler optimizes the types on the run, not to lose the memory efficiency of a primitive.
+		  with its methods, and is nullable). Kotlin's compiler optimizes the types on the run, not to lose the memory efficiency of a 
+		  primitive.
 		- Java's 'void' is called Unit
 		- the type is inferred if not declared explicitly. once declared, the var cannot be assigned a value of a different type.
 		
@@ -23,7 +24,8 @@ I. GETTING STARTED WITH KOTLIN
 
 		- mutable variables use the keyword 'var', immutable (aka values) use 'val'. val is preferred - it's easier to reason about the code
 		  that way, especially in a concurrent code.
-		- '==' is implicitly translated to the equals() (in Java == stands for referential equality, not the equality of the values)
+		- '==' is implicitly translated to equals() (in Java == stands for referential equality, not the equality of the values)
+		- '===' is for the referential equality
 		- if a function returns a value, you should declare its type in the signature, after the params
 		
 			fun getGreeting(): String {
@@ -125,6 +127,7 @@ I. GETTING STARTED WITH KOTLIN
 	        	
 	          interface support default functions, i.e. if a fun doesn't depend on any state, you can define its operation in the body inside
 	          the interface.
+	          interfaces can declare properties as well.
 	        - abstract classes are interfaces that can hold a state. extended with a colon, round brackets after the name:
 	        
 	        	class Player(name: String) : Moveable(), DiceRoller {}
@@ -167,6 +170,109 @@ I. GETTING STARTED WITH KOTLIN
 
 
 II. WORKING WITH CREATIONAL PATTERNS
+
+	> these patterns deal with how and when we create objects
+	
+	1. Singleton
+	
+		requirements:
+			- creates only one instance of a class
+			- this instance must be accessible from anywhere in the system
+			- the instantiation should be lazy, i.e. only when we use it for the first time, not at the start of the programm
+			- thread-safe: if two threads try to instantiate it simultaniously, they should get the same instance.
+			- if many threads try to instantiate a singleton object at the same time, they shouldn't be blocked for a long time
+			- cannot have a constructor, since it's not instantiated by us
+			
+		in Kotlin the implementation is easy - you just the keyword 'object' instead of 'class'
+		objects can implement interfaces
+		if you want to run some op at initialization, put it inside the init{} block
+		
+			object Logger : SomeInterface {
+				init {
+					some op
+				}
+			}
+			
+	2. Factory Method:
+	
+		used for creation of objects of the same category (implement the same interface) but with different implementations. the factory
+		decides based on some factor which of implementations is needed, and creates that implementation.
+		so the parts of the pattern are:
+			- an interface, a blueprint for products
+			- product classes, in our case - data classes that implement the interface 
+			- creator function - accepts some differentiating factor as its argument, and based on it ('when' expression) returns an object 
+			  of the resulting data class
+			  
+		* the data class that implements an interface with some declared properties must override them in its constructor:
+		
+			interface ChessPiece {
+				val file: Char,
+				val rank: Char
+			}
+			
+			data class King(
+				override val file: Char,
+				override val rank: Char
+			) : ChessPiece
+			
+		* you can extract components or properties from a collection or an object (of a data class) and assign them to individual variables
+		  with destructuring declarations:
+		  
+		  	val notation = "qa5"
+		  	val (type, file, rank) = notation.toCharArray()
+		  	
+	3. Static Factory Method:
+	
+		a class includes a static method that returns an instance of that class, a static constructor, so to speak.
+		benefits:
+			- you can have multiple named constructors with different implementation
+			- you can implement an error-handling logic
+			- you can return instances of this class' subclasses
+			- descriptive name
+			- encapsulation: hide the implementation of construction by making the constructor itself private, thus making the static 
+			  factory method the only way to instantiate
+			  
+		Kotlin doesn't have a 'static' modifier, the way to create static fields and methods is through a 'companion object' - a class within
+		the class that contains fields and methods accessible on the class itself, but not its instances
+		
+			class Server private constructor(port: Long) {
+				init {
+					println("server started on port $port")
+				}
+				companion object {
+					fun withPort(port: Long) = Server(port)
+				)
+			}
+			
+	4. Abstract Factory:
+	
+		a factory is a class or a method that creates other classes. an abstract factory is a  class that wraps multiple factory methods.
+		the Abstract Factory is commonly used in framewords and libraries that get their configuration from files.
+		
+		the Factory Method creates objects of sibling classes (implement the same interface), the Abstract Factory creates objects of family
+		of related classes, not necessarily siblings
+		
+			* Any class is the root of class hierarchy (like Object in Java), if a class doesn't specify it's parent, it inherits from
+			  Any by default. it's the Any that contains equals(), hashCode(), and toString()
+			  
+		so the goal is to create objects. those objects are implementation of concrete classes, and those concrete classes implement some 
+		abstract interface. in Abstract Factory we have multiple abstract interfaces.
+		for example, we receive the configuration of our system from a YAML config file, and in our code we want to parse this file, and
+		create an object for each property. the YAML (YAML Ain't Markup Language) file:
+		
+			server: 
+				port: 8000
+			environment: production
+			
+		we'll have an interface for a property, each class that implements this interface will be a class for some concrete property (e.g. 
+		port). we'll have another interface for the server configuration, which will contain a list of properties - related, not siblings.
+		
+			* Casting - a way to force compiler to use the specified type instead of the one it inferred. We can use the unsafe cast
+			  if we positively sure of the type:
+			  
+			  	val port: Int = portProperty.value as Int
+			
+				
 
 
 
