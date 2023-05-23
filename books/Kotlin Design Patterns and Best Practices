@@ -183,7 +183,7 @@ II. WORKING WITH CREATIONAL PATTERNS
 			- if many threads try to instantiate a singleton object at the same time, they shouldn't be blocked for a long time
 			- cannot have a constructor, since it's not instantiated by us
 			
-		in Kotlin the implementation is easy - you just the keyword 'object' instead of 'class'
+		in Kotlin the implementation is easy - you just use the keyword 'object' instead of 'class'
 		objects can implement interfaces
 		if you want to run some op at initialization, put it inside the init{} block
 		
@@ -191,6 +191,12 @@ II. WORKING WITH CREATIONAL PATTERNS
 				init {
 					some op
 				}
+			}
+			
+		* we use the 'object' keyword also to create an anonymous object:
+		
+			view.setOnClickListener(object : OnClickListener {
+				override fun onClick() {...}
 			}
 			
 	2. Factory Method:
@@ -306,6 +312,54 @@ II. WORKING WITH CREATIONAL PATTERNS
 			}
 			
 		we could also make it as an interface with the factory methods as its functionality
+		
+	5. Builder:
+	
+		used for construction of complex objects that requires a lot of properties. it simplifies the task by separating construction (i.e. 
+		assigning of arguments) from representation (i.e. creation of an object). thus, the pattern consists of two components: the product
+		class and the builder class (also can be an interface, which will be implemented by several concrete builder classes, differing in the
+		implementation details). the builder class contains functions for setting each of the properties, the function returns the builder
+		itself to enable the chaining; and a build() function that creates a product object with those properties. the properties belong to 
+		the Builder class itself, they duplicate the properties of the product class.
+		
+		in Kotlin the product class is a data class, that can be wrapped inside the builder class so it has a direct reference to it.
+		
+			* the comma that put after the last parameter is called a 'trailing coma', it's good for maintainability in case we change
+			  those params later.
+			* 'internal' modifier sets the visibility of the declaration (class, fun, property, or type) to the scope of its module
+			* it's a convention to prefix private variables with underscore to make the assignments like 
+			
+				this._message = message
+				
+			  more readable.
+			* to return the same object on which we perform an operation instead of doing it explicitly:
+			
+				fun message(msg: String): MailBuilder {
+					this._message = msg
+					return this
+				}
+				
+			  we can use a scoping function 'apply', which can be called on any object in Kotlin. it introduces us into the scope of the 
+			  object, and returns the object itself after executing its block:
+			  
+			  	fun message(msg: String) = apply {
+			  		_message = msg
+			  	}
+			  	
+		over all, the Builder is not much in use in Kotlin, because default and named args make it easy to create complex object without 
+		implementing this design pattern.
+		
+	6. Prototype:
+	
+		for creating objects that are similar, but slightly different, e.g. they differ in the value of one property. the task is to save 
+		resources and not to crate a whole new object, when mostly the new object is the same as the old one. the solution is to clone/copy the 
+		old one, and implement such a cloning logic that would allow to update certain properties.
+		the traditional way is with a Prototype interface that has a clone() method, which returns the Prototype itself (i.e. an object of the 
+		class that implements the Prototype interface). then a class implements the interface and defines its own cloning logic.
+		
+		in Kotlin the DP is incorporated in the language itself in the form of the copy() method of data classes.
+		
+			* add elements to a collection with the plusAssign operator (+=)
 
 
 
