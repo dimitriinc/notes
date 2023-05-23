@@ -256,7 +256,8 @@ II. WORKING WITH CREATIONAL PATTERNS
 			  Any by default. it's the Any that contains equals(), hashCode(), and toString()
 			  
 		so the goal is to create objects. those objects are implementation of concrete classes, and those concrete classes implement some 
-		abstract interface. in Abstract Factory we have multiple abstract interfaces.
+		abstract product interface. in Abstract Factory we have multiple abstract product interfaces, and multiple factory methods or classes,
+		one for each abstract product.
 		for example, we receive the configuration of our system from a YAML config file, and in our code we want to parse this file, and
 		create an object for each property. the YAML (YAML Ain't Markup Language) file:
 		
@@ -272,7 +273,39 @@ II. WORKING WITH CREATIONAL PATTERNS
 			  
 			  	val port: Int = portProperty.value as Int
 			
-				
+			  it's 'unsafe' because if the value is not of the declared type, the program will crash
+			  a 'safe' cast returns null if the type is wrong, so the variable will be of a nullable type:
+			  
+			  	val port: Int? = portProperty.value as? Int
+			  	
+			  a smart cast is performed implicitly by the compiler when we do a type check. 
+			  
+			  	if (portProperty is IntProperty) {
+			  		do sth
+			  	}
+			  	
+			  it works with nullables as well: in Kotlin hierarchy the non-nullable type is a subclass of the nullable one
+			  
+			  	val port: Int? = 8080
+			  	if (port != null) {
+			  		do sth		// the 'port' is now of the Int type
+			  	}
+			  	
+			* the reason we need a cast here is because in our Property implementation we have a 'value' field of Any type, since it can
+			  be either number or a string, depending on he property. another solution is to subclass the Property into StringProperty
+			  and IntProperty
+			  
+		and finally, the abstract factory class or interface wraps the factory methods responsible for creating products. one way to implement
+		it, is to create a Static Factory Method for each factory inside a companion object of the abstract factory class:
+		
+			class AbstractFactory {
+				companion object {
+					fun porperty(prop: String): Property {...}
+					fun server(propertyStrings: List<String>): ServerConfiguration {...}
+				}
+			}
+			
+		we could also make it as an interface with the factory methods as its functionality
 
 
 
