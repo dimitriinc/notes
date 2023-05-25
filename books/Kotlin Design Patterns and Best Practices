@@ -199,11 +199,11 @@ II. WORKING WITH CREATIONAL PATTERNS
 				override fun onClick() {...}
 			}
 			
-	2. Factory Method:
+	2. Factory Method
 	
 		used for creation of objects of the same category (implement the same interface) but with different implementations. the factory
 		decides based on some factor which of implementations is needed, and creates that implementation.
-		so the parts of the pattern are:
+		the parts of the pattern are:
 			- an interface, a blueprint for products
 			- product classes, in our case - data classes that implement the interface 
 			- creator function - accepts some differentiating factor as its argument, and based on it ('when' expression) returns an object 
@@ -227,7 +227,7 @@ II. WORKING WITH CREATIONAL PATTERNS
 		  	val notation = "qa5"
 		  	val (type, file, rank) = notation.toCharArray()
 		  	
-	3. Static Factory Method:
+	3. Static Factory Method
 	
 		a class includes a static method that returns an instance of that class, a static constructor, so to speak.
 		benefits:
@@ -250,15 +250,15 @@ II. WORKING WITH CREATIONAL PATTERNS
 				)
 			}
 			
-	4. Abstract Factory:
+	4. Abstract Factory
 	
 		a factory is a class or a method that creates other classes. an abstract factory is a  class that wraps multiple factory methods.
-		the Abstract Factory is commonly used in framewords and libraries that get their configuration from files.
+		the Abstract Factory is commonly used in frameworks and libraries that get their configuration from files.
 		
 		the Factory Method creates objects of sibling classes (implement the same interface), the Abstract Factory creates objects of family
 		of related classes, not necessarily siblings
 		
-			* Any class is the root of class hierarchy (like Object in Java), if a class doesn't specify it's parent, it inherits from
+			* 'Any' class is the root of class hierarchy (like Object in Java), if a class doesn't specify it's parent, it inherits from
 			  Any by default. it's the Any that contains equals(), hashCode(), and toString()
 			  
 		so the goal is to create objects. those objects are implementation of concrete classes, and those concrete classes implement some 
@@ -298,7 +298,7 @@ II. WORKING WITH CREATIONAL PATTERNS
 			  	}
 			  	
 			* the reason we need a cast here is because in our Property implementation we have a 'value' field of Any type, since it can
-			  be either number or a string, depending on he property. another solution is to subclass the Property into StringProperty
+			  be either number or a string, depending on the property. another solution is to subclass the Property into StringProperty
 			  and IntProperty
 			  
 		and finally, the abstract factory class or interface wraps the factory methods responsible for creating products. one way to implement
@@ -313,9 +313,9 @@ II. WORKING WITH CREATIONAL PATTERNS
 			
 		we could also make it as an interface with the factory methods as its functionality
 		
-	5. Builder:
+	5. Builder
 	
-		used for construction of complex objects that requires a lot of properties. it simplifies the task by separating construction (i.e. 
+		used for construction of complex objects that require a lot of properties. it simplifies the task by separating construction (i.e. 
 		assigning of arguments) from representation (i.e. creation of an object). thus, the pattern consists of two components: the product
 		class and the builder class (also can be an interface, which will be implemented by several concrete builder classes, differing in the
 		implementation details). the builder class contains functions for setting each of the properties, the function returns the builder
@@ -346,10 +346,10 @@ II. WORKING WITH CREATIONAL PATTERNS
 			  		_message = msg
 			  	}
 			  	
-		over all, the Builder is not much in use in Kotlin, because default and named args make it easy to create complex object without 
+		overall, the Builder is not much in use in Kotlin, because default and named args make it easy to create complex objects without 
 		implementing this design pattern.
 		
-	6. Prototype:
+	6. Prototype
 	
 		for creating objects that are similar, but slightly different, e.g. they differ in the value of one property. the task is to save 
 		resources and not to crate a whole new object, when mostly the new object is the same as the old one. the solution is to clone/copy the 
@@ -364,6 +364,44 @@ II. WORKING WITH CREATIONAL PATTERNS
 
 
 III. UNDERSTANDING STRUCTURAL PATTERNS
+
+	create extensible and maintainable object hierarchies, deal with relationships btn objects
+	
+	1. Decorator
+	
+		it's purpose is to dynamically extend the functionality of a class without creating multiple subclasses for each new extension. the
+		behavioral modifications with Decorator are considered to be cleaner and more maintainable.
+		
+		the base class (whose behavior we extend) implements an interface. the decorator class implements the same interface, and also holds
+		a reference to the base class (accepts it as an argument); moreover, the decorator delegates the implementation of the interface to 
+		that reference of the base class (with the 'by' keyword), so that it doesn't have to override any of the interface's methods if it 
+		doesn't want to, though the idea is to implement some of it, and that would be the extension we are after. for each extension you
+		can create it's own decorator that will have the base implementation (equals to the implementation of the class you pass as an arg),
+		plus the extended implementation that you define in the body of the decorator class.
+		
+			interface Pizza {
+				fun getDescription(): String
+				fun getCost(): Double
+			}
+			
+			class PepperoniPizza : Pizza {		// base class
+				override fun getDescription() = "Pizza with Pepperoni"
+				override fun getCost() = 8.99
+			}
+			
+			class CheesePizza(private val basePizza: Pizza) : Pizza by basePizza {		// first decorator class
+				override fun getDescription() = basePizza.getDescription() + ", with cheese"	// extension of behavior
+			}
+			
+			class ExpensivePizza(private val basePizza: Pizza) : Pizza by basePizza {	// another decorator class
+				override fun getCost() = basePizza.getCost() * 2
+			}
+			
+		in the client code you can combine extensions when you instantiate one decorator, and pass another decorator to its constructor. e.g.
+		lets create an expensive cheese Pepperoni Pizza:
+		
+			val pepperoniPizza = PepperoniPizza()
+			val expensiveCheesePizza = CheesePizza(ExpensivePizza(pepperoniPizza))
 
 
 
