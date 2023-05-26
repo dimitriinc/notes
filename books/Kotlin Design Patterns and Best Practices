@@ -360,6 +360,7 @@ II. WORKING WITH CREATIONAL PATTERNS
 		in Kotlin the DP is incorporated in the language itself in the form of the copy() method of data classes.
 		
 			* add elements to a collection with the plusAssign operator (+=)
+			* enum classes is a way to represent collections of constants
 
 
 
@@ -402,6 +403,123 @@ III. UNDERSTANDING STRUCTURAL PATTERNS
 		
 			val pepperoniPizza = PepperoniPizza()
 			val expensiveCheesePizza = CheesePizza(ExpensivePizza(pepperoniPizza))
+			
+		* Elvis operator (?:) put after an expression and before a default value, which will be returned if the expression results in null
+		* The 'by' keyword delegates the implementation of an interface to another object
+		* Operator overload: there is a set of common functions with their predetermined parameters, that we can overload to make our code 
+		  more concise and expressive; for each function of the set there is a corresponding operator.
+		  let's say in our custom class there is a functionality to which we want to assign an operator, and thus perform it not by calling
+		  the method, but by invoking the overloading operator; - we do it by prefixing the method declaration with the 'operator' keyword,
+		  the kind of operator is defined by the name of the method and it parameters. so when overloading we are only free to choose a method
+		  from the set, and the implementation (the method's body), we are not free to choose the name, or the parameters.
+		  
+		  	class MyMap {
+		  		val mapOfThings: MutableMap<String, String> = mutableMapOf()
+		  		operator fun get(key: String): String = mapOfThings[key]
+		  		operator fun set(key: String, value: String) {
+		  			mapOfThigns[key] = value
+		  		}
+		  		
+		  it works with interfaces as well
+		  		
+		  * instead of checking some condition with 'if' you can use 'require' - when its expression evaluates to false it throws and 
+		    IllegalArgumentException
+		    	
+		    	require (argument.length < maxNameLength) {
+		    		myMap[key] = argument
+		    	}
+		    	
+	2. Adapter
+	
+		the purpose is to make two incompatible interfaces work together, make them compatible. happens e.g. with legacy classes, to convert
+		them according to the needs of the modern code we would usually create an adapter class, that takes in the legacy one as an arg, and
+		modifies its output in some way.
+		
+		in Kotlin the best way to implement the DP is through extension functions: we define one on he incompatible interface, which converts
+		it to a compatible one:
+		
+			fun UsbMini.toUsbTypeC(): UsbTypeC {
+				val hasPower = this.hasPower == Power.TRUE	// 'this' points to the object we're extending
+				return object : UsbTypeC {			// anonymous object
+					override val hasPower = hasPower
+				}
+			}
+			
+		in fact, many Kotlin classes have built-in adapter methods, usually start with 'to', e.g. List<Type>.toTypedArray() 
+		
+	3. Bridge
+	
+		this pattern is about making the relations btn an abstraction and its implementations more flexible. one of the problems it solves is 
+		when you have a lot of classes implmenenting one interface, and that interface needs to change, all the implementations stop compiling.
+		the Bridge separates abstraction and implementation into separate hierarchies, allowing them to vary independently; improves the 
+		reusability of classes.
+		
+		'fragile base class' is the problem when modifying the superclass introduces bugs to subclasses.
+		
+		instead of creating multiple sublasses, which will be our abstract implementation. the objects of this class will differ based on
+		characteristics we provide as properties in their constructors.
+		the properties, as defined in the abstract impolementation class, are of interface types:
+		
+			interface Trooper {
+				fun move(x: Long, y: Long)
+				fun attackRebel(x: Long, y: Long)
+			}
+			
+			data class StormTrooper(				// abstract implementation
+				private val weapon: Weapon,
+				private val legs: Legs
+			) : Trooper {
+				override fun move(x: Long, y: Long) {
+					legs.move(x, y)				// let the properties define the behavior
+				}
+				override fun attackRebel(x: Long, y: Long) {
+					weapon.attack(x, y)
+				}
+			}
+			
+		* type aliasing - provide alternative names for existing types, at compile time they will be translated back.
+				  increases expressiveness of code
+				  also help us to hide complex generic expressions (more on it later)
+				  introduced by the 'typealias' keyword
+				  
+			typealias PointsOfDamage = Int
+			typealias Meters = Int
+			
+			interface Weapon {					// separate hierarchy
+				fun attack(x: Long, y: Long): PointsOfDamage
+			}
+			interface Legs {
+				fun move(x: Long, y: Long): Meters
+			}
+			
+		* constants - known at compile time. can't be inside a class (only an object, i.e. singleton)
+		
+			const val RIFLE_DAMAGE = 3L
+			const val REGULAR_SPEED: Meters = 1
+			
+		and now we can create different implementations of our abstract properties
+		
+			class FlameThrower : Weapon {
+				override fun attack(x: Long, y: Long) = RIFLE_DAMAGE * 3
+			}
+			
+			class AthleticLegs : Legs {
+				override fun move(x: Long, y: Long) = REGULAR_SPEED * 2
+			}
+			
+		and when we create objects of troopers, we pass those property implementations, and thus define the objcets
+		
+			val flameTrooper = StormTrooper(FlameThrower(), AthleticLegs())
+			
+		by creating parallel hierarchies of abstractions, we flatten the class hierarchies, and make it eadier to extent it.
+		the Bridge is often used in conjunction with dependency injection frameworks.
+		
+	4. Composite
+	
+		
+			
+		
+		  			
 
 
 
