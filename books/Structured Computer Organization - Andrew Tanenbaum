@@ -628,7 +628,7 @@ COMPUTER SYSTEMS
 	optical discs). as we go down the hierarchy, access time increases (there is a gap btn main memory (10nsec) and hard discs (100x times longer),
 	capacity increases, cost per bit decreases.
 	
-	2.3.2 Magnetic Discs
+	2.3.2 Magnetic Disks
 	
 		a hard disc is a collection of aluminum platters (plates) covered in a magnetizable coating (e.g. iron oxide). a platter is divided 
 		into 'tracks', rings of magnetized material divided by small guard areas. tracks are divided into sectors, separated by intersector
@@ -648,10 +648,61 @@ COMPUTER SYSTEMS
 		(READ, WRITE, FORMAT), controls the arm motion, detects and corrects errors, buffers and caches sectors, remaps bad sectors (the 
 		permanently magnetized sectors)
 		
-
+	2.3.3 - 2.3.5
+	
+		controllers started to be integrated into the drives itself beginning with IDE (Integrated Drive Electronics) in the mid 1980s, this 
+		also is a type of interface by which the drive is connected with the rest of the system, it defines how the commands are called, what
+		bus is used, the transfer rate, bandwidth capabilites, etc. the modern interface for personal computers is SATA (Serial AT Atachment):
+		thin round cable instead of a ribbon one, lower energy consumption, higher bandwidth and transfer rate.
+		
+		SAS interface is used for servers, it's faster and more expensive than SATA, also supports simultaneous read and write streams.
+		
+		RAID (Redundant Array of Independent Disks) is a way to introduce concurrency into the I/O operations. there are different 
+		configurations of RAID, the basic idea is to have multiple disks and distribute data among them to provide for the data's resiliency:
+		some configs duplicate data, some store parity data to restore it in case of a failure. and the concurrency provides for increased 
+		speeds.
+		
+	2.3.6 Solid-State Disks
+	
+		made of semiconductor material, bits are stored inside flash memory cells, which is a special transistor, where an electron can be
+		trapped inside a floating gate by applying a high voltage to the control gate. when a negative charge is trapped inside the floating 
+		gate, it increases the voltage necessary to turn on the flash transistor, and by testing if the transistor turns on, we can induce 
+		the logical 1 or 0. and the trapped charge doesn't escape when the power is off, which makes a flash cell a non-volatile memory.
+		it's faster than magnetic discs since it has no seek time and no cables for the interface, it connects to a slot on the motherboard,
+		it has no moving parts -> no danger of damaging it with movement (good for laptops and mobile devices). it's more susceptible to wear 
+		and tear though, because transistors deteriorate with time.
+		
 
 
 2.4 INPUT/OUTPUT
+
+	2.4.1 Buses
+	
+		connect CPU, memories, and I/O devices. I/O devices consist of devices itself and their controllers (integrated into the motherboard,
+		or situated on a separate board plugged into a bus slot. so it's the controller that controls the device's access for the bus. 
+			
+			e.g. when we read from HDD, the data comes out of the devices as a serial stream of bits, and the controller breaks it down 
+			into units to be written into the main memory (if it happens without CPU intervention, the op is called DMA, Direct Memory 
+			Access); when the transfer is finished, the controller issues an 'interrupt', which causes the CPU to suspend the current
+			operation and run an 'interrupt handler' (some actions needed for the delivered data)
+			
+		the bus is also used by the CPU to fetch instructions and data. when multiple parts of the system request the bus access at the same
+		time, a 'bus arbiter' (a chip) decides who goes next; usually the I/O has the preference, since once those devices go, they can't 
+		stop, and cutting them from the bus access will result in data loss.
+		
+		first standard of buses was introduced in IBM PC, it was calle ISA (Industry Standard Architecture). the next step in evolution was 
+		the PCI bus (Peripheral Component Interconnect), it had a dedicated channel btn CPU and RAM, the controllers could access it through
+		a PCI bridge. higher speed, more bits transferred in parallel (i.e. simultaneously)
+		
+		the modern one is PCIe ('e' for Express). two major upgrades:
+		
+			- bit-serial lines: the connections are 1-bit wide (serial). parallel connections are slower because it takes time to 
+			  synchronize all the bits in  a 64-bit (e.g.) signal. the devices have multiple lines connected to them ('lanes'), but the
+			  bits passing are not synchronized, so there is no 'skew'.
+			- point-to-point communication: the devices and CPU do not share the same bus, they send packets to each other, and the 
+			  response comes when it comes. the CPU and Memory are separated from the devices by a Root Complex (on motherboard), all 
+			  packets run through it. the packets from the diveces and to them pass through a switch, or, if the devices are PCI devices, 
+			  through a PCI bridge.
 
 
 
