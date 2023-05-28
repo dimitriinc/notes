@@ -2,7 +2,7 @@
 INTRODUCTION
 --------------------------------------------------------------------------
 
-	computer is a machine that can perform a task based on received instructions. the electrical circuit of each computer is able to receive and 
+	computer is a machine that can perform tasks based on received instructions. the electrical circuit of each computer is able to receive and 
 	recognize a certain set of instructions. the sequence of instructions, directed to a certain goal, is called a program
 	the instructions are simple (add two numbers, check if the number is zero, move some data from one memory slot to another)
 	they constitute the machine language - a way for people to communicate with the computer.
@@ -149,7 +149,7 @@ INTRODUCTION
 		this realization brought to life an explosion in variety and sophistication of instruction sets.
 		some of the instructions added in that period of time include:
 		
-			> before mentioned multiplication
+			> multiplication
 			> division
 			> increment
 			> floating-point arithmetic operations
@@ -623,6 +623,31 @@ COMPUTER SYSTEMS
 
 
 2.3 SECONDARY MEMORY
+
+	There is a memories hierarchy, where on top seat registers, then cache, -> main memory -> magnetic / solid state discs -> external (e.g. 
+	optical discs). as we go down the hierarchy, access time increases (there is a gap btn main memory (10nsec) and hard discs (100x times longer),
+	capacity increases, cost per bit decreases.
+	
+	2.3.2 Magnetic Discs
+	
+		a hard disc is a collection of aluminum platters (plates) covered in a magnetizable coating (e.g. iron oxide). a platter is divided 
+		into 'tracks', rings of magnetized material divided by small guard areas. tracks are divided into sectors, separated by intersector
+		gaps. each sector contains the data itself (usually 512 bytes per sector), prefixed by a preamble (synchronizes the head before 
+		reading/writing), and followed by an error-correction code (usually Reed-Solomone code). the total capacity of the disc might be 
+		stated in an unformatted state, or a formatted state (doesn't count preambles, ECCs, and intersector gaps), formatted capacity is 
+		around 15% smaller.
+		each platter can have 2 magnetized surfaces.
+		
+		reading and writing is performed by a disc head, resting on an arm. the head contains an induction coil, and floats over the surface.
+		the size and precision of the head dictates the width of tracks. writing happens when a negative or positive current passes through 
+		the head, and magnetizes the surface, aligning the magnetic particles facing left or facing right, depending on the polarity of the 
+		current. the reading happens when the head passes over the surface, and a negative or positive current is induced in the head. thus,
+		as the platter rotates under the head, we can read/write a stream of bits.
+		
+		the stream is converted into bytes (and vice versa) by a disck controller, which is a chip, that also accepts commans from the software
+		(READ, WRITE, FORMAT), controls the arm motion, detects and corrects errors, buffers and caches sectors, remaps bad sectors (the 
+		permanently magnetized sectors)
+		
 
 
 
