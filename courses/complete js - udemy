@@ -1225,7 +1225,7 @@ How to plan a web project
 	
 Refactoring with OOP
 
-	be careful with using protected methods of you class as callbacks that you pass to event handlers or async calls - they will have the 'this'
+	be careful with using protected methods of your class as callbacks that you pass to event handlers or async calls - they will have the 'this'
 	pointing to other things than the instance of the class. e.g. if a callback function passed to an event handler accesses some instance vars
 	with this.#map, this will point to the DOM element of the event listener.
 	in other words, when callback need to access instance variables, pass them with the .bind(this). set the 'this' explicitly
