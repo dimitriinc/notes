@@ -1704,7 +1704,7 @@ Misc
  		
  	  this will return an array of arrays, where are two elements: key and value. to transform this to an object:
  	  
- 	  	const formDataObj = Objec.fromEntries(arrOfValuesArrs)	// fromEntries() is available since ES2019
+ 	  	const formDataObj = Object.fromEntries(arrOfValuesArrs)	// fromEntries() is available since ES2019
  	  	
  	* History API - built into browsers: allows us to do many things, e.g. change the current url without reloading the page (e.g. update the 
  	  hash), or go back to the previous page:

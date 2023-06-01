@@ -51,8 +51,8 @@ Charge - there are two types of charges: negative and positive (the names are ju
 	 		     a unit of measure, and is called 'elementary charge unit' (ECU). though it's very small, so for real-life objects we 
 	 		     measure the charge in 'coulombs' (C) which is equal to 6,24 x 10^18 ECU.
 	 		     
-Current - when charged objects move it results in electric current. usually those objects are electrons, jumping fron one nucleus to another. some
-	  materials have atomic structure well fit for provideing a good environment for the free exchange of electrons, such materials are called 
+Current - when charged particles move, it results in electric current. usually those particles are electrons, jumping fron one nucleus to another. some
+	  materials have atomic structure well fit for providing a good environment for the free exchange of electrons, such materials are called 
 	  conductors. best conductor is silver, copper and aluminum are good conductors, most metals are fair to good, salt water is fair, distilled
 	  water is a pooor conductor. substances that do not create a good environment for the exchange of electrons are called 'insulators': most 
 	  gases are insulators, glass, dry wood, paper, plastic, pure water (though some minerals diluted in it may cause it to conduct electricity),
@@ -67,7 +67,7 @@ Current - when charged objects move it results in electric current. usually thos
 	  current'. but actual electrons, which carry the charge, flow from negative to positive. remains to be understood.
 	  
 Voltage - current will flow only if the charge carriers are 'pushed' or 'motivated', this motivation is provided by a build of electrostatic charges.
-	  when negative charge builds up in one place, and a positive one - in another, electromotive force (EMF) exists. EMF, aka 'voltage', or 
+	  when negative charge builds up in one place, and a positive one in another, electromotive force (EMF) exists. EMF, aka 'voltage', or 
 	  'electrical potential' is expressed in 'volts'
 	  
 	- some common voltages: household electricity - 110-130V, it's not stable, the voltage changes polarity several times per second
@@ -76,7 +76,7 @@ Voltage - current will flow only if the charge carriers are 'pushed' or 'motivat
 		  a deadly current
 		- before a lightning discharges - millions of V btn clouds, or btn a cloud and the ground
 		
-	- voltage can exits w/o current, that is the case rigth before the lightning, in a house outlet btn the terminals when nothing is connected,
+	- voltage can exits w/o current, that is the case right before the lightning, in a house outlet btn the terminals when nothing is connected,
 	  battery with nothing connected. this is called 'static electricity'. it stops being static when a good pathway btn terminals presents itself
 	  
 	- in case of a steady voltage not changing its polarity, the current that flows through an electrical device is directly proportional to the
@@ -86,16 +86,16 @@ Voltage - current will flow only if the charge carriers are 'pushed' or 'motivat
 Resistance - opposite of conductance. no material is perfectly conductive, there is always some resistance. conductors have low resistance, insulators
     	     high. where resistance is high, it's difficult for current to flow.
     	     
-    	   - measured in 'ohms' (represented by the Greek letter omega). in an electrical system as low as possible resistance is desired, because 
-    	     resistance (aka ohmic value) converts electrical energy into head, and it's considered a waste ('resistance loss'). given a constant
-    	     voltage, the current varies in inverse proportion to the resistance, i.e. if resistance doubles, the current doubles in half; if 
-    	     resistance a fith of its previous value, current increases by the factor of 5.
+    	   - measured in 'ohms' (represented by the Greek letter omega - Ω). in an electrical system as low as possible resistance is desired, because 
+    	     resistance (aka ohmic value) converts electrical energy into heat, and it's considered a waste ('resistance loss'). given a constant
+    	     voltage, the current varies in inverse proportion to the resistance, i.e. if resistance doubles, the current is cut in half; if 
+    	     resistance is a fith of its previous value, current increases by the factor of 5.
     	     when current flows through a resistive material, it gives rise to voltage across the resistive object (this kind of voltage is called 
     	     'potential difference'; the larger the current, the greater is the voltage (directly proportional given the resistance is the same)
     	     
     	   - conductors can loose all their resistance at temperatures near the absolute zero, this phenomenon is called 'super-conductivity'.
     	     so the conditions may affect the resistance of a certain component in a practical circuit. this fluctuations in high/low resistance can
-    	     be made to happen billions times per second, which allows for the existence of microchips.
+    	     be made to happen billions times per second.
     	     
     	     
 III. OHM'S LAW, POWER, AND ENERGY
@@ -103,7 +103,7 @@ III. OHM'S LAW, POWER, AND ENERGY
 	> prefix multipliers - denote small fractions or big numbers, starting with small:
 		- pico - p - one trillionth part - 0.000 000 000 001
 		- nano - n - one billionth - 0.000 000 001
-		- micro - u/mm - one millionth - 0.000 001
+		- micro - μ/mm - one millionth - 0.000 001
 		- milli - m - one thousandth - 0.001
 		- kilo - k/K - 1000
 		- mega - M - million - 1 000 000
@@ -114,20 +114,51 @@ III. OHM'S LAW, POWER, AND ENERGY
 		      voltage, and resistance interact in a predictable and precise way. The Ohm's law describes this way in mathematical terms.
 		      the law is denoted in three formulas:
 		      
-		      		E = IR
-		      		I = E/R
-		      		R = E/I
+		      		E = IR		
+		      		I = E/R		
+		      		R = E/I		
 		      		
 		      where E - voltage in volts, I - current in amperes, R - resistance in ohms
 		      the formulas function only with those units of measure
 		      
 	> Power - is the rate at which energy consumed or used, i.e. energy per unit of time. The unit of power is 'watt' (W), in equations - italic P.
+		  one W is one J (joule, energy) per second
 		  a conventional household bulb uses 25 W to 100 W. We can calculate power when we know 2 of the 3 basic measures of the curcuit with
 		  one of these formulas:
 		  
 		  		P = EI
 		  		P = E^2/R
 		  		P = I^2*R
+		  		
+	> Energy - ability to do work or cause a change. consists of power expended (used) over a period of time. the unit of energy is 'joule' (J), it
+		   also can be represented as watt-second (Ws), i.e. 1 J of energy is 1 W of power expended over 1 sec.
+		   in practice, a joule is too small of a unit to measure energy, the Wh (watt-hour) is more usefull, i.e. 1 watt of power consumed for
+		   one hour (3600 seconds) => 1 Wh = 3600 Ws = 3600 J.
+		   in medium-sized electrical systems (e.g. households) even Wh is too small to measure the energy, more practical is kWh (kilowatt-
+		   hour), or 3600 * 1000 = 3,600,000 J
+		   in large electrical networks (e.g. utility grids in cities) we use MWh (megawatt-hour), 3600 * 1,000,000 J.
+		   
+		   energy formulas:
+		   W - energy (Wh, whatt-hour)
+		   E - voltage (V, volts)
+		   I - current (A, amper)
+		   R - resistance (Ω, ohm)
+		   t - time (h, hour)
+		   
+		   	W = EIt
+		   	W = (E^2)t/R
+		   	W = (I^2)Rt
+		   	
+		   power and energy reference each other in their definitions: power is energy per unit time, energy is power multiplied by time.
+		   in termes of movement, power is like speed, and energy is like the distance covered.
+		   power consumed falls and rises at different moments of time, energy consumed increases over time relentlessly.
+		   
+		   
+IV. SIMPLE DC CIRCUITS
+
+	
+		  		
+		  		
 		  		
 		  		
 	
