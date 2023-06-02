@@ -703,6 +703,52 @@ COMPUTER SYSTEMS
 			  response comes when it comes. the CPU and Memory are separated from the devices by a Root Complex (on motherboard), all 
 			  packets run through it. the packets from the diveces and to them pass through a switch, or, if the devices are PCI devices, 
 			  through a PCI bridge.
+			  
+	2.4.2 Terminals
+	
+		consist of keyboard and monitor. in the mainframe world, those are usually combined in one device, connected to a mainframe by a serial
+		line, or over a telephone line (still used in banking among others). in the world of personal computers they are separate devices.
+		
+			> keyboards - have a sheet of elastometric material (like rubber) between the keys and the printed circuit board. in the sheet,
+				      under each key, there is a small dome that buckles when depressed by the key, a small spot of conductive 
+				      material inside the dome closes the circuit. an interrupt signal is generated and sent to the OS, which starts
+				      the keyboard interrupt handler program. it reads the key number from a register inside the keyboard controller.
+				      when the key is released, another interrupt is generated, so the OS can induce when a certain key (or several of
+				      them) are depressed and hold. multikey sequences are handled entirely by software.
+				      
+			> touch screens - part of mass market since the first iPhone (2007), developed in the sixties. can be opaque (touchpad) and 
+					  transparent. we concentrate on latter. the forms of the touch screen tech that are not much in use are 
+					  infrared and resistive touch screens, they don't work well with double finger touches, that may cause 
+					  'ghosting', when coordinates interrupted get duplicated from the two points of touches.
+					  the one that is in use is called capacitative touch screen: the surface that covers the screen is 
+					  manufactured to be a capacitor, and when a finger touches it (human body posses some capacitance as well),
+					  it changes the capacitance at the place of the touch (or multiple places). those changes in capacitance are
+					  detected by the electrodes on the edges of the surface and passed to the controller as a stream of 
+					  coordinates (x and y pairs). and what kind of gesture was performed is defined by the OS.
+					  
+					  a capacitor is a device that can store electric charge, it consists of two conductors, separated by an 
+					  insulator. in a touch screen two conductors are two grids of indium tin oxide (transparent conductive 
+					  material) stripes, one grid - vertical, another - horizontal. both are bonded to the opposite sides of an
+					  insulator, trditionally a glass plate, sometimes - silicon dioxide. voltage is upplied to the conductors,
+					  creating an electric field. it's applied to horizontal and vertical grids alternatively, many times per 
+					  second, the voltage values are affected by the change of capacitance on touch, and are read from the grid.
+					  
+					  on top of it all is a protective glass plate.
+					  
+			> flat panel displays - first monitors used the same tech as old tvs - cathode ray tubes. with advance of laptops new tech was
+						in use - liquid crystal display (LCD). liquid crystals flow like liquid, but have a spacial structure,
+						like crystals. by applying an electric field, the molecular alignment of the substance and its optical
+						properties can be changed. in particular, when shining a light through liquid crystals, we can control
+						the intensity of the outcoming light electrically.
+						in monitors, the substance is sealed between two glass plates: rear and front, both plates have 
+						transparent electrodes attached to them, behind the rear plate there is a source of light. the 
+						electrodes create electric fields in the liquid, different parts of the screen get different voltages,
+						that's how the displayed image is controlled. on both sides we also have polarizing filters.
+						the modern tech is OLED (Organic LIght Emitting Diode) display.
+						
+			> Video RAM - the monitors are refreshed 60-100 times a second from a video RAM on the display's controller card. the RAM 
+				      contains a bit map that represents the screen image: 3 bytes for each pixel, one byte represents the intensity of 
+				      one of the RGB colors
 
 
 
