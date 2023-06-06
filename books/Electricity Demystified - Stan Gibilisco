@@ -156,12 +156,97 @@ III. OHM'S LAW, POWER, AND ENERGY
 		   
 IV. SIMPLE DC CIRCUITS
 
+	> Series circuits
 	
-		  		
-		  		
-		  		
-		  		
+		all components are connected end to end, current flows along a single branch.
+		when multiple DC voltage sources are connected in series, their voltages add up, the total voltage of the circuit equals the sum of 
+		all the sources (in real applications - a bit less, since the sources will have a bit of resistance).
+			~ if some sources (batteries) are connected with reverse polarity, their voltages are subtracted from the total V.
+			
+		when resistors are connected in series, their resistances are added up as well
+			~ the resistance of the wires usually may be neglected, but if the resistance of the resistors are so small it's close to the R
+			  of wires, the R of wires should be treated as just another resistor in the series.
+		resistors don't have poles.
+		
+		since there is only one branch in DC circuit, the current in one place is the same as the current in any other place. so we don't 
+		differentiate current sources, if there are various.
+		
+	> Parallel circuits
 	
+		the flow of current is branched, all the branches get the same voltage, though current might not be the same. each component is 
+		directly connected to the voltage source.
+		
+			_________________________________
+		        |		|		 |
+		  	|		|		 |
+		  	|		|		 |
+		  	|	    -----------	    -----------
+		  	|	    |	      |	    |	      |
+		  --------------    |	      |	    |	      |
+	   	  |	       |    |	      |	    |	      |
+	   	  |	       |    |	      |	    |	      |
+	   	  |  V source  |    |	 C    |	    |	 C    |
+	   	  |	       |    |	      |	    |	      |
+	   	  |____________|    |	      |	    |         |
+	   	  	|   	    |	      |	    |	      |
+	   	  	|	    |_________|	    |_________|
+	   	  	|		 |		  |
+	   	  	|		 |		  |
+	   	  	|________________|________________|
+	   	  
+		
+		all the sources of voltages should be of same voltage, if not, a greater source will try to charge the lesser ones which will cause
+		damage. all the sources should be connected according to their polarities (- to -, + to +), otherwise it will be ineffective and 
+		dangerous, creating short-circuit loops between two batteries.
+		
+			> conventionally we represent the current flow from + to -, but in reality it flows the other way. the convention was accepted
+			  in times where electrons were not discovered and the reality of current flows was not understood, they didn't know who the
+			  charge carriers were. but the convention represents the reality well enough, so they just kept it for backwards
+			  compatibility.
+			  
+		with multiple sources of voltage connected in parallel correctly, the total voltage of the circuit == the voltage of one source. the 
+		reason to connect several sources is to increase deliverable current, which == the sum of the deliverable currents of each of the 
+		sources.
+	   	  
+	   	reistors, connected in parallel, combine their ohmic values in a more complicated way. to understand it we need to know what a 
+	   	reciprocal is in math.
+	   	
+	   		> the reciprocal of a number is another number that, when multiplied by the base number, produces 1. e.g. the reciprocal of
+	   		  2 is 1/2, because 2 * 1/2 = 1
+	   		  
+	   	so the total resistance is the reciprocal of the sum of the reciprocals of the individual resistances:
+	   	
+	   		 			1
+	   		    R = ------------------------------------
+	   		          1/R1 + 1/R2 + 1/R3 + ... + 1/Rn
+	   		          
+	   	this is considering the resistance of the wires can be neglected. if it can't, the computation is even more complex, and there is no
+	   	single formula to pin it down.
+	   	
+	   	the reciprocal of resistance is called conductance, and it is expressed in a unit called 'siemens' (S, in formulas - G)
+	   			
+	   			R = 1/G
+	   			G = 1/R
+	   			
+	   	the conductance of the resistors connected in parallel equals to the sum of conductances of individual resistors (like total resistance
+	   	in a series circuit). so to find the total resistance, it might be easier to first find the conductance, and then divide 1 by it.
+	   	
+	   > Kirchhoff's Laws
+	   
+	   	two important DC network principles:
+	   	
+	   		- the law for current - the sum of currents entering a point in a circuit equals the sum of currents exiting that point. based
+	   		  on the principle of conservation of charge (charge is neither created, nor destroyed in a circuit)
+	   		  
+	   		- the law for voltage - the sum of all voltages around any closed loop inside a DC circuit is 0 when polarity is taken into
+	   		  account. in other words, the sum of voltage drops (dissipation of energy thanks to the resistance of components) inside a
+	   		  closed loop equals to the sum of voltage rises (increases provided by sources of voltage). there can't be any potential
+	   		  difference between a point and itself.
+	   	  
+	   	  
+	   	  
+	   	  
+	   	  
 	   	  
 	   	  
 	   	  

@@ -744,7 +744,10 @@ COMPUTER SYSTEMS
 						transparent electrodes attached to them, behind the rear plate there is a source of light. the 
 						electrodes create electric fields in the liquid, different parts of the screen get different voltages,
 						that's how the displayed image is controlled. on both sides we also have polarizing filters.
-						the modern tech is OLED (Organic LIght Emitting Diode) display.
+						the modern tech is OLED (Organic LIght Emitting Diode) display: the biggest difference is the source
+						of light: LCD monitours have a full panel that illuminates with fluorescent or LED light; in OLED
+						monitors each pixel is illuminated separately, the light comes from an organic molecule, sandwitched
+						between two electrodes, and applied voltage to.
 						
 			> Video RAM - the monitors are refreshed 60-100 times a second from a video RAM on the display's controller card. the RAM 
 				      contains a bit map that represents the screen image: 3 bytes for each pixel, one byte represents the intensity of 
