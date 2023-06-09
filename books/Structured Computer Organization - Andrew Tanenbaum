@@ -800,17 +800,93 @@ COMPUTER SYSTEMS
 	2.4.6 Telecommunications Equipment
 	
 		~ Modems ~
+			
+			the computer signal represents data as two levels of voltages: 0 volts for 0 and 3-5 volts for 1. this two-level signal can't
+			be transmitted through a voice-grade telephone line without considerable distortion. what can be transmitted without 
+			distortion is a pure sine wave signal at frequency of 1000 to 2000 Hz, it's called 'carrier'.
+			pulsations of a sine wave are regular and predictable therefore on its own carry no information
+				> information is entropy
+			therefore, there are 3 ways to encode data in it. by varying: the amplitude, frequency, or phase of the sine wave. this 
+			process is called 'modulation', and the device that does it is called 'modem' ('mo'dulator / 'dem'odulator)
+			
+			in normal phase modulation the wave is turned 180 degrees with each change of a data bit, but it's also possible to encode
+			several bits in one phase, e.g. you can assign 4 different degrees to represent a dibit (00, 01, 10, 11), with this system
+			we can transmitt 2 bits per time interval. there are more than 2-bits systems.
+			
+			the number of time intervals (signal changes per second) is call the 'baud rate'. since there are ways to transmit several 
+			bits per baud (i.e. time interval), the boud rate and the bit rate aren't the same thing.
+			
+			computers send data with 8-bit characters, so it would be great to send them all at once in parallel, but telephone lines
+			provide only one chanel, so the bits must be sent serially.
+			'full-duplex' modems can transmit and recieve data simultaneously.
 		
 		~ Digital Subscriber Lines ~
 		
+			dialup lines can offer up to 56 kbps, TV cable transmits up to 10 mbps. so the telephone companies needed a different 
+			technology, they came up with ADSL (Asymmetric Digital Subscriber Line). which is sometimes referred to as a 'broadband'
+			service: the term just means that the service offers more than one signaling channel (as opposed to a 'baseband' service like
+			the dialup).
+			
+			modems are so slow because the telephone lines were designed for transmitting voice, not data, the network was optimized for
+			that, and one of those optimizations was that the wire from each subscriber to the telephone company's office (aka 'local 
+			loop') was limited to 3000 Hz by a filter in the office. without this filter the bandwidth of the wire can reach 1.1 MHz.
+			
+			with switching to the ADSL technology, the telcos removed the filter, and devided the available 1.1. MHz bandwith into 
+			256 channels 4.3 kHz each. channel 0 is used for POTS (Plain Old Telephone Service), channels 1-5 are not used to keep the 
+			phone signal and data signals isolated. of the remaining 250 one - for downstream control, one - for upstream control, the 
+			rest - for data transmition. of those 80-90% is used for downstream data, since people download much more than they upload;
+			that division is responsible for the 'Asymmetric' in ADSL.
+			
+			within each channel the bit rate is adjusted in real time, so different channels my have different bit rates. the data is 
+			sent using the combination of amplitude and phase modulation with up to 15 bits per baud.
+			
+			an ADSL modem is basically 250 simple modems packed into one box, and able to transmit in parallel.
+			
+			at the telco's office the voice signal is separated, the data signals are routed to a DSLAM (Digital Subscriber Line Access
+			Multiplexer) which contains the same kind of digital signal processor as the ADSL modem, DSLAM recovers the digital signal into
+			a bit stream, forms packets and sends them to an ISP.
+		
 		~ Internet over Cable ~
 
-
-
-2.5 SUMMARY
-
-
-
+			here we speak about the internet service provided by TV companies using their cable. the main difference from telcos wires is 
+			that the cable is shared between hundreads of households (whereas each telco client has its individual connection): in a tv
+			office theres a piece of equipment called 'headend' to which one cable is connected, and this cable runs through the 
+			neigbourhood, and the clients might choose to tap into it.
+			
+			the cable has much higher bandwidth, up to 750 MHz, but since it's shared btn many people the gain in bit rate might not be 
+			obvious for individual consumers. moreover the bandwidth is shared with tv broadcasting itself, and FM radio. the whole 
+			bandwidth is divided into 6MHz (US) channels. the asymmetry btn upstream and downstream channels is present as well, though 
+			it's more dictated by the technology than in the case of ADSL: TV channels are one-way by design - downstream, so the upstream
+			channels can't occupy the TV frequencies, which leaves them very restricted space to operate in, in the lower spectrum, namely
+			5-42 MHz, befor the TV begins at 54 MHz. downstream channels can occupy the TV space, they get higher spectrum (550 - 750 MHz).
+			
+			for the cable connection a special cable modem is required. the shared nature of the connection implies some administration of
+			who, when and at what frequency can send packets to the headend. for that, when the modem comes online, first thing it does it
+			scanns the downstream channels for a special packet periodically issued by the headend containing the system parameters. when
+			it finds it, it announces its presence to the headend, which assigns the modem its upstream and downstream channels, that can
+			be reassigned later depending on the load on the system.
+			
+			since the channels are public, the data should be encrypted as well, so at the start modem the key pairs with the headend 
+			using the Diffie-Hellman algorithm.
+			
+	2.4.8 Character Codes
+	
+		each computer uses a set of characters, for it to understand those characters, they each have to be assigned a number. the mapping 
+		of characters onto integers is called a character code. for computers to communicate with each other, they must use the same charcter
+		code, thus standards have been developed.
+		
+			> ACII - 7 bits per character, hence 128 possible characters. but since computers are byte-oriented, there is an additional
+			  128 control characters (do not print), that are no longer much in use.
+			  
+			> Unicode -  16 bits per character, international alphabets. still not enough, ideographs are not in dictionary order, new 
+			  words in ideographic languages require new characters.
+			  
+			> UTF-8 - stands for UCS (Universal Character Set, basically Unicode) Transformation Format. codes vary in length: from 1 to
+			  6(?) bytes, e.g. ACII characters are only 1 byte long. if the char is not of ASCII, the high-order bits of the first byte 
+			  start with 1 and indicate the number of bytes in the char, and each following byte starts with 10 (first byte never starts 
+			  with 10, which helps to synchronize the bytes of one char, and in case of errors find the start of each char).
+			  can code ~ 2 billion characters, a lot of space still is not in use, saving for possible new chars.
+			  
 
 
 ----------------------------------------------------------------------------
