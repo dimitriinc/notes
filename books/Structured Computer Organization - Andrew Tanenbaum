@@ -752,6 +752,58 @@ COMPUTER SYSTEMS
 			> Video RAM - the monitors are refreshed 60-100 times a second from a video RAM on the display's controller card. the RAM 
 				      contains a bit map that represents the screen image: 3 bytes for each pixel, one byte represents the intensity of 
 				      one of the RGB colors
+				      
+	2.4.3 Mice
+	
+		deviced to accomodate first graphical user interfaces and simplify the input commands for laymen. come in 3 forms:
+		
+			> mechanical: a rubber ball turn two shafts aligned at 90 degrees to each other. each shaft drives a variable resistor, or
+			  potentiometer. by measuring changes in the resistance, it's possible to calculate the movement of the mouse.
+			  
+			> optical: a light emitting diode (LED) illuminates the imperfections on the surface, and a tiny video camera records this,
+			  about 1000 small images (18x18 px) per second. by comparing consecutive images, we detect the movement.
+			  
+			> optomechanical: has a rubber ball that turns shafts, the shafts are connected to encoders that have slits in them, as a 
+			  shaft rotates, its slit periodically comes between a LED and its detector, creating a pulse signal. by counting the pulses,
+			  we compute the motion.
+			  
+		every time a mouse moves a certain minimum distance (e.g. 0.01 inch), aka 'mickey', it sends a 3 byte data to the computer. the first
+		byte contains an integer that tells the distance moved in x-direction since the last time, the second byte - the y-direction, and the
+		third - the data about the current state of the mouse buttons.
+		
+	2.4.5 Printers
+	
+		> laser printers: a printer has its own RAM containing a bit map of an image to be printed, the laser is modulated with this data to
+		  be reflected on a rotating precision drum, which is charged up to 1000 volts and coated with a photosensitive material at the 
+		  beginning of each page cycle. the laser hits the drum line by line, constructing each line dot by dot: the dot where the laser hits
+		  is discharged. when one line is ready, the drum rotates a fraction of a degree. 
+		  further in the rotation, the patterned lines pass through a toner, which is a reservoir of an electrostatically charged black powder: 
+		  the powder is attracted to the still charged spots on the drum.
+		  next, the drum is pressed against the paper, leaving the powder on it. then the page passes through heated rollers that fuse the 
+		  powder and the paper. and the drum is discharged and scraped of residual toner.
+		  
+		> color printers: color images can be viewed in two ways:
+			- transmitted light - like on a monitor, where color is produced by the linear superposition of the three additive primary 
+			  colors: red, green, and blue
+			- reflected light - like on a printed page, where the image absorbs certain wavelengths of light and reflects the other. those
+			  images are built up from the linear superposition of the three subtractive primary colors: cyan (all red absorbed), magenta
+			  (all green absorbed), and yellow (all blue absorbed)
+		  thus, the printers should build the images from different combinations of cyan, magenta, and yellow inks. in practice it's difficult
+		  to find such a mix that would absorb all he light and produce the pure black; so in addition to those three, a blank ink is used as
+		  well. these systems are called CMYK printers (K for 'key plate').
+		  
+		  		~ the complete set of colors that a monitor or a printer can produce is called its 'gamut'
+		  		
+		> thermal printers: contains a print head with heatable needles on it, the needles a heated with electric current. the paper is 
+		  thermally sensitive, and then it passes through the needles, the leave a dot on it. these printers are used to print receipts.
+		  
+	2.4.6 Telecommunications Equipment
+	
+		~ Modems ~
+		
+		~ Digital Subscriber Lines ~
+		
+		~ Internet over Cable ~
 
 
 
