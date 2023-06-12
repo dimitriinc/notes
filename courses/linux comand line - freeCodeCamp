@@ -1,0 +1,99 @@
+why use command line:
+	- more control over the machine
+	- faster, e.g. create multiple files with one command
+	- automation of tasks
+	- instructions are the same for Linux and Mac, there are equivalents for Windows
+	- basic requirement for advanced interactions with computers
+	
+History of OSs
+	two major families:
+		- Unix-based: Linux, Mac. was a closed source software
+		- descendants of Microsoft NT: Windows, Xbox OS
+		
+Rise of the GNU Project
+	to create an open source alternative to Unix, Richard Stallman launched the GNU Project in 1984. around the same time, Linus Torvalds had
+	the same goal, and created a kernel for a free OS, but he lacked other components, so he combined his kernel with the GNU, which lacked a 
+	kernel.
+	
+Basic Linux components
+	- kernel - provides other parts with necessary services: device control, networking, file system management, process and memory management.
+		   acts as a main interface btn the OS and the hardware.
+	- shell - an interface to an OS. exposes services of the OS to users and other programms. outer layer of OS, hence 'shell'
+	- terminal - a program that runs a shell
+	
+Linux Distributions
+	flavors of the Linux OS, built on top of the Kernel
+		- Debian family - e.g. Ubuntu. user-friendly, GUI over CLI
+		- Red Hat family - oriented on commercial use by businesses, main product - RHEL (Red Hat Enterprise Linux): stability, security,
+				   long-term support. in addition maintains the Fedora project - a testing ground for new tech that can eventually be
+				   incorporated into the RHEL, focus on cutting-edge developments.
+		- SUSE family - also oriented on the enterprise market, where priority is given to stability and robustness. has differnt editions for
+				different usecases:
+					- SLES - designed for server and cloud deployments
+					- SLED - for desktop and workstation use in enterprise environment
+					- openSUSE - community-driven, open-source. balance btn cutting-edge features and stability
+					
+Basic commands
+	- whoami - prints the name of the currently logged in user
+	- man - prints the manual or info about a command, config files etc
+		> man whoami
+	- clear - clears all previous commands from the terminal window
+	- xdg-open <file/directory name> - opens file/directory in GUI (with a program that's default for file's type)
+	
+Working with directories
+	- pwd - prints the path of the Present Working Directory
+	- cd <path> - change directory
+		> cd / cd ~ 	// gets to the home directory
+		> cd ..		// to the parent directory
+	- ls - lists all the file in the pwd	
+		> ls -a		// includes the hidden files
+		> ls -l 	// long listing + permissions (rwx - read, write, execute)
+	- mkdir <directoryName> - make new directory
+	- rmdir <directoryName> - remove directory (if it's empty)
+		> rmdir -p <dirName>	// remove the nested dirs recursively
+		
+Working with files
+	- touch <fileName> - create a new file, can create multiple files
+	- rm <fileName> - remove file permanently
+		> rm -rf <file/dir name>	// recursive and forced removal
+	- cp <oldFile> <newFile> - copy, <newFile> can be a directory path, where to copy the <oldfile>
+		> cp -r <sourceDir> <targetDir>		// copy the dir with everything inside it
+	- mv <source> <destination> - move + rename
+	
+Working with file contents
+	- head <file> - prints the first 10 lines of the file
+		> head -n <num> <file>		// override the num of lines printed
+	- tail <file> - prints the last 10 lines
+		> -n
+		> tail -f <file> 	// watches the file and prints the new additions (useful for logging)
+	- cat <file> - prints the content of the file, multi files possible
+	  with the '>' operator concatenates several files into one
+	  	> cat <file> <file> <file> > <newFile>
+	- less <file> - shows the contents in an interactive UI (inside the terminal)
+	- echo <sth> - prints the argument
+	- wc <file> - 'word count' prints the num of lines, words, and bytes
+	- grep <arg> - filters the content to display, if you pipeline it with 'cat', it will show only the lines that contain the <arg>
+		> cat <file> | grep <arg>
+		
+Command operations
+	- '>' - redirects the output to a new file
+		> pwd > <file> 	// creates/overrides a file, which content will be the path of the working directory
+	- '>>' - the same, only doesn't override the content, but rather concatenates the new output
+	- '|' - pipe, takes the output of one command, and passes it to the next command as its input
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
