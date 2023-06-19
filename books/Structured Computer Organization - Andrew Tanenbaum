@@ -893,6 +893,60 @@ COMPUTER SYSTEMS
 THE DIGITAL LOGIC LEVEL
 ----------------------------------------------------------------------------
 
+3.1 GATES AND BOOLEAN ALGEBRA
+
+	3.1.1 Gates
+	
+		in a digital circuit only two logical values are present. typically, the signal of 0 - 0,5 V represents the binary 0, and 1 - 1,5 V 
+		represents the binary 1. the volages outside of that range are not permitted in the circuit. gates are electronic devices that 
+		produce various functions of those two-valued signals.
+		
+		the topic of how the gates work is outside of the scope of the book and belongs to the 'device level', one below the digital logic
+		level, but we touch on it briefly anyway.
+		the digital logic rests on the fact that transistors can be made to act as fast binary switches: they either let the current pass or
+		block it based on some external signal (base layer). a transistor has three connections to the outside world: emitter, base, and 
+		collector; the base connection is the one that defines the position of the switch. for example, in a NOT gate (that consists of only
+		one transistor, aka an 'inverter') if the signal coming to the base is of low voltage, the transistor shuts off, and acts as an 
+		infinite resistance, so the output signal comes through the collector connection, which is defined by some steady outside voltage 
+		(typically 1,5 V); thus, if the input is 0, the output is 1. and if the incoming signal exceeds the critical value, the transistor
+		switches on and acts as a wire, causing the outcoming signal pass through the emitter connection, which is pulled down to ground (0 V):
+		the incoming 1 turns into 0.
+		the switching of transistor between states happens in 1 nanosecond or less. an adjacent resistor is need to restrict the current drawn 
+		by the transistor so it doesn't burn out.
+		
+		a NAND gate consist of two transistors connected in serie and produce 0 only if both input signals are 1. we can add to it an inverter 
+		and get the AND gate (outputs 1 only if both input signals are 1). in a NOR gate two transistors are connected in parallel, produces 1
+		only if both input signals are 0. similarly by adding an inverter we get an OR gate (outputs 0 only if both inputs are 0).
+		since AND and OR require one transistor more than NAND and NOR, the latter ones are the ones used in the computer production.
+		the gates can have more than 2 input signals.
+		
+		there are two major families of transistors: bipolar and MOS (metal oxide semiconductor). bipolar is faster but its the MOS that is 
+		used inside the integrated circuits, because the consume less power and are smaller in size.
+
+3.2 BASIC DIGITAL LOGIC CIRCUITS	 
+
+
+
+3.3. MEMORY
+
+
+
+3.4 CPU CHIPS AND BUSES
+
+
+
+3.5 EXAMPLE CPU CHIPS
+
+
+
+3.6 EXAMPLE BUSES
+
+
+
+3.7 INTERFACING
+
+
+
 
 
 

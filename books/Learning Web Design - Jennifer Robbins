@@ -206,7 +206,24 @@ the user provides input via a set of form controls. each control represents a va
 
 a simple control is declared with a <input> element, and which control will it be is defined with the 'type' attribute: 'text' value is the default one. is declared with a 'placeholder' attribute. with 'type' you can also tell browser what kind of info is expected (e.g. tel, email etc)
 
-to submit the form you need a submit button, declared with the same <input>, with 'type' set to "submit"	
+to submit the form you need a submit button, declared with the same <input>, with 'type' set to "submit"
+
+
+GRID LAYOUT
+
+	Terminology
+	
+		- grid container - the elements that has the 'display:grid' property on it
+		- grid item - all the direct children elements of the grid container
+		- grid lines - dividing lines of the grid, horizonatal and vertical	
+		- grid cell - the smallest unit, bordered by four grid lines, with no gird lines running through it
+		- grid area - a rectangle made up of one or more adjacent gric cells
+		- grid track - the space between two adjacent grid lines; generic names for grid columns and grid rows. columns run along a block axis,
+			       rows - along an inline axis
+			       
+	Setting up the grid
+	
+		
 
 
 

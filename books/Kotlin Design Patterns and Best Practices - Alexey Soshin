@@ -261,7 +261,7 @@ II. WORKING WITH CREATIONAL PATTERNS
 			* 'Any' class is the root of class hierarchy (like Object in Java), if a class doesn't specify it's parent, it inherits from
 			  Any by default. it's the Any that contains equals(), hashCode(), and toString()
 			  
-		so the goal is to create objects. those objects are implementation of concrete classes, and those concrete classes implement some 
+		so the goal is to create objects. those objects are implementations of concrete classes, and those concrete classes implement some 
 		abstract product interface. in Abstract Factory we have multiple abstract product interfaces, and multiple factory methods or classes,
 		one for each abstract product.
 		for example, we receive the configuration of our system from a YAML config file, and in our code we want to parse this file, and
@@ -422,7 +422,7 @@ III. UNDERSTANDING STRUCTURAL PATTERNS
 		  		
 		  it works with interfaces as well
 		  		
-		  * instead of checking some condition with 'if' you can use 'require' - when its expression evaluates to false it throws and 
+		  * instead of checking some condition with 'if' you can use 'require' - when its expression evaluates to false it throws an
 		    IllegalArgumentException
 		    	
 		    	require (argument.length < maxNameLength) {
@@ -435,7 +435,7 @@ III. UNDERSTANDING STRUCTURAL PATTERNS
 		them according to the needs of the modern code we would usually create an adapter class, that takes in the legacy one as an arg, and
 		modifies its output in some way.
 		
-		in Kotlin the best way to implement the DP is through extension functions: we define one on he incompatible interface, which converts
+		in Kotlin the best way to implement the DP is through extension functions: we define one on the incompatible interface, which converts
 		it to a compatible one:
 		
 			fun UsbMini.toUsbTypeC(): UsbTypeC {
@@ -456,9 +456,9 @@ III. UNDERSTANDING STRUCTURAL PATTERNS
 		
 		'fragile base class' is the problem when modifying the superclass introduces bugs to subclasses.
 		
-		instead of creating multiple sublasses, which will be our abstract implementation. the objects of this class will differ based on
-		characteristics we provide as properties in their constructors.
-		the properties, as defined in the abstract impolementation class, are of interface types:
+		instead of creating multiple sublasses, we create a base class, which will be our abstract implementation. the objects of this class 
+		will differ based on characteristics we provide as properties in their constructors.
+		the properties, as defined in the abstract implementation class, are of interface types:
 		
 			interface Trooper {
 				fun move(x: Long, y: Long)
@@ -507,14 +507,63 @@ III. UNDERSTANDING STRUCTURAL PATTERNS
 				override fun move(x: Long, y: Long) = REGULAR_SPEED * 2
 			}
 			
-		and when we create objects of troopers, we pass those property implementations, and thus define the objcets
+		and when we create objects of troopers, we pass those property implementations, and thus define the objects
 		
 			val flameTrooper = StormTrooper(FlameThrower(), AthleticLegs())
 			
-		by creating parallel hierarchies of abstractions, we flatten the class hierarchies, and make it eadier to extent it.
+		by creating parallel hierarchies of abstractions, we flatten the class hierarchies, and make it easier to extend it.
 		the Bridge is often used in conjunction with dependency injection frameworks.
 		
 	4. Composite
+	
+		for creating a class that is composed of objects of the same type, and has the same behavior as its composing parts; e.g. a class
+		for a squad of stormtroopers, that can do anything an individual stormtrooper can.
+		
+		this is achieved by the wrapper class and the unit class implementing the same interface.
+		
+			class Squad(private val units: List<Trooper>) : Trooper {
+				constructor(vararg units: Trooper) : this(units.toList())
+				override fun move(x: Long, y: Long) {
+					for (u in units) {
+						u.move(x, y)
+					}
+				}
+				override fun attack(x: Long, y: Long) {
+					for (u in units) {
+						u.attack(x, y)
+					}
+				}
+			}
+			
+		* secondary constructors
+			primary constructors are the ones that follow the class' name immediately in parentheses.
+			the secondary ones are declared inside the body with the 'constructor' keyword, they must call the primary constructor with
+			this().
+			
+		* varargs
+			to pass any number of arguments of the same type. under the hood the args are converted to an array of their type.
+			
+		the Composite DP can be deployed to create a wrapper class of wrappers (e.g. a platoon of squads). and the whole hierarchies of such
+		classes, that share the same behavior.
+		
+		goes well with the Iterator DP.
+		
+	5. Facade
+	
+		hides ugly implementation, and presents a nice and consise interface instead, can be class of an extension function
+		applied when to perform an operation you need to use a family of classes
+		
+	6. Flyweight
+	
+		reduces the memory footprint of the program by stripping objects of their states, if that state is immutable and can be shared between 
+		the objects.
+		those objects stripped of their states are called 'flyweight' objects.
+		in Kotlin you can store the immutable state in a singleton object, and reference it from the flyweight classes.
+		
+	7. Proxy
+	
+		
+		
 	
 		
 			
