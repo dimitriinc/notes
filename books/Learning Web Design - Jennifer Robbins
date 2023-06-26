@@ -1,3 +1,7 @@
+.. continuation, the majority of the summary is lost in the great file purge of the linux migration
+
+
+
 ----------------------------------------------------
 WEB IMAGES
 ----------------------------------------------------
@@ -217,13 +221,94 @@ GRID LAYOUT
 		- grid item - all the direct children elements of the grid container
 		- grid lines - dividing lines of the grid, horizonatal and vertical	
 		- grid cell - the smallest unit, bordered by four grid lines, with no gird lines running through it
-		- grid area - a rectangle made up of one or more adjacent gric cells
+		- grid area - a rectangle made up of one or more adjacent grid cells
 		- grid track - the space between two adjacent grid lines; generic names for grid columns and grid rows. columns run along a block axis,
 			       rows - along an inline axis
 			       
 	Setting up the grid
 	
+		after declaring the grid container with the 'display:grid', on the same element we set up the configuration for rows and columns with
+		the properties 'grid-template-rows' and 'grid-template-columns'; the values for these properties basically difine the size of rows 
+		and columns respectively: how many sizes you provide (separated by a whitespace), that will be the number of rows and columns.
+		a simple example with fixed values: 
 		
+			grid-template-rows: 100px 200px 300px
+			
+		this grid will have three rows of the designated size.
+		
+		~ fractions ~
+		
+		there is a grid-specific value unit called fraction (fr), it assign the width or height based on the available space: depending on how
+		many fractions are provided in the property's value declaration, the available space (container's width/height) will be divided into
+		that number of fractions. e.g.:
+		
+			grid-template-columns: 1fr 2fr 1fr
+			
+		the second column will take up 1/2 of the available space (2 of the 4 fractions)
+		
+		~ content-based sizing ~
+		
+		several values:
+			- min-content - the width of the longest word or widest image
+			- max-content - the width of one line
+			- auto - browser decides based on available space and some other factors
+			
+		
+		~ repeating track sizes ~ 
+		
+		when you have a repeating pattern of track sizes, e.g. all tracks are the same, use the repeat() function, the first parameter of which
+		is the number of repetitions, and the second is the patern:
+		
+			grid-template-columns: repeat(5, 1fr 2fr)
+			
+		~ defining grid areas ~
+		
+		with the 'grid-template-areas' property we give names to every item, and then adjacent item have the same name, they are considered to
+		be an area. we name the items raw by raw, one raw being inside doube quotes:
+		
+			grid-template-areas: 
+				"header header header"
+				"ads main links"
+				"footer footer footer";
+				
+		~ shorthand ~
+		
+		'grid is the shorthand property, that follows the pattern 'grid: rows / columns'; areas declaration belongs to the 'row' part
+		
+	Placing grid items
+		
+		by default grid items fall into grid cells sequentially, but we can give them instructions to change this behavior.
+		
+		~ positioning by lines ~
+		
+		all the line in the grid have numbers and names by which we can refer to them, numbers are default and start with 1, or -1 if we count
+		from the last line. and the names we can assign with the 'grid-template-...' properties.
+		so the positioning happens with the 4 properties that we assign to the grid item elements: 'grid-row/column-start/end' (2 shorthands: 
+		'grid-row/column: [start] / [end]'). for [start] [end] values we pass the number or name of the line.
+		
+		~ positioning by areas ~
+		
+		give the grid item element the 'grid-area: [area]' property, and assign it to the area that you previously defined with the 
+		'grid-template-row' on the grid container element.
+		
+	Implicit grid behavior
+	
+		grid automatically generates rows and columns in case if there are more items that can fit into the explicitly defined grid (with 
+		template properties), or if you assign an item to a grid cell that is outside the defined scope.
+		by default the size of the auto-generated tracks is set to 'auto', but you can change it with the 'grid-auto-rows/columns' properties.
+		this behavior can be made use of, when you have a dynamic set of products/items and you are only concerned with how many columns are 
+		there - you can define a template for columns, and the 'grid-auto-rows' for any number of rows.
+		
+	Spacing and alignment
+	
+		spacing between tracks is called 'gutters' and you can set it with the 'grid-row/column-gap' properties, or with the shorthand
+		'grid-gap: [row] [column]'
+		
+		to align items withing their cells you can:
+			- give item elements the 'justify-self' for horizontal alignment, and 'align-self' for vertical one
+			- give grid container element 'justify/align-items' properties align all the item at once
+			
+		in case the tracks don't occupy the whole space of the container, you can align them with 'justify/align-content'
 	
 		
 
@@ -236,7 +321,7 @@ MISC
 	
 	> ::before and ::after - pseudo element selectors for generated content: when you want to generate some element on the fly while the page
 	  			 is being rendered. 'before' generates an element before the parent one, and 'after' - after. those have to have a 
-	  			 'content' property to exist on the page, the value might be an empty string.
+	  			 'content' property to exist on the page, the value might be an empty srting.
 	  			 
 	> the :active is a pseudo class that denotes the elements in the active state, i.e. when the element is clicked.
 
