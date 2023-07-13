@@ -991,8 +991,42 @@ THE DIGITAL LOGIC LEVEL
 	
 	3.2.1 Integrated circuits
 	
+		gates are manufactured and sold as units, called 'integrated circuits', or 'chips': rectangular pieces of silicon, mounted into a 
+		plastic or ceramic package; it's connected to the rest of the system with pins, one pin is preserved for the power, one - for ground,
+		the rest in theory are for inputs and outputs for each gate, in practice there are so many gates that it's not feasible to have a pin
+		(or two) for each one of them.
+		there are different types of packages: 
+			DIP - Dual Inline Package - small rectangular (microcontrollers)
+			PGA - Pin Grid Array - pins on the bottom
+			LGA - Land Grid Array - has a pad on the bottom instead of pins	
+			
+		chips have a finite 'gate delay' that includes the signal propagation time and switching time - it usually varies btn 100s of 
+		picoseconds and a couple of nanoseconds.
 		
-
+	3.2.2 Combinational circuits
+	
+		a combinational circuit is one with multiple inputs and outputs, and the outputs are uniquely defined by the inputs (hence RAM is not
+		a combinational circuits, since the ouput there is defined by a combination of inputs and the state of the memory)
+		
+		some frequently used combinational circuits:
+		
+			- Multiplexer - has 2^n inputs, one output, and n control signals that define which input will be output. used in serializing
+					data, e.g. when reading keyboard strokes: each stroke is an 7- or 8-bit data, that needs to be transported over
+					a serial link, such as USB. also used to implement the majority function from earilier
+					
+			- Decoders - has n inputs, based on which one of the 2^n outputs is set to 1. used for example to determine which RAM chip
+				     should be addressed.
+			
+			- Comparators - compares two input words, outputs 1 if they are equal, otherwise - outputs 0
+			
+	3.2.3 Arithmetic circuits
+	
+		less general purpose than the ones before, as far as i understood, are not exactly combinational circuits
+		
+			- Shifter - n inputs and n outputs, the bits are shifted to the right or to the left based on a control signal
+			- Adder - 
+		
+				
 3.3. MEMORY
 
 

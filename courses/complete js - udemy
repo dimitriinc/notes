@@ -1499,7 +1499,7 @@ Running promises in parallel
 		
 	there are other combinators of Promises, all take in an array of Promises as its arg, the difference is the return value:
 	
-		- allSettled() - it's like all(), but it doesn't short-curcuit when one of the promises is rejected; it returns the values of all
+		- allSettled() - it's like all(), but it doesn't short-circuit when one of the promises is rejected; it returns the values of all
 				 the settled promises: fulfilled, or rejected
 				 	
 		- any() - returns the value of the first fulfilled promise, ignoring the rejected ones
