@@ -206,11 +206,11 @@ INTRODUCTION
 	
 		> IBM's System/360 line: innovative for many reasons:
 		
-			- it was a family of different models, that shared the instruction set, and differed in size, price, and capabilities. the 
+			- it was a family of different models, that shared the instruction set; and differed in size, price, and capabilities. the 
 			  strategy of releasing new computers in families like that became sth like an industry standard for the manufacturers.
 			- thanks to the same instruction set, the models were one-way compatible: you could run the programs written for smaller models
 			  on larger ones, but when trying to do it the other way around, you could encounter some problems due to the programs written
-			  for the larger models wouldnt fit into the memory of the smaller ones.
+			  for the larger models wouldn't fit into the memory of the smaller ones.
 			- they were compatible with two previous IBM's models: the smaller models could emulate the 1401 (commercial usage, input/
 			  output processor, computed with the serial decimal arithmetics on variable-length words in memory), and the larger ones
 			  could emulate the 7094 (scientific usage, number cruncher, performed parallel binary arithmetic on 36-bit registers). they
@@ -263,12 +263,12 @@ INTRODUCTION
 		  while RFID chips are minimal structures, microcontrollesrs are complete computers: they have processor, memory, and I/O capability.
 		  I/O is usually sensing pressed buttons and switches on the device, and controlling light, display, sound etc of devices. the software 
 		  for microcontrollers comes in form of a chip with a read-only memory (ROM), it's produced when the microcontroller is manufactured.
-		  the production volume of microcontrollers exceeds that of normal comptuers by orders of magnitude. they can be cheap - some 10 cents.
+		  the production volume of microcontrollers exceeds that of normal computers by orders of magnitude. they can be cheap - some 10 cents.
 		  can be two types: 
 		  	- general purpose: classic architecture and instruction set
 		  	- special purpose: modified architecture and instruction set, tuned to some specific application (e.g. multipmedia)
 		  microcontrollers also can vary in their data transoport capabilities, there are 4-bit, 8-bit, 16-bit, and 32-bit systems (2010ish).
-		  manufactoring costs greatly insluences the architectural choices, because microcontrollers are much more cost-sensitive than normal
+		  manufactoring costs greatly influences the architectural choices, because microcontrollers are much more cost-sensitive than normal
 		  computers (every cent in prices matters, since they're so cheap) 
 		  another thing that impacts the architecture of microcontrollers is the fact that they must operate in real time: an interaction from
 		  the user (or from the environment) must produce an instant response.
