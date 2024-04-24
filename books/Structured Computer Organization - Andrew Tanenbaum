@@ -697,7 +697,7 @@ COMPUTER SYSTEMS
 		the modern one is PCIe ('e' for Express). two major upgrades:
 		
 			- bit-serial lines: the connections are 1-bit wide (serial). parallel connections are slower because it takes time to 
-			  synchronize all the bits in  a 64-bit (e.g.) signal. the devices have multiple lines connected to them ('lanes'), but the
+			  synchronize all the bits in a 64-bit (e.g.) signal. the devices have multiple lines connected to them ('lanes'), but the
 			  bits passing are not synchronized, so there is no 'skew'.
 			- point-to-point communication: the devices and CPU do not share the same bus, they send packets to each other, and the 
 			  response comes when it comes. the CPU and Memory are separated from the devices by a Root Complex (on motherboard), all 
