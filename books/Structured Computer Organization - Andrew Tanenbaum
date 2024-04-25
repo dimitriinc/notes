@@ -904,7 +904,7 @@ THE DIGITAL LOGIC LEVEL
 		the topic of how the gates work is outside of the scope of the book and belongs to the 'device level', one below the digital logic
 		level, but we touch on it briefly anyway.
 		the digital logic rests on the fact that transistors can be made to act as fast binary switches: they either let the current pass or
-		block it based on some external signal (base layer). a transistor has three connections to the outside world: emitter, base, and 
+		block: it's based on some external signal (base layer). a transistor has three connections to the outside world: emitter, base, and 
 		collector; the base connection is the one that defines the position of the switch. for example, in a NOT gate (that consists of only
 		one transistor, aka an 'inverter') if the signal coming to the base is of low voltage, the transistor shuts off, and acts as an 
 		infinite resistance, so the output signal comes through the collector connection, which is defined by some steady outside voltage 
@@ -939,7 +939,7 @@ THE DIGITAL LOGIC LEVEL
 		for the functions that have more than 2 variables, the truth tables quickly become too large to comprehend efficiently, so other 
 		notation was introduced. to see how it works we need to keep in mind:
 			- a boolean function can be specified by naming the combinations of input variables that produce an output of 1 (the rest of 
-			  cominations will produce a 0); 
+			  combinations will produce a 0); 
 			- the AND operation/gate is equivalent to multiplication (i.e. the comination of A*B*C will result in 1 only if all the 
 			  variables are 1), and the OR operation/gate is equivalent to adding (A+B+C will be 1, if any of the variables is 1)
 			- the inverted value of a variable is denoted by this variable with a horizontal line on top of it, and effectively stands for 
