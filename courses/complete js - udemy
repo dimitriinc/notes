@@ -203,8 +203,8 @@ Execution contexts and the Call Stack
 		  local vars, and arguments passed to a function.
 	  the global context is for the top-level code, i.e. the code that is not wrapped in functions, contains declarations of global vars, of those
 	  functions (but not their bodies).
-	  after the global context is created, it's passed to the actuall execution, i.e. to the CPU to process the binary code.
-	  for each program there is one one global execution context.
+	  after the global context is created, it's passed to the actual execution, i.e. to the CPU to process the binary code.
+	  for each program there is one global execution context.
 	  
 	  then, for each function in the global context, a separate execution context is created and executed. after that the Call Stack is empty and
 	  waiting for the callbacks from the Callback Queue to be inserted by the Event Loop.
@@ -267,9 +267,9 @@ Scope and the Scope Chain
 Variable environment, hoisting, and TDZ
 
 	- hoisting is the mechanism that allows us to call functions before they are defined in the code (but only if the function was created with a 
-	  function declaration), and acutally there are different rules of hoisting applied to different kinds of variables.
+	  function declaration), and actually, there are different rules of hoisting applied to different kinds of variables.
 	  hoisting actually works this way: before the execution of a context, it gets scanned for variables and based on the result, a Variable 
-	  Environment object is created with the scanned variables as its properties, thus when the function is called during the execution, JS
+	  Environment object is created with the scanned variables as its properties, thus, when the function is called during the execution, JS
 	  already knows its value.
 	  but not all kinds of variables are accessible this way, or 'hoisted':
 	  
@@ -1038,7 +1038,7 @@ Prototypes
 	and points it to the 'prototype' property of the constructor function. thus we can create methods on the prototype property of the constructor,
 	and it will be accessible to every object created with that constructor:
 		
-		Person.prototype.caclAge = function() {
+		Person.prototype.calcAge = function() {
 			return 2037 - this.birthdate
 		}
 		
@@ -1087,7 +1087,7 @@ ES6 classes
 	we can also declare custom methods in the class body, and those methods will be added to the prototype property of the class (function), not to
 	the instances of this class (objects created with its constructor)
 	
-	apart from appealing to the users of classic OOP languages, this way is a neater to add functionality to the prototype, we keep it all in one
+	apart from appealing to the users of classic OOP languages, this way is neater for adding functionality to the prototype, we keep it all in one
 	place.
 	
 Setters and getters
@@ -1152,9 +1152,9 @@ Inheritance btn classes
 				     	Student.prototype = Object.create(Person.prototype)
 				     	
 				     the problem with this is that the constructor property of the Student.prototype will point to the Person
-				     the solution is to manually asign the constructor perperty the value of Student
+				     the solution is to manually assign the constructor property the value of Student
 				     
-	- ES6 classes - with the help of 'extends' keyword and the super() function. syntax, once again, reminds of trditional OOP languages:
+	- ES6 classes - with the help of 'extends' keyword and the super() function. syntax, once again, reminds of traditional OOP languages:
 	
 				class Student extends Person {
 					constructor(firstName, birthdate, course) {
@@ -1172,7 +1172,7 @@ Inheritance btn classes
 			    	const StudentProto = Object.create(PersonProto)
 			    	const marge = Object.create(StudentProto)
 			    	
-			    to implement the constructor, we use the same thechnique as with constructor functions, i.e. we call the parent's 
+			    to implement the constructor, we use the same technique as with constructor functions, i.e. we call the parent's 
 			    constructor with the call() to assign the 'this'
 			    
 			    	StudentProto.init = function(firstName, birthdate, course) {
@@ -1186,14 +1186,14 @@ Inheritance btn classes
 Encapsulation
 
 	you can protect the properties and methods that you don't want to be accessible outside of the class with a conventional syntax, i.e. prefix
-	th names with an underscore. it's not a technical protection, it's sign for yourself and other programmers that the field is protected.
+	the names with an underscore. it's not a technical protection, it's sign for yourself and other programmers that the field is protected.
 	
 	to close access programatically, put the fields outside of the constructor and prefix it with #. that's a new feature of JS, not widely 
 	supported. those fields will be stored in the instance object, not in the proto.
 	
 		* return 'this' from the methods to be able to chain them
 		* classes are not hoisted (can't access them before they're declared)
-		* make a preoperty or a method static with a 'static' keyword (declared outside of the constructor())
+		* make a property or a method static with a 'static' keyword (declared outside of the constructor())
 	
 	
 	
